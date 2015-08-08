@@ -1,0 +1,488 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EE376DDC1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE376DDB1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift */; };
+		EE376DDE1B747125005EE336 /* WordToContextCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE376DDD1B747125005EE336 /* WordToContextCtl.swift */; };
+		EE37D02C1B731E2B001AC3E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37D02B1B731E2B001AC3E0 /* AppDelegate.swift */; };
+		EE37D02E1B731E2B001AC3E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37D02D1B731E2B001AC3E0 /* ViewController.swift */; };
+		EE37D0331B731E2B001AC3E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE37D0321B731E2B001AC3E0 /* Assets.xcassets */; };
+		EE37D0411B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37D0401B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.swift */; };
+		EE37D04C1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37D04B1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EE37D03D1B731E2B001AC3E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE37D0201B731E2B001AC3E0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE37D0271B731E2B001AC3E0;
+			remoteInfo = wordsToCtxTransitionAnimation;
+		};
+		EE37D0481B731E2B001AC3E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE37D0201B731E2B001AC3E0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE37D0271B731E2B001AC3E0;
+			remoteInfo = wordsToCtxTransitionAnimation;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EE376DDB1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveThenExpandTextViewCtl.swift; sourceTree = "<group>"; };
+		EE376DDD1B747125005EE336 /* WordToContextCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordToContextCtl.swift; sourceTree = "<group>"; };
+		EE37D0281B731E2B001AC3E0 /* wordsToCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wordsToCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE37D02B1B731E2B001AC3E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EE37D02D1B731E2B001AC3E0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EE37D0321B731E2B001AC3E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EE37D0371B731E2B001AC3E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE37D03C1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wordsToCtxTransitionAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE37D0401B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wordsToCtxTransitionAnimationTests.swift; sourceTree = "<group>"; };
+		EE37D0421B731E2B001AC3E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE37D0471B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wordsToCtxTransitionAnimationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE37D04B1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wordsToCtxTransitionAnimationUITests.swift; sourceTree = "<group>"; };
+		EE37D04D1B731E2B001AC3E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EE37D0251B731E2B001AC3E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE37D0391B731E2B001AC3E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE37D0441B731E2B001AC3E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EE37D01F1B731E2B001AC3E0 = {
+			isa = PBXGroup;
+			children = (
+				EE37D02A1B731E2B001AC3E0 /* wordsToCtxTransitionAnimation */,
+				EE37D03F1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests */,
+				EE37D04A1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests */,
+				EE37D0291B731E2B001AC3E0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EE37D0291B731E2B001AC3E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EE37D0281B731E2B001AC3E0 /* wordsToCtxTransitionAnimation.app */,
+				EE37D03C1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.xctest */,
+				EE37D0471B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EE37D02A1B731E2B001AC3E0 /* wordsToCtxTransitionAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				EE37D02B1B731E2B001AC3E0 /* AppDelegate.swift */,
+				EE37D02D1B731E2B001AC3E0 /* ViewController.swift */,
+				EE376DDD1B747125005EE336 /* WordToContextCtl.swift */,
+				EE376DDB1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift */,
+				EE37D0321B731E2B001AC3E0 /* Assets.xcassets */,
+				EE37D0371B731E2B001AC3E0 /* Info.plist */,
+			);
+			path = wordsToCtxTransitionAnimation;
+			sourceTree = "<group>";
+		};
+		EE37D03F1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests */ = {
+			isa = PBXGroup;
+			children = (
+				EE37D0401B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.swift */,
+				EE37D0421B731E2B001AC3E0 /* Info.plist */,
+			);
+			path = wordsToCtxTransitionAnimationTests;
+			sourceTree = "<group>";
+		};
+		EE37D04A1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EE37D04B1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift */,
+				EE37D04D1B731E2B001AC3E0 /* Info.plist */,
+			);
+			path = wordsToCtxTransitionAnimationUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EE37D0271B731E2B001AC3E0 /* wordsToCtxTransitionAnimation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE37D0501B731E2B001AC3E0 /* Build configuration list for PBXNativeTarget "wordsToCtxTransitionAnimation" */;
+			buildPhases = (
+				EE37D0241B731E2B001AC3E0 /* Sources */,
+				EE37D0251B731E2B001AC3E0 /* Frameworks */,
+				EE37D0261B731E2B001AC3E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wordsToCtxTransitionAnimation;
+			productName = wordsToCtxTransitionAnimation;
+			productReference = EE37D0281B731E2B001AC3E0 /* wordsToCtxTransitionAnimation.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EE37D03B1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE37D0531B731E2B001AC3E0 /* Build configuration list for PBXNativeTarget "wordsToCtxTransitionAnimationTests" */;
+			buildPhases = (
+				EE37D0381B731E2B001AC3E0 /* Sources */,
+				EE37D0391B731E2B001AC3E0 /* Frameworks */,
+				EE37D03A1B731E2B001AC3E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EE37D03E1B731E2B001AC3E0 /* PBXTargetDependency */,
+			);
+			name = wordsToCtxTransitionAnimationTests;
+			productName = wordsToCtxTransitionAnimationTests;
+			productReference = EE37D03C1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EE37D0461B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE37D0561B731E2B001AC3E0 /* Build configuration list for PBXNativeTarget "wordsToCtxTransitionAnimationUITests" */;
+			buildPhases = (
+				EE37D0431B731E2B001AC3E0 /* Sources */,
+				EE37D0441B731E2B001AC3E0 /* Frameworks */,
+				EE37D0451B731E2B001AC3E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EE37D0491B731E2B001AC3E0 /* PBXTargetDependency */,
+			);
+			name = wordsToCtxTransitionAnimationUITests;
+			productName = wordsToCtxTransitionAnimationUITests;
+			productReference = EE37D0471B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EE37D0201B731E2B001AC3E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Liwei Zhang";
+				TargetAttributes = {
+					EE37D0271B731E2B001AC3E0 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					EE37D03B1B731E2B001AC3E0 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = EE37D0271B731E2B001AC3E0;
+					};
+					EE37D0461B731E2B001AC3E0 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = EE37D0271B731E2B001AC3E0;
+					};
+				};
+			};
+			buildConfigurationList = EE37D0231B731E2B001AC3E0 /* Build configuration list for PBXProject "wordsToCtxTransitionAnimation" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EE37D01F1B731E2B001AC3E0;
+			productRefGroup = EE37D0291B731E2B001AC3E0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EE37D0271B731E2B001AC3E0 /* wordsToCtxTransitionAnimation */,
+				EE37D03B1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests */,
+				EE37D0461B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EE37D0261B731E2B001AC3E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE37D0331B731E2B001AC3E0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE37D03A1B731E2B001AC3E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE37D0451B731E2B001AC3E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EE37D0241B731E2B001AC3E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE376DDE1B747125005EE336 /* WordToContextCtl.swift in Sources */,
+				EE376DDC1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift in Sources */,
+				EE37D02E1B731E2B001AC3E0 /* ViewController.swift in Sources */,
+				EE37D02C1B731E2B001AC3E0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE37D0381B731E2B001AC3E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE37D0411B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE37D0431B731E2B001AC3E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE37D04C1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EE37D03E1B731E2B001AC3E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EE37D0271B731E2B001AC3E0 /* wordsToCtxTransitionAnimation */;
+			targetProxy = EE37D03D1B731E2B001AC3E0 /* PBXContainerItemProxy */;
+		};
+		EE37D0491B731E2B001AC3E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EE37D0271B731E2B001AC3E0 /* wordsToCtxTransitionAnimation */;
+			targetProxy = EE37D0481B731E2B001AC3E0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EE37D04E1B731E2B001AC3E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EE37D04F1B731E2B001AC3E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EE37D0511B731E2B001AC3E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = wordsToCtxTransitionAnimation/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.wordsToCtxTransitionAnimation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EE37D0521B731E2B001AC3E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = wordsToCtxTransitionAnimation/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.wordsToCtxTransitionAnimation;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		EE37D0541B731E2B001AC3E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = wordsToCtxTransitionAnimationTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.wordsToCtxTransitionAnimationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wordsToCtxTransitionAnimation.app/wordsToCtxTransitionAnimation";
+			};
+			name = Debug;
+		};
+		EE37D0551B731E2B001AC3E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = wordsToCtxTransitionAnimationTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.wordsToCtxTransitionAnimationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wordsToCtxTransitionAnimation.app/wordsToCtxTransitionAnimation";
+			};
+			name = Release;
+		};
+		EE37D0571B731E2B001AC3E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = wordsToCtxTransitionAnimationUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.wordsToCtxTransitionAnimationUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = wordsToCtxTransitionAnimation;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		EE37D0581B731E2B001AC3E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = wordsToCtxTransitionAnimationUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.wordsToCtxTransitionAnimationUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = wordsToCtxTransitionAnimation;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EE37D0231B731E2B001AC3E0 /* Build configuration list for PBXProject "wordsToCtxTransitionAnimation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE37D04E1B731E2B001AC3E0 /* Debug */,
+				EE37D04F1B731E2B001AC3E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE37D0501B731E2B001AC3E0 /* Build configuration list for PBXNativeTarget "wordsToCtxTransitionAnimation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE37D0511B731E2B001AC3E0 /* Debug */,
+				EE37D0521B731E2B001AC3E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE37D0531B731E2B001AC3E0 /* Build configuration list for PBXNativeTarget "wordsToCtxTransitionAnimationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE37D0541B731E2B001AC3E0 /* Debug */,
+				EE37D0551B731E2B001AC3E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE37D0561B731E2B001AC3E0 /* Build configuration list for PBXNativeTarget "wordsToCtxTransitionAnimationUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE37D0571B731E2B001AC3E0 /* Debug */,
+				EE37D0581B731E2B001AC3E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EE37D0201B731E2B001AC3E0 /* Project object */;
+}
