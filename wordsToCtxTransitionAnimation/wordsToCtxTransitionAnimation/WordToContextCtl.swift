@@ -53,56 +53,75 @@ func setupWordsCtxTransitionTextViewCtl(onCtl: UIViewController, viewToAttachOn:
 // AnimatableTextViewCtl manages a set of textViews
 
 class wordsCtxTransitionTextViewCtl: UIViewController, UIScrollViewDelegate {
-    init(wordsViewInput: UITextView, wordsViewCtlInput: UIViewController? = nil) {
+    init(ctxOrigin c: CGPoint, ctxString s: NSString, wordsView w: UITextView, , wordsViewCtl: UIViewController? = nil) {
         super.init(nibName: nil, bundle: nil)
-        wordsView = wordsViewInput
+        ctxOrigin = c
+        ctxString = s
+        wordsView = w
+        
+        
     }
     override func loadView() {
+        view = UIView.init(frame: UIScreen.mainScreen().bounds)
         adjuster = UIScrollView(frame: view.frame)
         adjuster.contentSize = CGSizeMake(adjuster.frame.width * 3, adjuster.frame.height * 3)
         adjuster.contentOffset = CGPointMake(adjuster.frame.width, adjuster.frame.height)
         view.addSubview(adjuster)
+        ctxViewSample = UIView.init(frame: CGRectMake(adjuster.contentOffset.x, adjuster.contentOffset.y, adjuster.frame.size.width, adjuster.frame.size.width))
+        ctxTextViewSample = UITextView(frame: CGRectMake(ctxOrigin.x, ctxOrigin.y, ctxViewSample.frame.size.width - ctxOrigin.x * 2, ctxViewSample.frame.size.height - ctxOrigin.y))
+        ctxTextViewSample.attributedText = NSAttributedString(string: fullContent)
+        ctxTextViewSample.contentInset = UIEdgeInsetsZero
+        ctxTextViewSample.textContainer.lineFragmentPadding = 0
+        ctxTextViewSample.showsHorizontalScrollIndicator = false
+        ctxTextViewSample.showsVerticalScrollIndicator = false
+        ctxViewSample.addSubview(ctxTextViewSample)
+        refreshLines()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-//    var firstGlyphOriginFromListInCtlView: CGPoint! // Prerequisite
-    
-    let wordsView: UITextView! // Prerequisite
-    let attriWords: NSMutableAttributedString! // Prerequisite
-    
-    var adjuster: UIScrollView!
-    var wordsColor = UIColor.blackColor()
-    
-    // The set of textViews managed by the controller to mock the movement of context.
-    // Glyph/character info
-    var glyphRangesInOriginalViewToMock = [NSRange]()
-    var lineRectsInOriginalViewToMock = [CGRect]()
-    var
+    let ctxOrigin: CGPoint
+    let ctxString: NSString
+    // wordsView info
+    let wordsView: UITextView
+    var attriWords: NSAttributedString {
+        return wordsView.attributedText
+    }
     var firstGlyphOrigin: CGPoint {
         return view.convertPoint(getFisrtGlyphOrigin(wordsView), fromView: wordsView)
     }
+    var adjuster: UIScrollView!
+    var wordsColor = UIColor.blackColor()
+    var yDistanceOfFirstGlyphOriginWordsToCtx: CGFloat {
+        return ctxOrigin -
+    }
+    // The set of textViews managed by the controller to mock the movement of context.
+    // Glyph/character info
+    var glyphRangesInWordsView = [NSRange]()
+    var lineRectsInWordsView = [CGRect]()
+    
+    var ctxViewSample: UIView
+    var ctxTextViewSample: UITextView
     var lastGlyphIndexesInLinesInOriginalViewToMock: [Int] {
         var i = [Int]()
-        for r in glyphRangesInOriginalViewToMock {
+        for r in glyphRangesInWordsView {
             i.append(r.location + r.length - 1)
         }
         return i
     }
     var firstExtraGlyphIndexesInLinesInOriginalViewToMock: [Int] {
         var i = [Int]()
-        for r in glyphRangesInOriginalViewToMock {
+        for r in glyphRangesInWordsView {
             i.append(r.location + r.length)
         }
         return i
     }
     var wordsGlyphRangeInOriginalViewToMock: NSRange {
-        return originalViewToMock.layoutManager.glyphRangeForCharacterRange(wordsCharacterRange, actualCharacterRange: nil)
+        return wordsView.layoutManager.glyphRangeForCharacterRange(wordsCharacterRange, actualCharacterRange: nil)
     }
     var wordsCharacterRange: NSRange {
-        return (originalViewToMock.attributedText!.string as NSString).rangeOfString(attriWords.string as String)
+        return (wordsView.attributedText!.string as NSString).rangeOfString(attriWords.string as String)
     }
     //  animatedLines
     var animatedLineMainViews = [AnimatableOneLineTextView]()
@@ -117,10 +136,6 @@ class wordsCtxTransitionTextViewCtl: UIViewController, UIScrollViewDelegate {
         return view.textView.layoutManager.boundingRectForGlyphRange(view.textView.layoutManager.glyphRangeForCharacterRange(wordsCharacterRange, actualCharacterRange: nil), inTextContainer: view.textView.textContainer).origin
     }
     
-    override func loadView() {
-        view = UIView(frame: originalViewToMock.frame)
-        refreshLines()
-    }
     
     // Transition
     func transitToCollapsedAtLanuch() {
@@ -133,6 +148,7 @@ class wordsCtxTransitionTextViewCtl: UIViewController, UIScrollViewDelegate {
     }
     func transitToExpanded(animated: Bool) {
         adjustToMatchLineWrap(animated, currentMainView: animatedLineMainViews[0], mainViews: animatedLineMainViews, extraViews: animatedLineExtraViews)
+        adjuster.setContentOffset(CGPointMake(adjuster.contentOffset.x, adjuster.contentOffset.y + ), animated: animated)
         if !animated {
             isExpanded = true
         }
@@ -171,7 +187,7 @@ class wordsCtxTransitionTextViewCtl: UIViewController, UIScrollViewDelegate {
     }
     func refreshAnimatableOneLineTextViews(inout views: [AnimatableOneLineTextView]) {
         // Match the number of views.
-        var y = views.count - lineRectsInOriginalViewToMock.count
+        var y = views.count - lineRectsInWordsView.count
         if y > 0 {
             while y > 0 {
                 views.last!.removeFromSuperview()
@@ -180,9 +196,9 @@ class wordsCtxTransitionTextViewCtl: UIViewController, UIScrollViewDelegate {
             }
         } else if y < 0 {
             var i = 0
-            for _ in glyphRangesInOriginalViewToMock {
+            for _ in glyphRangesInWordsView {
                 if i + 1 > views.count {
-                    let l = initOneAnimatableOneLineTextView(CGPointMake(lineRectsInOriginalViewToMock[0].origin.x, lineRectsInOriginalViewToMock[i].origin.y))
+                    let l = initOneAnimatableOneLineTextView(CGPointMake(lineRectsInWordsView[0].origin.x, lineRectsInWordsView[i].origin.y))
                     l.delegate = self
                     view.addSubview(l)
                     views.append(l)
@@ -207,25 +223,26 @@ class wordsCtxTransitionTextViewCtl: UIViewController, UIScrollViewDelegate {
                 v.setContentOffset(CGPointMake(o + view.frame.width * CGFloat(j), 0), animated: false)
                 // Reset visiability.
                 let charRange = isForMain ? NSMakeRange(wordsCharacterRange.location, lastGlyphIndexesInLinesInOriginalViewToMock[j] - wordsCharacterRange.location + 1) : NSMakeRange(firstExtraGlyphIndexesInLinesInOriginalViewToMock[j], (v.textView.attributedText.string as NSString).length - firstExtraGlyphIndexesInLinesInOriginalViewToMock[j])
-                v.textView.attributedText = setGlyphsVisiability(originalViewToMock.attributedText!, charRange: charRange, color: wordsColor)
+                v.textView.attributedText = setGlyphsVisiability(wordsView.attributedText!, charRange: charRange, color: wordsColor)
                 v.visiableCharacterRange = charRange
                 j++
             }
         }
     }
     func refreshLinesInfo() {
-        glyphRangesInOriginalViewToMock.removeAll(keepCapacity: true)
-        lineRectsInOriginalViewToMock.removeAll(keepCapacity: true)
-        let s = originalViewToMock.attributedText.string as NSString
-        let g = animateWordsOnly ? getGlyphRangeForTextOccupiedLines(attriWords, view: originalViewToMock) : originalViewToMock.layoutManager.glyphRangeForCharacterRange(NSMakeRange(0, s.length), actualCharacterRange: nil)
+        glyphRangesInWordsView.removeAll(keepCapacity: true)
+        lineRectsInWordsView.removeAll(keepCapacity: true)
+        let s = wordsView.attributedText.string as NSString
+        let g = animateWordsOnly ? getGlyphRangeForTextOccupiedLines(attriWords, view: wordsView) : wordsView.layoutManager.glyphRangeForCharacterRange(NSMakeRange(0, s.length), actualCharacterRange: nil)
         if g.length > 0 {
             var lastRect = CGRectZero
-            while g.location + g.length > (glyphRangesInOriginalViewToMock.count > 0 ? glyphRangesInOriginalViewToMock.last!.location + glyphRangesInOriginalViewToMock.last!.length : 0) {
-                let lineGlyphRange = originalViewToMock.layoutManager.glyphRangeForBoundingRect(CGRectMake(0, lastRect.maxY + 1, 1, 1), inTextContainer: originalViewToMock.textContainer)
-                lastRect = originalViewToMock.layoutManager.boundingRectForGlyphRange(lineGlyphRange, inTextContainer: originalViewToMock.textContainer)
+            while g.location + g.length > (glyphRangesInWordsView.count > 0 ? glyphRangesInWordsView.last!.location + glyphRangesInWordsView.last!.length : 0) {
+                let lineGlyphRange = wordsView.layoutManager.glyphRangeForBoundingRect(CGRectMake(0, lastRect.maxY + 1, 1, 1), inTextContainer: wordsView.textContainer)
+                lastRect = wordsView.layoutManager.boundingRectForGlyphRange(lineGlyphRange, inTextContainer: wordsView.textContainer)
+                lastRect = CGRectMake(lastRect.origin.x + adjuster.contentOffset.x, lastRect.origin.y + adjuster.frame.size.height, lastRect.size.width, lastRect.size.height)
                 if NSIntersectionRange(lineGlyphRange, wordsGlyphRangeInOriginalViewToMock).length > 0 {
-                    glyphRangesInOriginalViewToMock.append(lineGlyphRange)
-                    lineRectsInOriginalViewToMock.append(lastRect)
+                    glyphRangesInWordsView.append(lineGlyphRange)
+                    lineRectsInWordsView.append(lastRect)
                 }
             }
         }
@@ -233,7 +250,7 @@ class wordsCtxTransitionTextViewCtl: UIViewController, UIScrollViewDelegate {
     func initOneAnimatableOneLineTextView(origin: CGPoint, width: CGFloat = 10000, height: CGFloat = 100) -> AnimatableOneLineTextView {
         let r = UITextView(frame: CGRectMake(0, 0, width, height))
         configTextView(r)
-        r.attributedText = originalViewToMock.attributedText!
+        r.attributedText = wordsView.attributedText!
         return AnimatableOneLineTextView(textViewToInsert: r, rect: CGRectMake(origin.x, origin.y, view.frame.width - origin.x * 2, height))
     }
     func configTextView(view: UITextView) {
