@@ -38,10 +38,82 @@ func getLines(glyphRanges: [NSRange], lineRects: [CGRect]) -> [MovableOneTextLin
     
 }
 
+// To add wordsToCtx transition, we need: 1) view to attach on 2) viewController to attach on 3) words' textView 4) origin in viewToAttachOn's coordinates 5) ctx's texts
+class WordsToCtxTransitionCtl: UIViewController, UIScrollViewDelegate {
+    init(ctxOriginInWordsView c: CGPoint, ctxString s: NSString, wordsView w: UITextView, addToView v: UIView, wordsViewCtl vc: UIViewController? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        ctxOrigin = c
+        ctxString = s
+        wordsView = w
+        addToView = v
+        wordsViewCtl = vc
+        adjuster = getAdjuster(addToView.frame.size)
+        
+    }
+    override func loadView() {
+        view = UIView(frame: CGRectMake(0, 0, addToView.frame.width, addToView.frame.width))
+        let p = view.convertPoint(ctxOrigin, fromView: wordsView)
+        ctxView = UITextView(frame: CGRectMake(p.x, p.y, adjuster.frame.width - (p.x - adjuster.contentOffset.x) * 2, adjuster.frame.height - (p.x - adjuster.contentOffset.x)))
+        ctxView.attributedText = attriCtx
+        view.addSubview(ctxView)
+        adjuster.addSubview(ctxView)
+        view.addSubview(adjuster)
+        
+    }
+    let ctxOrigin: CGPoint
+    let ctxString: NSString
+    let wordsView: UITextView
+    let addToView: UIView
+    let wordsViewCtl: UIViewController?
+    var ctxColor: UIColor = UIColor.grayColor()
+    var attriCtx: NSAttributedString {
+        let attri = attriWords.attributesAtIndex(0, effectiveRange: nil)
+        let s = NSMutableAttributedString(string: ctxString as String, attributes: attri)
+        s.setValue(ctxColor, forKey: NSForegroundColorAttributeName)
+        s.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: (s.string as NSString).rangeOfString(attriWords.string))
+        return s
+    }
+    var attriWords: NSAttributedString {
+        return wordsView.attributedText
+    }
+    var firstGlyphOrigin: CGPoint {
+        return view.convertPoint(getFisrtGlyphOrigin(wordsView), fromView: wordsView)
+    }
+    let adjuster: UIScrollView
+    func getAdjuster(frameSize: CGSize) -> UIScrollView {
+        let a = UIScrollView(frame: CGRectMake(0, 0, frameSize.width, frameSize.height))
+        a.contentSize = CGSizeMake(a.frame.width * 3, a.frame.height * 3)
+        a.contentOffset = CGPointMake(a.frame.width, a.frame.height)
+        return a
+    }
+    var ctxView: UITextView
+    
+    var triggeringLineView: MovableOneTextLineView
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        if scrollView.isEqual(triggeringLineView) {
+            
+        }
+    }
+    func expand() {
+        
+    }
+    var glyphRangesInWordsView: [NSRange] {
+        return
+    }
+    func generateLines() {
+        
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 // SyncCtl(a set of functions) to control the movement of MovableOneTextLineViews
 struct Lines {
     var main: [MovableOneTextLineView]
     var extra: [MovableOneTextLineView]
+    
+    
     
     
     
@@ -90,27 +162,8 @@ func refreshMovableOneTextLineView(baseOffsetXs: [CGFloat], deltaOffsetX: CGFloa
     lineViews.forEach { $0.contentOffset = CGPointMake(baseOffsetXs[lineViews.indexOf($0)!] + deltaOffsetX, $0.contentOffset.y) }
 }
 
-func syncMoves(mainViews: [MovableOneTextLineView], extraViews: [MovableOneTextLineView], animated: Bool = true) {
-    for m in mainViews {
-        if let i = mainViews.indexOf(m) {
-            let next = mainViews.filter{ mainViews.indexOf($0)! > i }
-            if next.count == 0 { return }
-            let nextExtra = extraViews.filter{ extraViews.indexOf($0)! > i }
-            m.baseContentOffsetX = m.contentOffset.x
-            updateFollowingViewsBaseContentOffsetX(m, followingViews: next + nextExtra)
-            if m.visiableGlyphsRectX < m.contentOffset.x + m.frame.width { // Visiable part is still visiable.
-                m.isTrigger = true
-                m.extraXTiggered = m.visiableGlyphsRectX - m.contentOffset.x - m.frame.width
-                m.setContentOffset(CGPointMake(m.baseContentOffsetX + m.extraXTiggered, m.contentOffset.y), animated: animated) // Animated move synces one by one after the previous one finishes.
-                if !animated {
-                    syncFollowingViews(m, followingViews: next + nextExtra)
-                }
-            }
-        }
-    }
-}
 
-class MovableOneTextLineView: UIScrollView {
+class MovableOneTextLineView: UIScrollView, UIScrollViewDelegate {
     let textView: UITextView
     // Used by lineExtraView to hide the visiable part.
     var visiableCharacterRange: NSRange!
@@ -130,4 +183,13 @@ class MovableOneTextLineView: UIScrollView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    func hideVisiablePart(animated: Bool) -> Bool {
+        if visiableGlyphsRectX < contentOffset.x + frame.width {
+            // Visiable part is still visiable.
+            setContentOffset(CGPointMake(visiableGlyphsRectX - frame.width, contentOffset.y), animated: animated)
+            return true
+        }
+        return false
+    }
+    
 }
