@@ -13,14 +13,7 @@ let screenSize = UIScreen.mainScreen().bounds.size
 
 // WordsView(UITextView) to provide info of start state
 
-// SampleView(UITextView) to mock the end state
-func getSampleCtxView(firstGlyphOrigin: CGPoint, words: NSAttributedString, ctx: NSString, containerSize: CGSize = screenSize) -> UITextView {
-    
-}
-// Adjuster(UIScrollView) to transit between words and context
-func getAdjuster() -> UIScrollView {
-    
-}
+
 // MovableOneTextLineView(UIScrollView + UITextView) to compose the animatedContext
 func getMovableOneTextLineView(origin: CGPoint, visiableGlyphRange: NSRange, ctx: NSAttributedString) -> MovableOneTextLineView {
     
@@ -55,8 +48,8 @@ class WordsToCtxTransitionCtl: UIViewController, UIScrollViewDelegate {
         let p = view.convertPoint(ctxOrigin, fromView: wordsView)
         ctxView = UITextView(frame: CGRectMake(p.x, p.y, adjuster.frame.width - (p.x - adjuster.contentOffset.x) * 2, adjuster.frame.height - (p.x - adjuster.contentOffset.x)))
         ctxView.attributedText = attriCtx
+        ctxView.alpha = 0
         view.addSubview(ctxView)
-        adjuster.addSubview(ctxView)
         view.addSubview(adjuster)
         
     }
@@ -76,7 +69,7 @@ class WordsToCtxTransitionCtl: UIViewController, UIScrollViewDelegate {
     var attriWords: NSAttributedString {
         return wordsView.attributedText
     }
-    var firstGlyphOrigin: CGPoint {
+    var firstWordsGlyphOrigin: CGPoint {
         return view.convertPoint(getFisrtGlyphOrigin(wordsView), fromView: wordsView)
     }
     let adjuster: UIScrollView
@@ -97,8 +90,8 @@ class WordsToCtxTransitionCtl: UIViewController, UIScrollViewDelegate {
     func expand() {
         
     }
-    var glyphRangesInWordsView: [NSRange] {
-        return
+    func firstLineOrigin() -> CGPoint {
+        
     }
     func generateLines() {
         
@@ -108,88 +101,34 @@ class WordsToCtxTransitionCtl: UIViewController, UIScrollViewDelegate {
     }
 }
 
+
+
+// glyphOriginMatchingPoint is in superView's coordinates.
+func textViewOrigin(view: UITextView, glyphOriginMatchingPoint: CGPoint) -> CGPoint {
+    let b = view.bounds.origin
+    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
+    let i = view.textContainerInset
+    let p = view.convertPoint(glyphOriginMatchingPoint, fromView: view.superview)
+    return CGPointMake(p.x - b.x - g.x - i.left, p.y - b.y - g.y - i.top)
+}
+
+// FirstGlyphOrigin in it's textView's coordinates.
+func textViewFirstGlyphOrigin(view: UITextView) -> CGPoint {
+    let b = view.bounds.origin
+    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
+    let i = view.textContainerInset
+    return CGPointMake(b.x + g.x + i.left, b.y + g.y + i.top)
+}
+
 // SyncCtl(a set of functions) to control the movement of MovableOneTextLineViews
-struct Lines {
-    var main: [MovableOneTextLineView]
-    var extra: [MovableOneTextLineView]
-    
-    
-    
-    
-    
-    func sync(line: MovableOneTextLineView, deltaX: CGFloat) {
-        let linesToSync = findLinesToSync(line)
-        if linesToSync.count > 0 {
-            let baseXs = getBaseXs(linesToSync)
-            updateContentOffset(linesToSync, newXs: baseXs.map { $0 + deltaX })
-        }
-    }
-    
-    func getBaseXs(lines: [MovableOneTextLineView]) -> [CGFloat] {
-        return lines.map { return $0.contentOffset.x }
-    }
-    
-    func findLinesToSync(afterLine: MovableOneTextLineView) -> [MovableOneTextLineView] {
-        if let r = findElements(afterLine, inArray: main) {
-            return r + findElements(main.indexOf(afterLine)!, inArray: extra)!
-        } else {
-            return findElements(afterLine, inArray: extra)! + findElements(extra.indexOf(afterLine)!, inArray: main)!
-        }
-        return [MovableOneTextLineView]()
-    }
-}
 
-func findElements<T: Equatable>(beyondElement: T, inArray: [T]) -> [T]? {
-    if let i = inArray.indexOf(beyondElement) {
-        return inArray.filter { inArray.indexOf($0) > i }
-    }
-    return nil
-}
-
-func findElements<T: Equatable>(beyondIndex: Int, inArray: [T]) -> [T]? {
-    return inArray.count > beyondIndex ? inArray.filter { inArray.indexOf($0) > beyondIndex } : nil
-}
 
 func findTextLines(forBaseContentOffsetXs: [CGFloat], inCtxLines: [MovableOneTextLineView]) -> [MovableOneTextLineView] {
     return inCtxLines.filter { inCtxLines.indexOf($0) > inCtxLines.count - forBaseContentOffsetXs.count - 1 }
 }
 
-func updateContentOffset(lines: [MovableOneTextLineView], newXs: [CGFloat]) {
-    lines.forEach { $0.contentOffset = CGPointMake(newXs[lines.indexOf($0)!], $0.contentOffset.y) }
-}
-
-func refreshMovableOneTextLineView(baseOffsetXs: [CGFloat], deltaOffsetX: CGFloat, lineViews: [MovableOneTextLineView]) {
-    lineViews.forEach { $0.contentOffset = CGPointMake(baseOffsetXs[lineViews.indexOf($0)!] + deltaOffsetX, $0.contentOffset.y) }
-}
 
 
-class MovableOneTextLineView: UIScrollView, UIScrollViewDelegate {
-    let textView: UITextView
-    // Used by lineExtraView to hide the visiable part.
-    var visiableCharacterRange: NSRange!
-    var visiableGlyphRange: NSRange {
-        return textView.layoutManager.glyphRangeForCharacterRange(visiableCharacterRange, actualCharacterRange: nil)
-    }
-    var visiableGlyphsRectX: CGFloat {
-        return textView.frame.origin.x + textView.textContainer.lineFragmentPadding + textView.textContainerInset.left + textView.layoutManager.boundingRectForGlyphRange(visiableGlyphRange, inTextContainer: textView.textContainer).origin.x
-    }
-    init(textViewToInsert: UITextView, rect: CGRect) {
-        super.init(frame: rect)
-        decelerationRate = UIScrollViewDecelerationRateFast
-        contentSize = CGSizeMake(textViewToInsert.frame.width * 3, textViewToInsert.frame.height)
-        textView = textViewToInsert
-        addSubview(textView)
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    func hideVisiablePart(animated: Bool) -> Bool {
-        if visiableGlyphsRectX < contentOffset.x + frame.width {
-            // Visiable part is still visiable.
-            setContentOffset(CGPointMake(visiableGlyphsRectX - frame.width, contentOffset.y), animated: animated)
-            return true
-        }
-        return false
-    }
-    
-}
+
+
+
