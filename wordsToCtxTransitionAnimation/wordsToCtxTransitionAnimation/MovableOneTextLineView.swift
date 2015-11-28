@@ -36,10 +36,14 @@ class MovableOneTextLineView: UIScrollView, UIScrollViewDelegate {
     func hideVisiablePart(animated: Bool) -> Bool {
         if visiableGlyphsRectX < contentOffset.x + frame.width {
             // Visiable part is still visiable.
-            setContentOffset(CGPointMake(visiableGlyphsRectX - frame.width, contentOffset.y), animated: animated)
+            setContentOffset(CGPointMake(contentOffsetXHidesVisiablePart(frame.width, visiableGlyphsRectX: visiableGlyphsRectX), contentOffset.y), animated: animated)
             return true
         }
         return false
     }
     
+}
+
+func contentOffsetXHidesVisiablePart(viewWidth: CGFloat, visiableGlyphsRectX: CGFloat) -> CGFloat {
+    return visiableGlyphsRectX - viewWidth
 }

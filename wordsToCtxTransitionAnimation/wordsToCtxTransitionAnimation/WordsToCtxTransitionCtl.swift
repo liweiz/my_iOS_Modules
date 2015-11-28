@@ -103,22 +103,7 @@ class WordsToCtxTransitionCtl: UIViewController, UIScrollViewDelegate {
 
 
 
-// glyphOriginMatchingPoint is in superView's coordinates.
-func textViewOrigin(view: UITextView, glyphOriginMatchingPoint: CGPoint) -> CGPoint {
-    let b = view.bounds.origin
-    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
-    let i = view.textContainerInset
-    let p = view.convertPoint(glyphOriginMatchingPoint, fromView: view.superview)
-    return CGPointMake(p.x - b.x - g.x - i.left, p.y - b.y - g.y - i.top)
-}
 
-// FirstGlyphOrigin in it's textView's coordinates.
-func textViewFirstGlyphOrigin(view: UITextView) -> CGPoint {
-    let b = view.bounds.origin
-    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
-    let i = view.textContainerInset
-    return CGPointMake(b.x + g.x + i.left, b.y + g.y + i.top)
-}
 
 // SyncCtl(a set of functions) to control the movement of MovableOneTextLineViews
 
