@@ -17,6 +17,7 @@
 		EE5EDF1D1B86C0B6008A0855 /* MovableOneTextLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5EDF1C1B86C0B6008A0855 /* MovableOneTextLineView.swift */; };
 		EE5EDF1F1B86C384008A0855 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5EDF1E1B86C384008A0855 /* Lines.swift */; };
 		EE7B93701B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7B936F1B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift */; };
+		EEF736D51C09E6D800E8EB4C /* FuncsToMatchTextViewOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF736D41C09E6D800E8EB4C /* FuncsToMatchTextViewOrigin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		EE5EDF1C1B86C0B6008A0855 /* MovableOneTextLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovableOneTextLineView.swift; sourceTree = "<group>"; };
 		EE5EDF1E1B86C384008A0855 /* Lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		EE7B936F1B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsToCtxTransitionCtl.swift; sourceTree = "<group>"; };
+		EEF736D41C09E6D800E8EB4C /* FuncsToMatchTextViewOrigin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuncsToMatchTextViewOrigin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				EE376DDD1B747125005EE336 /* WordToContextCtl.swift */,
 				EE7B936F1B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift */,
 				EE5EDF1E1B86C384008A0855 /* Lines.swift */,
+				EEF736D41C09E6D800E8EB4C /* FuncsToMatchTextViewOrigin.swift */,
 				EE5EDF1C1B86C0B6008A0855 /* MovableOneTextLineView.swift */,
 				EE376DDB1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift */,
 				EE37D0321B731E2B001AC3E0 /* Assets.xcassets */,
@@ -266,6 +269,7 @@
 				EE5EDF1D1B86C0B6008A0855 /* MovableOneTextLineView.swift in Sources */,
 				EE5EDF1F1B86C384008A0855 /* Lines.swift in Sources */,
 				EE376DDC1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift in Sources */,
+				EEF736D51C09E6D800E8EB4C /* FuncsToMatchTextViewOrigin.swift in Sources */,
 				EE7B93701B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift in Sources */,
 				EE37D02E1B731E2B001AC3E0 /* ViewController.swift in Sources */,
 				EE37D02C1B731E2B001AC3E0 /* AppDelegate.swift in Sources */,
