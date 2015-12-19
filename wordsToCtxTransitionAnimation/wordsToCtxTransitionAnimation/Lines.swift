@@ -12,7 +12,7 @@ import UIKit
 let fontColor = UIColor.blueColor()
 let sysFont = UIFont.systemFontOfSize(16)
 
-func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines {
+func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
     var mainLines = [MovableOneTextLineView]()
     var extraLines = [MovableOneTextLineView]()
     let linesInfo = textViewLinesInfo(viewToCopy)
@@ -23,17 +23,21 @@ func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines {
         }
         let f = CGRectMake(0, 0, linesInfo.lineRects[0].size.width * CGFloat(linesInfo.lineRects.count), linesInfo.lineRects[0].size.height)
         let l = combineRanges(characterRanges)
+        var i = 0
         for x in characterRanges {
             let rangeMain = visiableRange(true, wordsCharacterRange: l, lineWordsCharacterRange: x)
             let rangeExtra = visiableRange(false, wordsCharacterRange: l, lineWordsCharacterRange: x)
             let lineTextViewMain = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeMain, color: fontColor)
             let lineTextViewExtra = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeExtra, color: fontColor)
+            let lineMain = MovableOneTextLineView(textViewToInsert: lineTextViewMain, rect: linesInfo.lineRects[i])
+            let lineExtra = MovableOneTextLineView(textViewToInsert: lineTextViewExtra, rect: linesInfo.lineRects[i])
             mainLines.append(lineMain)
             extraLines.append(lineExtra)
+            i++
         }
-        
+        return Lines(main: mainLines, extra: extraLines, visiableCharacterRanges: characterRanges)
     }
-    
+    return nil
 }
 
 func combineRanges(ranges: [NSRange]) -> NSRange {
