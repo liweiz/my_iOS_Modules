@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-
+let fontColor = UIColor.blueColor()
+let sysFont = UIFont.systemFontOfSize(16)
 
 func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines {
     var mainLines = [MovableOneTextLineView]()
@@ -20,10 +21,45 @@ func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines {
         for x in linesInfo.glyphRanges {
             characterRanges.append(viewToCopy.layoutManager.characterRangeForGlyphRange(x, actualGlyphRange: nil))
         }
-        var textViewToAdd = UITextView(frame: CGRectMake(0, 0, linesInfo.lineRects[0].size.width * CGFloat(linesInfo.lineRects.count), linesInfo.lineRects[0].size.height))
-        textViewToAdd.
+        let f = CGRectMake(0, 0, linesInfo.lineRects[0].size.width * CGFloat(linesInfo.lineRects.count), linesInfo.lineRects[0].size.height)
+        let l = combineRanges(characterRanges)
+        for x in characterRanges {
+            let rangeMain = visiableRange(true, wordsCharacterRange: l, lineWordsCharacterRange: x)
+            let rangeExtra = visiableRange(false, wordsCharacterRange: l, lineWordsCharacterRange: x)
+            let lineTextViewMain = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeMain, color: fontColor)
+            let lineTextViewExtra = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeExtra, color: fontColor)
+            mainLines.append(lineMain)
+            extraLines.append(lineExtra)
+        }
+        
     }
     
+}
+
+func combineRanges(ranges: [NSRange]) -> NSRange {
+    if ranges.count > 0 {
+        var l = 0
+        for x in ranges {
+            l = l + x.length
+        }
+        return NSMakeRange(ranges.first!.location, l)
+    }
+    return NSMakeRange(0, 0)
+}
+
+func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRange: NSRange, color: UIColor) -> UITextView {
+    let textViewToAdd = UITextView(frame: frame)
+    let s = glyphsVisiabilityWithColor(attriString, charRange: visiableCharRange, color: color)
+    s.setAttributes(["NSFontAttributeName": sysFont], range: NSMakeRange(0, s.length))
+    textViewToAdd.attributedText = s
+    return textViewToAdd
+}
+
+func glyphsVisiabilityWithColor(aString: NSAttributedString, charRange: NSRange, color: UIColor) -> NSMutableAttributedString {
+    let s = NSMutableAttributedString(attributedString: aString)
+    s.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: NSMakeRange(0, (s.string as NSString).length))
+    s.addAttribute(NSForegroundColorAttributeName, value: color, range: charRange)
+    return s
 }
 
 func visiableRange(isForMain: Bool, wordsCharacterRange: NSRange, lineWordsCharacterRange: NSRange) -> NSRange {
