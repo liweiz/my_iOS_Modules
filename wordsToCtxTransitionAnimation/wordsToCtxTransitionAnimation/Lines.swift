@@ -11,6 +11,11 @@ import UIKit
 
 let fontColor = UIColor.blueColor()
 let sysFont = UIFont.systemFontOfSize(16)
+//  Each line when it leads the move of following lines has two phases of sliding: 1) matching the line start of the textview it copies 2) hiding the extra part of the line that is not supposed to be shown in the line.
+
+var initialOffsetXs = [CGFloat]()
+var mainLeadingXs = [CGFloat]()
+var extraLeadingXs = [CGFloat]()
 
 func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
     var mainLines = [MovableOneTextLineView]()
@@ -40,17 +45,6 @@ func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
     return nil
 }
 
-func combineRanges(ranges: [NSRange]) -> NSRange {
-    if ranges.count > 0 {
-        var l = 0
-        for x in ranges {
-            l = l + x.length
-        }
-        return NSMakeRange(ranges.first!.location, l)
-    }
-    return NSMakeRange(0, 0)
-}
-
 func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRange: NSRange, color: UIColor) -> UITextView {
     let textViewToAdd = UITextView(frame: frame)
     let s = glyphsVisiabilityWithColor(attriString, charRange: visiableCharRange, color: color)
@@ -59,18 +53,7 @@ func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRa
     return textViewToAdd
 }
 
-func glyphsVisiabilityWithColor(aString: NSAttributedString, charRange: NSRange, color: UIColor) -> NSMutableAttributedString {
-    let s = NSMutableAttributedString(attributedString: aString)
-    s.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: NSMakeRange(0, (s.string as NSString).length))
-    s.addAttribute(NSForegroundColorAttributeName, value: color, range: charRange)
-    return s
-}
-
-func visiableRange(isForMain: Bool, wordsCharacterRange: NSRange, lineWordsCharacterRange: NSRange) -> NSRange {
-    return isForMain ? NSMakeRange(wordsCharacterRange.location, lineWordsCharacterRange.location + lineWordsCharacterRange.length - 1) : NSMakeRange(lineWordsCharacterRange.location + lineWordsCharacterRange.length, wordsCharacterRange.location + wordsCharacterRange.length - 1)
-}
-
-
+// MARK: - Adjust line offset
 // We use [CGPoint] as the data container to record each line's move on each step. There is a [[CGPoint]] used as a container to record all the moves each line takes for all the steps.
 
 func offsetAdjustAfterLineFollowDone(lineOffsetInRoot: CGPoint, targetOffsetInRoot: CGPoint, line: UITextView, animated: Bool) {
@@ -85,6 +68,22 @@ func offsetToFollowAboveLine(aboveLineOffset: CGPoint, aboveLineSize: CGSize) ->
     return CGPointMake(aboveLineOffset.x + aboveLineSize.width, aboveLineOffset.y + aboveLineSize.height)
 }
 
+func updateContentOffsets(lines: [MovableOneTextLineView], newXs: [CGFloat]) {
+    lines.forEach { $0.contentOffset = CGPointMake(newXs[lines.indexOf($0)!], $0.contentOffset.y) }
+}
+
+// MARK: - Line geometric/character/glyph info
+func expectedOffsetXsForLines(textViews: [UITextView], glyphRangesForLines: [NSRange]) -> [CGFloat] {
+    var r = [CGFloat]()
+    var i = Int(0)
+    for v in textViews {
+        let boundingRect = v.layoutManager.boundingRectForGlyphRange(glyphRangesForLines[i], inTextContainer: v.textContainer)
+        r.append(boundingRect.origin.x)
+        i++
+    }
+    return r
+}
+
 func linesRects(firstOrigin: CGPoint, linesRectsInTextView: [CGRect]) -> [CGRect] {
     var r = [CGRect]()
     let d = distancesToMove(linesRectsInTextView[0].origin, to: firstOrigin)
@@ -96,6 +95,67 @@ func linesRects(firstOrigin: CGPoint, linesRectsInTextView: [CGRect]) -> [CGRect
     return r
 }
 
+// NSLayoutManager's glyphRangeForBoundingRect bug: That documentation is incorrect; the glyphRangeForBoundingRect methods currently always return whole lines. http://www.cocoabuilder.com/archive/cocoa/17416-nslayoutmanager-glyphrangeforboundingrect-bug.html
+func glyphRangeForText(text: NSAttributedString, view: UITextView) -> NSRange {
+    let r = (view.attributedText.string as NSString).rangeOfString(text.string)
+    if r.location == NSNotFound {
+        return r
+    }
+    return view.layoutManager.glyphRangeForBoundingRect(view.layoutManager.boundingRectForGlyphRange(view.layoutManager.glyphRangeForCharacterRange(r, actualCharacterRange: nil), inTextContainer: view.textContainer), inTextContainer: view.textContainer)
+}
+
+// textViewLinesInfo returns the visiableGlyphRanges for lines and corresponding rect in one textView's coordinates.
+// view's line break leaves no glyph outside of the visiable area, which means no need to worry about the glyph that is partly or not visiable here.
+func textViewLinesInfo(view: UITextView) -> (glyphRanges: [NSRange], lineRects: [CGRect]) {
+    var glyphRanges = [NSRange]()
+    var lineRects = [CGRect]()
+    let gRange = glyphRangeForText(view.attributedText, view: view)
+    if gRange.location != NSNotFound {
+        if gRange.length > 0 {
+            var lastRect = CGRectZero
+            while gRange.location + gRange.length > (glyphRanges.count > 0 ? glyphRanges.last!.location + glyphRanges.last!.length : 0) {
+                let lineGlyphRange = view.layoutManager.glyphRangeForBoundingRect(CGRectMake(0, lastRect.maxY + 1, 1, 1), inTextContainer: view.textContainer)
+                lastRect = view.layoutManager.boundingRectForGlyphRange(lineGlyphRange, inTextContainer: view.textContainer)
+                lastRect = CGRectMake(lastRect.origin.x + view.bounds.origin.x + view.textContainerInset.left + view.textContainer.lineFragmentPadding, lastRect.origin.y + view.bounds.origin.y + view.textContainerInset.top, lastRect.size.width, lastRect.size.height)
+                if NSIntersectionRange(lineGlyphRange, gRange).length > 0 {
+                    glyphRanges.append(lineGlyphRange)
+                    lineRects.append(lastRect)
+                }
+            }
+        }
+    }
+    return (glyphRanges, lineRects)
+}
+
+func glyphsVisiabilityWithColor(aString: NSAttributedString, charRange: NSRange, color: UIColor) -> NSMutableAttributedString {
+    let s = NSMutableAttributedString(attributedString: aString)
+    s.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: NSMakeRange(0, (s.string as NSString).length))
+    s.addAttribute(NSForegroundColorAttributeName, value: color, range: charRange)
+    return s
+}
+
+func visiableRange(isForMain: Bool, wordsCharacterRange: NSRange, lineWordsCharacterRange: NSRange) -> NSRange {
+    return isForMain ? NSMakeRange(wordsCharacterRange.location, lineWordsCharacterRange.location + lineWordsCharacterRange.length - 1) : NSMakeRange(lineWordsCharacterRange.location + lineWordsCharacterRange.length, wordsCharacterRange.location + wordsCharacterRange.length - 1)
+}
+
+// GlyphOriginMatchingPoint is in superView's coordinates.
+func getTextViewOrigin(view: UITextView, glyphOriginMatchingPoint: CGPoint) -> CGPoint {
+    let b = view.bounds.origin
+    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
+    let i = view.textContainerInset
+    let p = view.convertPoint(glyphOriginMatchingPoint, fromView: view.superview)
+    return CGPointMake(p.x - b.x - g.x - i.left, p.y - b.y - g.y - i.top)
+}
+
+// FirstGlyphOrigin in it's textView's coordinates.
+func textViewFirstGlyphOrigin(view: UITextView) -> CGPoint {
+    let b = view.bounds.origin
+    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
+    let i = view.textContainerInset
+    return CGPointMake(b.x + g.x + i.left, b.y + g.y + i.top)
+}
+
+// MARK: - Lines
 struct Lines {
     var main: [MovableOneTextLineView]
     var extra: [MovableOneTextLineView]
@@ -126,60 +186,16 @@ struct Lines {
     }
 }
 
-func updateContentOffsets(lines: [MovableOneTextLineView], newXs: [CGFloat]) {
-    lines.forEach { $0.contentOffset = CGPointMake(newXs[lines.indexOf($0)!], $0.contentOffset.y) }
-}
-
-
-
-// textViewLinesInfo returns the visiableGlyphRanges for lines and corresponding rect in one textView's coordinates.
-// view's line break leaves no glyph outside of the visiable area, which means no need to worry about the glyph that is partly or not visiable here.
-func textViewLinesInfo(view: UITextView) -> (glyphRanges: [NSRange], lineRects: [CGRect]) {
-    var glyphRanges = [NSRange]()
-    var lineRects = [CGRect]()
-    let gRange = glyphRangeForText(view.attributedText, view: view)
-    if gRange.location != NSNotFound {
-        if gRange.length > 0 {
-            var lastRect = CGRectZero
-            while gRange.location + gRange.length > (glyphRanges.count > 0 ? glyphRanges.last!.location + glyphRanges.last!.length : 0) {
-                let lineGlyphRange = view.layoutManager.glyphRangeForBoundingRect(CGRectMake(0, lastRect.maxY + 1, 1, 1), inTextContainer: view.textContainer)
-                lastRect = view.layoutManager.boundingRectForGlyphRange(lineGlyphRange, inTextContainer: view.textContainer)
-                lastRect = CGRectMake(lastRect.origin.x + view.bounds.origin.x + view.textContainerInset.left + view.textContainer.lineFragmentPadding, lastRect.origin.y + view.bounds.origin.y + view.textContainerInset.top, lastRect.size.width, lastRect.size.height)
-                if NSIntersectionRange(lineGlyphRange, gRange).length > 0 {
-                    glyphRanges.append(lineGlyphRange)
-                    lineRects.append(lastRect)
-                }
-            }
+// MARK: - Utility
+func combineRanges(ranges: [NSRange]) -> NSRange {
+    if ranges.count > 0 {
+        var l = 0
+        for x in ranges {
+            l = l + x.length
         }
+        return NSMakeRange(ranges.first!.location, l)
     }
-    return (glyphRanges, lineRects)
-}
-
-// NSLayoutManager's glyphRangeForBoundingRect bug: That documentation is incorrect; the glyphRangeForBoundingRect methods currently always return whole lines. http://www.cocoabuilder.com/archive/cocoa/17416-nslayoutmanager-glyphrangeforboundingrect-bug.html
-func glyphRangeForText(text: NSAttributedString, view: UITextView) -> NSRange {
-    let r = (view.attributedText.string as NSString).rangeOfString(text.string)
-    if r.location == NSNotFound {
-        return r
-    }
-    return view.layoutManager.glyphRangeForBoundingRect(view.layoutManager.boundingRectForGlyphRange(view.layoutManager.glyphRangeForCharacterRange(r, actualCharacterRange: nil), inTextContainer: view.textContainer), inTextContainer: view.textContainer)
-}
-
-// glyphOriginMatchingPoint is in superView's coordinates.
-
-func getTextViewOrigin(view: UITextView, glyphOriginMatchingPoint: CGPoint) -> CGPoint {
-    let b = view.bounds.origin
-    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
-    let i = view.textContainerInset
-    let p = view.convertPoint(glyphOriginMatchingPoint, fromView: view.superview)
-    return CGPointMake(p.x - b.x - g.x - i.left, p.y - b.y - g.y - i.top)
-}
-
-// FirstGlyphOrigin in it's textView's coordinates.
-func textViewFirstGlyphOrigin(view: UITextView) -> CGPoint {
-    let b = view.bounds.origin
-    let g = view.layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
-    let i = view.textContainerInset
-    return CGPointMake(b.x + g.x + i.left, b.y + g.y + i.top)
+    return NSMakeRange(0, 0)
 }
 
 func findElements<T: Equatable>(beyondElement: T, inArray: [T]) -> [T]? {

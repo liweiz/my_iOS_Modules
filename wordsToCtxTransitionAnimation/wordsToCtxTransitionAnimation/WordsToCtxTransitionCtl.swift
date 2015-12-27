@@ -14,22 +14,7 @@ let screenSize = UIScreen.mainScreen().bounds.size
 // WordsView(UITextView) to provide info of start state
 
 
-// MovableOneTextLineView(UIScrollView + UITextView) to compose the animatedContext
-func getMovableOneTextLineView(origin: CGPoint, visiableGlyphRange: NSRange, ctx: NSAttributedString) -> MovableOneTextLineView {
-    
-}
 
-
-
-// CtxLinesCtl(a set of functions) to have the lastest info about MovableOneTextLineViews for a certain context and refresh them
-
-func getLinesInfoInWordsView(wordsView: UITextView) -> (glyphRanges: [NSRange], lineRects: [CGRect]) {
-    
-}
-
-func getLines(glyphRanges: [NSRange], lineRects: [CGRect]) -> [MovableOneTextLineView] {
-    
-}
 
 // To add wordsToCtx transition, we need: 1) view to attach on 2) viewController to attach on 3) words' textView 4) origin in viewToAttachOn's coordinates 5) ctx's texts
 class WordsToCtxTransitionCtl: UIViewController, UIScrollViewDelegate {
