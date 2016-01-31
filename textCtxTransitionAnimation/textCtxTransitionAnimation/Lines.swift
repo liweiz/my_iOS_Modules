@@ -1,9 +1,9 @@
 //
 //  Lines.swift
-//  wordsToCtxTransitionAnimation
+//  textCtxTransitionAnimation
 //
-//  Created by Liwei Zhang on 2015-08-20.
-//  Copyright © 2015 Liwei Zhang. All rights reserved.
+//  Created by Liwei Zhang on 2016-01-31.
+//  Copyright © 2016 Liwei Zhang. All rights reserved.
 //
 
 import Foundation
@@ -18,8 +18,8 @@ var mainLeadingXs = [CGFloat]()
 var extraLeadingXs = [CGFloat]()
 
 func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
-    var mainLines = [MovableOneTextLineView]()
-    var extraLines = [MovableOneTextLineView]()
+    var mainLines = [Line]()
+    var extraLines = [Line]()
     let linesInfo = textViewLinesInfo(viewToCopy)
     var characterRanges = [NSRange]()
     if linesInfo.glyphRanges.count > 0 {
@@ -34,8 +34,8 @@ func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
             let rangeExtra = visiableRange(false, wordsCharacterRange: l, lineWordsCharacterRange: x)
             let lineTextViewMain = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeMain, color: fontColor)
             let lineTextViewExtra = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeExtra, color: fontColor)
-            let lineMain = MovableOneTextLineView(textViewToInsert: lineTextViewMain, rect: linesInfo.lineRects[i])
-            let lineExtra = MovableOneTextLineView(textViewToInsert: lineTextViewExtra, rect: linesInfo.lineRects[i])
+            let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesInfo.lineRects[i])
+            let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesInfo.lineRects[i])
             mainLines.append(lineMain)
             extraLines.append(lineExtra)
             i++
@@ -78,7 +78,7 @@ func offsetToFollowAboveLine(aboveLineOffset: CGPoint, aboveLineSize: CGSize) ->
     return CGPointMake(aboveLineOffset.x + aboveLineSize.width, aboveLineOffset.y + aboveLineSize.height)
 }
 
-func updateContentOffsets(lines: [MovableOneTextLineView], newXs: [CGFloat]) {
+func updateContentOffsets(lines: [Line], newXs: [CGFloat]) {
     lines.forEach { $0.contentOffset = CGPointMake(newXs[lines.indexOf($0)!], $0.contentOffset.y) }
 }
 
@@ -169,10 +169,10 @@ func textViewFirstGlyphOrigin(view: UITextView) -> CGPoint {
 
 // MARK: - Lines
 struct Lines {
-    var main: [MovableOneTextLineView]
-    var extra: [MovableOneTextLineView]
+    var main: [Line]
+    var extra: [Line]
     var visiableCharacterRanges: [NSRange]
-    func sync(withLine: MovableOneTextLineView, deltaX: CGFloat) {
+    func sync(withLine: Line, deltaX: CGFloat) {
         let _linesToSync = linesToSync(withLine)
         if _linesToSync.count > 0 {
             let _baseXs = baseXs(_linesToSync)
@@ -189,17 +189,17 @@ struct Lines {
         }
     }
     
-    func baseXs(lines: [MovableOneTextLineView]) -> [CGFloat] {
+    func baseXs(lines: [Line]) -> [CGFloat] {
         return lines.map { return $0.contentOffset.x }
     }
     
-    func linesToSync(afterLine: MovableOneTextLineView) -> [MovableOneTextLineView] {
+    func linesToSync(afterLine: Line) -> [Line] {
         if let r = findElements(afterLine, inArray: main) {
             return r + findElements(main.indexOf(afterLine)!, inArray: extra)!
         } else {
             return findElements(afterLine, inArray: extra)! + findElements(extra.indexOf(afterLine)!, inArray: main)!
         }
-        return [MovableOneTextLineView]()
+        return [Line]()
     }
     
     func expandIntoCtx() -> [[CGPoint]] {

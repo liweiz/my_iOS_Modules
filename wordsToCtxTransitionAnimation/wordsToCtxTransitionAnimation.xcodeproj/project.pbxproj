@@ -14,6 +14,7 @@
 		EE37D0331B731E2B001AC3E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE37D0321B731E2B001AC3E0 /* Assets.xcassets */; };
 		EE37D0411B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37D0401B731E2B001AC3E0 /* wordsToCtxTransitionAnimationTests.swift */; };
 		EE37D04C1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37D04B1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift */; };
+		EE3C4A5D1C5C8F65004FD630 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3C4A5C1C5C8F65004FD630 /* Data.swift */; };
 		EE5EDF1D1B86C0B6008A0855 /* MovableOneTextLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5EDF1C1B86C0B6008A0855 /* MovableOneTextLineView.swift */; };
 		EE5EDF1F1B86C384008A0855 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5EDF1E1B86C384008A0855 /* Lines.swift */; };
 		EE7B93701B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7B936F1B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift */; };
@@ -51,6 +52,7 @@
 		EE37D0471B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wordsToCtxTransitionAnimationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE37D04B1B731E2B001AC3E0 /* wordsToCtxTransitionAnimationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wordsToCtxTransitionAnimationUITests.swift; sourceTree = "<group>"; };
 		EE37D04D1B731E2B001AC3E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE3C4A5C1C5C8F65004FD630 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		EE5EDF1C1B86C0B6008A0855 /* MovableOneTextLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovableOneTextLineView.swift; sourceTree = "<group>"; };
 		EE5EDF1E1B86C384008A0855 /* Lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		EE7B936F1B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsToCtxTransitionCtl.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				EE5EDF1E1B86C384008A0855 /* Lines.swift */,
 				EEF736D41C09E6D800E8EB4C /* FuncsToMatchTextViewOrigin.swift */,
 				EE5EDF1C1B86C0B6008A0855 /* MovableOneTextLineView.swift */,
+				EE3C4A5C1C5C8F65004FD630 /* Data.swift */,
 				EE376DDB1B73A4B7005EE336 /* MoveThenExpandTextViewCtl.swift */,
 				EE37D0321B731E2B001AC3E0 /* Assets.xcassets */,
 				EE37D0371B731E2B001AC3E0 /* Info.plist */,
@@ -272,6 +275,7 @@
 				EEF736D51C09E6D800E8EB4C /* FuncsToMatchTextViewOrigin.swift in Sources */,
 				EE7B93701B78DFD7005F0C85 /* WordsToCtxTransitionCtl.swift in Sources */,
 				EE37D02E1B731E2B001AC3E0 /* ViewController.swift in Sources */,
+				EE3C4A5D1C5C8F65004FD630 /* Data.swift in Sources */,
 				EE37D02C1B731E2B001AC3E0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

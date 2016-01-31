@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:textCtxTransitionAnimation/textCtxTransitionAnimation.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:wordsToCtxTransitionAnimation/wordsToCtxTransitionAnimation.xcodeproj">
    </FileRef>
 </Workspace>

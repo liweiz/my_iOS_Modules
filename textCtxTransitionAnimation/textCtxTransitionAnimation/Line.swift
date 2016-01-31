@@ -1,19 +1,19 @@
 //
-//  MovableOneTextLineView.swift
-//  wordsToCtxTransitionAnimation
+//  Line.swift
+//  textCtxTransitionAnimation
 //
-//  Created by Liwei Zhang on 2015-08-20.
-//  Copyright © 2015 Liwei Zhang. All rights reserved.
+//  Created by Liwei Zhang on 2016-01-31.
+//  Copyright © 2016 Liwei Zhang. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-func refreshMovableOneTextLineView(baseOffsetXs: [CGFloat], deltaOffsetX: CGFloat, lineViews: [MovableOneTextLineView]) {
-    lineViews.forEach { $0.contentOffset = CGPointMake(baseOffsetXs[lineViews.indexOf($0)!] + deltaOffsetX, $0.contentOffset.y) }
+func refreshLine(baseOffsetXs: [CGFloat], deltaOffsetX: CGFloat, lines: [Line]) {
+    lines.forEach { $0.contentOffset = CGPointMake(baseOffsetXs[lines.indexOf($0)!] + deltaOffsetX, $0.contentOffset.y) }
 }
 
-class MovableOneTextLineView: UIScrollView, UIScrollViewDelegate {
+class Line: UIScrollView, UIScrollViewDelegate {
     let textView: UITextView
     // Used by lineExtraView to hide the visiable part.
     var visiableCharacterRange: NSRange!
@@ -41,16 +41,18 @@ class MovableOneTextLineView: UIScrollView, UIScrollViewDelegate {
         }
         return false
     }
-    func moveOneLineView(main: MovableOneTextLineView, extra: MovableOneTextLineView, initialOffsetX: CGFloat, expectedOffsetX: CGFloat, animated: Bool) -> (mainLeadingX: CGFloat, extraLeadingX: CGFloat) {
-        main.setContentOffset(CGPointMake(expectedOffsetX - initialOffsetX, main.contentOffset.y), animated: animated)
-        
-    }
+    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.isEqual(self) {
-            if visiableGlyphsRectX
+            
         }
     }
+    
+}
+
+func transit(main: Line, extra: Line, initialOffsetX: CGFloat, expectedOffsetX: CGFloat, animated: Bool) -> (mainLeadingX: CGFloat, extraLeadingX: CGFloat) {
+    main.setContentOffset(CGPointMake(expectedOffsetX - initialOffsetX, main.contentOffset.y), animated: animated)
     
 }
 
