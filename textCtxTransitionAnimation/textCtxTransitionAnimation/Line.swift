@@ -14,7 +14,7 @@ func refreshLine(baseOffsetXs: [CGFloat], deltaOffsetX: CGFloat, lines: [Line]) 
 }
 
 class Line: UIScrollView, UIScrollViewDelegate {
-    let textView: UITextView
+    var textView = UITextView(frame: CGRectMake(0, 0, 0, 0))
     // Used by lineExtraView to hide the visiable part.
     var visiableCharacterRange: NSRange!
     var visiableGlyphRange: NSRange {
