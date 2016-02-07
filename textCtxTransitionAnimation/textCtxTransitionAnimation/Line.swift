@@ -36,26 +36,25 @@ class Line: UIScrollView, UIScrollViewDelegate {
     func hideVisiablePart(animated: Bool) -> Bool {
         if visiableGlyphsRectX < contentOffset.x + frame.width {
             // Visiable part is still visiable.
-            setContentOffset(CGPointMake(contentOffsetXHidesVisiablePart(frame.width, visiableGlyphsRectX: visiableGlyphsRectX), contentOffset.y), animated: animated)
+            setContentOffset(CGPointMake(contentOffsetXToHideVisiableGlyphs, contentOffset.y), animated: animated)
             return true
         }
         return false
     }
-    
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView.isEqual(self) {
-            
-        }
+    var contentOffsetXToHideVisiableGlyphs: CGFloat {
+        return visiableGlyphsRectX - frame.width
     }
     
-}
-
-func transit(main: Line, extra: Line, initialOffsetX: CGFloat, expectedOffsetX: CGFloat, animated: Bool) -> (mainLeadingX: CGFloat, extraLeadingX: CGFloat) {
-    main.setContentOffset(CGPointMake(expectedOffsetX - initialOffsetX, main.contentOffset.y), animated: animated)
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        if scrollView.isEqual(self) {
+//            
+//        }
+//    }
     
 }
 
-func contentOffsetXHidesVisiablePart(viewWidth: CGFloat, visiableGlyphsRectX: CGFloat) -> CGFloat {
-    return visiableGlyphsRectX - viewWidth
-}
+//func transit(main: Line, extra: Line, initialOffsetX: CGFloat, expectedOffsetX: CGFloat, animated: Bool) -> (mainLeadingX: CGFloat, extraLeadingX: CGFloat) {
+//    main.setContentOffset(CGPointMake(expectedOffsetX - initialOffsetX, main.contentOffset.y), animated: animated)
+//    
+//}
+

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE2048F91C6722B700F0E1FA /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2048F81C6722B700F0E1FA /* CGPointExtension.swift */; };
+		EE9AF6451C6314C000BCFE95 /* Ctx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9AF6441C6314C000BCFE95 /* Ctx.swift */; };
 		EED9AA0C1C5DDDC900AA7A34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA0B1C5DDDC900AA7A34 /* AppDelegate.swift */; };
 		EED9AA0E1C5DDDC900AA7A34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA0D1C5DDDC900AA7A34 /* ViewController.swift */; };
 		EED9AA131C5DDDC900AA7A34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EED9AA121C5DDDC900AA7A34 /* Assets.xcassets */; };
@@ -14,8 +16,7 @@
 		EED9AA2C1C5DDDC900AA7A34 /* textCtxTransitionAnimationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA2B1C5DDDC900AA7A34 /* textCtxTransitionAnimationUITests.swift */; };
 		EED9AA3A1C5DDEEC00AA7A34 /* ModuleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA391C5DDEEC00AA7A34 /* ModuleData.swift */; };
 		EED9AA3E1C5DE20300AA7A34 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA3D1C5DE20300AA7A34 /* Line.swift */; };
-		EED9AA401C5DE44500AA7A34 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA3F1C5DE44500AA7A34 /* Lines.swift */; };
-		EED9AA421C5F278C00AA7A34 /* FuncsToMatchTextViewOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA411C5F278C00AA7A34 /* FuncsToMatchTextViewOrigin.swift */; };
+		EED9AA421C5F278C00AA7A34 /* UtilFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA411C5F278C00AA7A34 /* UtilFuncs.swift */; };
 		EED9AA441C61DA4600AA7A34 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA431C61DA4600AA7A34 /* UITextViewExtension.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE2048F81C6722B700F0E1FA /* CGPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
+		EE9AF6441C6314C000BCFE95 /* Ctx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ctx.swift; sourceTree = "<group>"; };
 		EED9AA081C5DDDC900AA7A34 /* textCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = textCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EED9AA0B1C5DDDC900AA7A34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EED9AA0D1C5DDDC900AA7A34 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,8 +53,7 @@
 		EED9AA2D1C5DDDC900AA7A34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EED9AA391C5DDEEC00AA7A34 /* ModuleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleData.swift; sourceTree = "<group>"; };
 		EED9AA3D1C5DE20300AA7A34 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
-		EED9AA3F1C5DE44500AA7A34 /* Lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
-		EED9AA411C5F278C00AA7A34 /* FuncsToMatchTextViewOrigin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuncsToMatchTextViewOrigin.swift; sourceTree = "<group>"; };
+		EED9AA411C5F278C00AA7A34 /* UtilFuncs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilFuncs.swift; sourceTree = "<group>"; };
 		EED9AA431C61DA4600AA7A34 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,10 +110,11 @@
 				EED9AA121C5DDDC900AA7A34 /* Assets.xcassets */,
 				EED9AA171C5DDDC900AA7A34 /* Info.plist */,
 				EED9AA391C5DDEEC00AA7A34 /* ModuleData.swift */,
-				EED9AA411C5F278C00AA7A34 /* FuncsToMatchTextViewOrigin.swift */,
+				EED9AA411C5F278C00AA7A34 /* UtilFuncs.swift */,
+				EE2048F81C6722B700F0E1FA /* CGPointExtension.swift */,
 				EED9AA431C61DA4600AA7A34 /* UITextViewExtension.swift */,
 				EED9AA3D1C5DE20300AA7A34 /* Line.swift */,
-				EED9AA3F1C5DE44500AA7A34 /* Lines.swift */,
+				EE9AF6441C6314C000BCFE95 /* Ctx.swift */,
 			);
 			path = textCtxTransitionAnimation;
 			sourceTree = "<group>";
@@ -265,10 +268,11 @@
 			files = (
 				EED9AA441C61DA4600AA7A34 /* UITextViewExtension.swift in Sources */,
 				EED9AA0E1C5DDDC900AA7A34 /* ViewController.swift in Sources */,
-				EED9AA401C5DE44500AA7A34 /* Lines.swift in Sources */,
+				EE2048F91C6722B700F0E1FA /* CGPointExtension.swift in Sources */,
+				EE9AF6451C6314C000BCFE95 /* Ctx.swift in Sources */,
 				EED9AA3E1C5DE20300AA7A34 /* Line.swift in Sources */,
 				EED9AA3A1C5DDEEC00AA7A34 /* ModuleData.swift in Sources */,
-				EED9AA421C5F278C00AA7A34 /* FuncsToMatchTextViewOrigin.swift in Sources */,
+				EED9AA421C5F278C00AA7A34 /* UtilFuncs.swift in Sources */,
 				EED9AA0C1C5DDDC900AA7A34 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
