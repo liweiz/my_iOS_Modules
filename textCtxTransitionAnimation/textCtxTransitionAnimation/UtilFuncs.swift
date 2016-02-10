@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 func combineRanges(ranges: [NSRange]) -> NSRange {
     if ranges.count > 0 {
         var l = 0
@@ -45,7 +44,7 @@ func visiableRange(isForMain: Bool, wordsCharacterRange: NSRange, lineWordsChara
 
 func linesRects(firstOrigin: CGPoint, linesRectsInTextView: [CGRect]) -> [CGRect] {
     var r = [CGRect]()
-    let d = distancesToMove(linesRectsInTextView[0].origin, to: firstOrigin)
+    let d = linesRectsInTextView[0].origin.deltaTo(firstOrigin)
     if d.x * d.y != 0 {
         for x in linesRectsInTextView {
             r.append(CGRect(x: x.origin.x + d.x, y: x.origin.y + d.y, width: x.size.width, height: x.size.height))
@@ -56,7 +55,7 @@ func linesRects(firstOrigin: CGPoint, linesRectsInTextView: [CGRect]) -> [CGRect
 // We use [CGPoint] as the data container to record each line's move on each step. There is a [[CGPoint]] used as a container to record all the moves each line takes for all the steps.
 func initialOffsetX(contentViewWidth: CGFloat, noOfLines: Int) -> [CGFloat] {
     var r = [CGFloat]()
-    for var i = 0; i < noOfLines; i++ {
+    for i in 0 ..< noOfLines {
         r.append(contentViewWidth * CGFloat(i))
     }
     return r
