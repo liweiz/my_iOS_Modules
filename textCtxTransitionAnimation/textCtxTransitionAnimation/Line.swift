@@ -15,7 +15,7 @@ func refreshLine(baseOffsetXs: [CGFloat], deltaOffsetX: CGFloat, lines: [Line]) 
 
 class Line: UIScrollView, UIScrollViewDelegate {
     var textView = UITextView(frame: CGRectMake(0, 0, 0, 0))
-    // Used by lineExtraView to hide the visiable part.
+    // Properties for vislable glyphs.
     var visiableCharacterRange: NSRange!
     var visiableGlyphRange: NSRange {
         return textView.layoutManager.glyphRangeForCharacterRange(visiableCharacterRange, actualCharacterRange: nil)
@@ -23,6 +23,13 @@ class Line: UIScrollView, UIScrollViewDelegate {
     var visiableGlyphsRectX: CGFloat {
         return textView.frame.origin.x + textView.textContainer.lineFragmentPadding + textView.textContainerInset.left + textView.layoutManager.boundingRectForGlyphRange(visiableGlyphRange, inTextContainer: textView.textContainer).origin.x
     }
+    var visiableGlyphsRectRightEndX: CGFloat {
+        return visiableGlyphsRectX + textView.layoutManager.boundingRectForGlyphRange(visiableGlyphRange, inTextContainer: textView.textContainer).width
+    }
+    var visiableGlyphsIsHidden: Bool {
+        return (visiableGlyphsRectX >= contentOffset.x + contentSize.width) || (visiableGlyphsRectRightEndX <= contentOffset.x) ? true : false
+    }
+    
     init(textViewToInsert: UITextView, rect: CGRect) {
         super.init(frame: rect)
         decelerationRate = UIScrollViewDecelerationRateFast
@@ -33,24 +40,28 @@ class Line: UIScrollView, UIScrollViewDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    func hideVisiablePart(animated: Bool) -> Bool {
-        if visiableGlyphsRectX < contentOffset.x + frame.width {
-            // Visiable part is still visiable.
-            setContentOffset(CGPointMake(contentOffsetXToHideVisiableGlyphs, contentOffset.y), animated: animated)
+    func scrollToRightTohideVisiableGlyphs(animated: Bool) -> Bool {
+        if !visiableGlyphsIsHidden {
+            setContentOffset(CGPointMake(contentOffsetXToHideVisiableGlyphsWhenScrolledToRight, contentOffset.y), animated: animated)
             return true
         }
         return false
     }
-    var contentOffsetXToHideVisiableGlyphs: CGFloat {
-        return visiableGlyphsRectX - frame.width
+    func scrollToLeftToShowVisiableGlyphs(animated: Bool, newOffsetX: CGFloat) -> Bool {
+        if visiableGlyphsIsHidden {
+            setContentOffset(CGPointMake(newOffsetX, contentOffset.y), animated: animated)
+            return true
+        }
+        return false
+    }
+    var contentOffsetXToHideVisiableGlyphsWhenScrolledToRight: CGFloat {
+        return visiableGlyphsRectX - contentSize.width
     }
     
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        if scrollView.isEqual(self) {
-//            
-//        }
-//    }
-    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        scrollAnimationDone = true
+    }
+    var scrollAnimationDone = false
 }
 
 //func transit(main: Line, extra: Line, initialOffsetX: CGFloat, expectedOffsetX: CGFloat, animated: Bool) -> (mainLeadingX: CGFloat, extraLeadingX: CGFloat) {
