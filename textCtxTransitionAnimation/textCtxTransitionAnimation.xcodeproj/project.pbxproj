@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EE2048F91C6722B700F0E1FA /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2048F81C6722B700F0E1FA /* CGPointExtension.swift */; };
 		EE386DBC1C686322003055A1 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE386DBB1C686322003055A1 /* UIViewExtension.swift */; };
+		EE8068B51C6F06D4007833FC /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8068B41C6F06D4007833FC /* ArrayExtension.swift */; };
 		EE9AF6451C6314C000BCFE95 /* Ctx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9AF6441C6314C000BCFE95 /* Ctx.swift */; };
 		EED9AA0C1C5DDDC900AA7A34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA0B1C5DDDC900AA7A34 /* AppDelegate.swift */; };
 		EED9AA0E1C5DDDC900AA7A34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9AA0D1C5DDDC900AA7A34 /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		EE2048F81C6722B700F0E1FA /* CGPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
 		EE386DBB1C686322003055A1 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		EE8068B41C6F06D4007833FC /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		EE9AF6441C6314C000BCFE95 /* Ctx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ctx.swift; sourceTree = "<group>"; };
 		EED9AA081C5DDDC900AA7A34 /* textCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = textCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EED9AA0B1C5DDDC900AA7A34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				EE386DBB1C686322003055A1 /* UIViewExtension.swift */,
 				EED9AA3D1C5DE20300AA7A34 /* Line.swift */,
 				EE9AF6441C6314C000BCFE95 /* Ctx.swift */,
+				EE8068B41C6F06D4007833FC /* ArrayExtension.swift */,
 			);
 			path = textCtxTransitionAnimation;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				EED9AA3E1C5DE20300AA7A34 /* Line.swift in Sources */,
 				EED9AA3A1C5DDEEC00AA7A34 /* ModuleData.swift in Sources */,
 				EE386DBC1C686322003055A1 /* UIViewExtension.swift in Sources */,
+				EE8068B51C6F06D4007833FC /* ArrayExtension.swift in Sources */,
 				EED9AA421C5F278C00AA7A34 /* UtilFuncs.swift in Sources */,
 				EED9AA0C1C5DDDC900AA7A34 /* AppDelegate.swift in Sources */,
 			);

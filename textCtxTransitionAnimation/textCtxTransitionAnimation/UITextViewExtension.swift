@@ -37,7 +37,7 @@ extension UITextView {
     }
     // textViewLinesInfo returns the visiableGlyphRanges for lines and corresponding rect in one textView's coordinates.
     // view's line break leaves no glyph outside of the visiable area, which means no need to worry about the glyph that is partly or not visiable here.
-    func textViewLinesInfo() -> (glyphRanges: [NSRange], lineRects: [CGRect]) {
+    func linesInfo() -> (glyphRanges: [NSRange], lineRects: [CGRect]) {
         var glyphRanges = [NSRange]()
         var lineRects = [CGRect]()
         let gRange = glyphRangeForText(attributedText)

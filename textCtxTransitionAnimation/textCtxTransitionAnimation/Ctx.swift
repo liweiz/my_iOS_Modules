@@ -18,9 +18,8 @@ var mainLeadingXs = [CGFloat]()
 var extraLeadingXs = [CGFloat]()
 
 func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
-    var mainLines = [Line]()
-    var extraLines = [Line]()
-    let linesInfo = textViewLinesInfo(viewToCopy)
+    var lines = [Line]()
+    let linesInfo = viewToCopy.linesInfo()
     var characterRanges = [NSRange]()
     if linesInfo.glyphRanges.count > 0 {
         for x in linesInfo.glyphRanges {
@@ -36,16 +35,14 @@ func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
             let lineTextViewExtra = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeExtra, color: fontColor)
             let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesInfo.lineRects[i])
             let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesInfo.lineRects[i])
-            mainLines.append(lineMain)
-            extraLines.append(lineExtra)
-            i++
+            lines.append(lineMain)
+            lines.append(lineExtra)
+            i += 1
         }
-        return Lines(main: mainLines, extra: extraLines, visiableCharacterRanges: characterRanges)
+        return Lines(Lines: lines, visiableCharacterRanges: characterRanges)
     }
     return nil
 }
-
-
 
 func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRange: NSRange, color: UIColor) -> UITextView {
     let textViewToAdd = UITextView(frame: frame)
@@ -55,19 +52,7 @@ func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRa
     return textViewToAdd
 }
 
-// MARK: - Adjust line offset
-
-
-
-func offsetAdjustAfterLineFollowDone(lineOffsetInRoot: CGPoint, targetOffsetInRoot: CGPoint, line: UITextView, animated: Bool) {
-    let p = distancesToMove(lineOffsetInRoot, to: targetOffsetInRoot)
-    if p.x * p.y != 0 {
-        line.setContentOffset(p, animated: animated)
-    }
-}
-
-
-
+// updateContentOffsets adjusts offsets for lines
 func updateContentOffsets(lines: [Line], newXs: [CGFloat]) {
     lines.forEach { $0.contentOffset = CGPointMake(newXs[lines.indexOf($0)!], $0.contentOffset.y) }
 }
@@ -84,62 +69,6 @@ func expectedOffsetXsForLines(textViews: [UITextView], glyphRangesForLines: [NSR
     return r
 }
 
-// MARK: - Lines
-struct Lines {
-    let Lines: [Line]
-    var Main: [Line] {
-        return pickEvenOrOdd(Lines, pickEven: true)
-    }
-    var Extra: [Line] {
-        return pickEvenOrOdd(Lines, pickEven: false)
-    }
-    var BaseXs: [CGFloat] {
-        return Lines.map { return $0.contentOffset.x }
-    }
-    let visiableCharacterRanges: [NSRange]
-    func sync(withLine: Line, deltaX: CGFloat) {
-        let _linesToSync = linesToSync(withLine)
-        if _linesToSync.count > 0 {
-            let _baseXs = baseXs(_linesToSync)
-            updateContentOffsets(_linesToSync, newXs: _baseXs.map { $0 + deltaX })
-        }
-    }
-    
-    func startFromInitialToExpected(initialOffsetXs: [CGFloat], expectedOffsetXs: [CGFloat], animated: Bool) -> (mainLeadingXs: [CGFloat], extraLeadingXs: [CGFloat]) {
-        var m = [CGFloat]()
-        var e = [CGFloat]()
-        var i = 0
-        for x in initialOffsetXs {
-            main[i].setContentOffset(CGPointMake(expectedOffsetXs[i] - x, main[i].contentOffset.y), animated: animated)
-        }
-    }
-    
 
-    
-    func linesToSync(afterLine: Line) -> [Line] {
-        if let r = findElements(afterLine, inArray: main) {
-            return r + findElements(main.indexOf(afterLine)!, inArray: extra)!
-        } else {
-            return findElements(afterLine, inArray: extra)! + findElements(extra.indexOf(afterLine)!, inArray: main)!
-        }
-        return [Line]()
-    }
-    
-    func expandIntoCtx() -> [[CGPoint]] {
-        
-    }
-}
-
-func pickEvenOrOdd<T>(fromArray: [T], pickEven: Bool) -> [T] {
-    var r = [T]()
-    var i = 0
-    for t in fromArray {
-        if i % 2 == 1 {
-            r.append(t)
-        }
-        i++
-    }
-    return r
-}
 
 

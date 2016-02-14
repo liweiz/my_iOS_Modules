@@ -20,17 +20,6 @@ func combineRanges(ranges: [NSRange]) -> NSRange {
     return NSMakeRange(0, 0)
 }
 
-func findElements<T: Equatable>(beyondElement: T, inArray: [T]) -> [T]? {
-    if let i = inArray.indexOf(beyondElement) {
-        return inArray.filter { inArray.indexOf($0) > i }
-    }
-    return nil
-}
-
-func findElements<T: Equatable>(beyondIndex: Int, inArray: [T]) -> [T]? {
-    return inArray.count > beyondIndex ? inArray.filter { inArray.indexOf($0) > beyondIndex } : nil
-}
-
 func glyphsVisiabilityWithColor(aString: NSAttributedString, charRange: NSRange, color: UIColor) -> NSMutableAttributedString {
     let s = NSMutableAttributedString(attributedString: aString)
     s.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: NSMakeRange(0, (s.string as NSString).length))
