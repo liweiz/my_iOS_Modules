@@ -9,16 +9,7 @@
 import Foundation
 import UIKit
 
-func combineRanges(ranges: [NSRange]) -> NSRange {
-    if ranges.count > 0 {
-        var l = 0
-        for x in ranges {
-            l = l + x.length
-        }
-        return NSMakeRange(ranges.first!.location, l)
-    }
-    return NSMakeRange(0, 0)
-}
+
 
 func glyphsVisiabilityWithColor(aString: NSAttributedString, charRange: NSRange, color: UIColor) -> NSMutableAttributedString {
     let s = NSMutableAttributedString(attributedString: aString)
@@ -42,9 +33,9 @@ func linesRects(firstOrigin: CGPoint, linesRectsInTextView: [CGRect]) -> [CGRect
     return r
 }
 // We use [CGPoint] as the data container to record each line's move on each step. There is a [[CGPoint]] used as a container to record all the moves each line takes for all the steps.
-func initialOffsetX(contentViewWidth: CGFloat, noOfLines: Int) -> [CGFloat] {
+func initialOffsetX(contentViewWidth: CGFloat, lineIndex: Int) -> [CGFloat] {
     var r = [CGFloat]()
-    for i in 0 ..< noOfLines {
+    for i in 0 ... lineIndex {
         r.append(contentViewWidth * CGFloat(i))
     }
     return r

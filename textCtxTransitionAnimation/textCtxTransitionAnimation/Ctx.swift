@@ -17,32 +17,8 @@ var initialOffsetXs = [CGFloat]()
 var mainLeadingXs = [CGFloat]()
 var extraLeadingXs = [CGFloat]()
 
-func createLines(firstOrigin: CGPoint, viewToCopy: UITextView) -> Lines? {
-    var lines = [Line]()
-    let linesInfo = viewToCopy.linesInfo()
-    var characterRanges = [NSRange]()
-    if linesInfo.glyphRanges.count > 0 {
-        for x in linesInfo.glyphRanges {
-            characterRanges.append(viewToCopy.layoutManager.characterRangeForGlyphRange(x, actualGlyphRange: nil))
-        }
-        let f = CGRectMake(0, 0, linesInfo.lineRects[0].size.width * CGFloat(linesInfo.lineRects.count), linesInfo.lineRects[0].size.height)
-        let l = combineRanges(characterRanges)
-        var i = 0
-        for x in characterRanges {
-            let rangeMain = visiableRange(true, wordsCharacterRange: l, lineWordsCharacterRange: x)
-            let rangeExtra = visiableRange(false, wordsCharacterRange: l, lineWordsCharacterRange: x)
-            let lineTextViewMain = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeMain, color: fontColor)
-            let lineTextViewExtra = lineTextView(f, attriString: viewToCopy.attributedText, visiableCharRange: rangeExtra, color: fontColor)
-            let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesInfo.lineRects[i])
-            let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesInfo.lineRects[i])
-            lines.append(lineMain)
-            lines.append(lineExtra)
-            i += 1
-        }
-        return Lines(Lines: lines, visiableCharacterRanges: characterRanges)
-    }
-    return nil
-}
+
+
 
 func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRange: NSRange, color: UIColor) -> UITextView {
     let textViewToAdd = UITextView(frame: frame)

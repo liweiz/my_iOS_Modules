@@ -35,12 +35,34 @@ extension Array where Element: Equatable {
     }
 }
 
+extension SequenceType where Self.Generator.Element == NSRange {
+    func rangeIntersected(range: NSRange) -> (NSRange) -> NSRange {
+        return {(r: NSRange) -> NSRange in
+            return NSIntersectionRange(r, range)
+        }
+    }
+    func rangesIntersect(range: NSRange) -> [NSRange] {
+        let x = rangeIntersected(range)
+        return filter { x($0).length > 0 }
+    }
+    func combineContinuousRanges(startLocation: Int) -> NSRange {
+        if underestimateCount() > 0 {
+            var l = 0
+            for range in self {
+                l = l + range.length
+            }
+            return NSMakeRange(startLocation, l)
+        }
+        return NSMakeRange(0, 0)
+    }
+}
+
 extension Array where Element: Line {
 //    let visiableCharacterRanges: [NSRange]
-    var EvenIndexedElements: [Line] {
+    var EvenIndexedElements: [Element] {
         return pickEvenOrOdd(true)
     }
-    var OddIndexedElements: [Line] {
+    var OddIndexedElements: [Element] {
         return pickEvenOrOdd(false)
     }
     var BaseXs: [CGFloat] {
@@ -51,5 +73,29 @@ extension Array where Element: Line {
             l.setContentOffset(CGPointMake(l.contentOffset.x + deltaX, l.contentOffset.y), animated: animated)
         }
     }
+    mutating func prepareLines(imitateView: UITextView, visiableCharacterRange: NSRange) {
+        let linesGlyphRangesAndRects = imitateView.linesGlyphRangesAndRects()
+        var characterRangesForEachLineInViewImitated = [NSRange]()
+        if linesGlyphRangesAndRects.glyphRanges.count > 0 {
+            for x in linesGlyphRangesAndRects.glyphRanges {
+                characterRangesForEachLineInViewImitated.append(imitateView.layoutManager.characterRangeForGlyphRange(x, actualGlyphRange: nil))
+            }
+            let lineTextViewRect = CGRectMake(0, 0, linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.width * CGFloat(linesGlyphRangesAndRects.lineRectsInSelfCoordinates.count), linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.height)
+            var i = 0
+            for x in characterRangesForEachLineInViewImitated.rangesIntersect(visiableCharacterRange) {
+                let rangeMain = visiableRange(true, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
+                let rangeExtra = visiableRange(false, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
+                let lineTextViewMain = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeMain, color: fontColor)
+                let lineTextViewExtra = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeExtra, color: fontColor)
+                let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
+                let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
+                append(lineMain)
+                append(lineExtra)
+                i += 1
+            }
+        }
+    }
 }
+
+
 
