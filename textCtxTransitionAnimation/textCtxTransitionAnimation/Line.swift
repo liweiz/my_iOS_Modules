@@ -29,7 +29,6 @@ class Line: UIScrollView, UIScrollViewDelegate {
     var visiableGlyphsIsHidden: Bool {
         return (visiableGlyphsRectX >= contentOffset.x + contentSize.width) || (visiableGlyphsRectRightEndX <= contentOffset.x) ? true : false
     }
-    
     init(textViewToInsert: UITextView, rect: CGRect) {
         super.init(frame: rect)
         decelerationRate = UIScrollViewDecelerationRateFast
@@ -40,7 +39,7 @@ class Line: UIScrollView, UIScrollViewDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    func scrollToRightTohideVisiableGlyphs(animated: Bool) -> Bool {
+    func scrollToRightToHideVisiableGlyphs(animated: Bool) -> Bool {
         if !visiableGlyphsIsHidden {
             setContentOffset(CGPointMake(contentOffsetXToHideVisiableGlyphsWhenScrolledToRight, contentOffset.y), animated: animated)
             return true

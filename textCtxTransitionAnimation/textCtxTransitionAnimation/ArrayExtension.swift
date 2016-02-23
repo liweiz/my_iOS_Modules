@@ -58,7 +58,9 @@ extension SequenceType where Self.Generator.Element == NSRange {
 }
 
 extension Array where Element: Line {
-//    let visiableCharacterRanges: [NSRange]
+    var visiableCharacterRanges: [NSRange] {
+        return map { return $0.visiableCharacterRange }
+    }
     var EvenIndexedElements: [Element] {
         return pickEvenOrOdd(true)
     }
@@ -73,29 +75,30 @@ extension Array where Element: Line {
             l.setContentOffset(CGPointMake(l.contentOffset.x + deltaX, l.contentOffset.y), animated: animated)
         }
     }
-    mutating func prepareLines(imitateView: UITextView, visiableCharacterRange: NSRange) {
-        let linesGlyphRangesAndRects = imitateView.linesGlyphRangesAndRects()
-        var characterRangesForEachLineInViewImitated = [NSRange]()
-        if linesGlyphRangesAndRects.glyphRanges.count > 0 {
-            for x in linesGlyphRangesAndRects.glyphRanges {
-                characterRangesForEachLineInViewImitated.append(imitateView.layoutManager.characterRangeForGlyphRange(x, actualGlyphRange: nil))
-            }
-            let lineTextViewRect = CGRectMake(0, 0, linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.width * CGFloat(linesGlyphRangesAndRects.lineRectsInSelfCoordinates.count), linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.height)
-            var i = 0
-            for x in characterRangesForEachLineInViewImitated.rangesIntersect(visiableCharacterRange) {
-                let rangeMain = visiableRange(true, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
-                let rangeExtra = visiableRange(false, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
-                let lineTextViewMain = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeMain, color: fontColor)
-                let lineTextViewExtra = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeExtra, color: fontColor)
-                let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
-                let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
-                append(lineMain)
-                append(lineExtra)
-                i += 1
-            }
-        }
-    }
 }
 
-
+func prepareLines(imitateView: UITextView, visiableCharacterRange: NSRange) -> [Line] {
+    var lines = [Line]()
+    let linesGlyphRangesAndRects = imitateView.linesGlyphRangesAndRects()
+    var characterRangesForEachLineInViewImitated = [NSRange]()
+    if linesGlyphRangesAndRects.glyphRanges.count > 0 {
+        for x in linesGlyphRangesAndRects.glyphRanges {
+            characterRangesForEachLineInViewImitated.append(imitateView.layoutManager.characterRangeForGlyphRange(x, actualGlyphRange: nil))
+        }
+        let lineTextViewRect = CGRectMake(0, 0, linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.width * CGFloat(linesGlyphRangesAndRects.lineRectsInSelfCoordinates.count), linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.height)
+        var i = 0
+        for x in characterRangesForEachLineInViewImitated.rangesIntersect(visiableCharacterRange) {
+            let rangeMain = visiableRange(true, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
+            let rangeExtra = visiableRange(false, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
+            let lineTextViewMain = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeMain, color: fontColor)
+            let lineTextViewExtra = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeExtra, color: fontColor)
+            let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
+            let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
+            lines.append(lineMain)
+            lines.append(lineExtra)
+            i += 1
+        }
+    }
+    return lines
+}
 
