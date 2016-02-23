@@ -35,28 +35,6 @@ extension Array where Element: Equatable {
     }
 }
 
-extension SequenceType where Self.Generator.Element == NSRange {
-    func rangeIntersected(range: NSRange) -> (NSRange) -> NSRange {
-        return {(r: NSRange) -> NSRange in
-            return NSIntersectionRange(r, range)
-        }
-    }
-    func rangesIntersect(range: NSRange) -> [NSRange] {
-        let x = rangeIntersected(range)
-        return filter { x($0).length > 0 }
-    }
-    func combineContinuousRanges(startLocation: Int) -> NSRange {
-        if underestimateCount() > 0 {
-            var l = 0
-            for range in self {
-                l = l + range.length
-            }
-            return NSMakeRange(startLocation, l)
-        }
-        return NSMakeRange(0, 0)
-    }
-}
-
 extension Array where Element: Line {
     var visiableCharacterRanges: [NSRange] {
         return map { return $0.visiableCharacterRange }
@@ -75,6 +53,11 @@ extension Array where Element: Line {
             l.setContentOffset(CGPointMake(l.contentOffset.x + deltaX, l.contentOffset.y), animated: animated)
         }
     }
+    
+}
+
+func ==(lhs: NSRange, rhs: NSRange) -> Bool {
+    return NSEqualRanges(lhs, rhs)
 }
 
 func prepareLines(imitateView: UITextView, visiableCharacterRange: NSRange) -> [Line] {
@@ -87,13 +70,19 @@ func prepareLines(imitateView: UITextView, visiableCharacterRange: NSRange) -> [
         }
         let lineTextViewRect = CGRectMake(0, 0, linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.width * CGFloat(linesGlyphRangesAndRects.lineRectsInSelfCoordinates.count), linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.height)
         var i = 0
-        for x in characterRangesForEachLineInViewImitated.rangesIntersect(visiableCharacterRange) {
-            let rangeMain = visiableRange(true, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
-            let rangeExtra = visiableRange(false, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: x)
+        for lineCharacterRange in characterRangesForEachLineInViewImitated.rangesIntersect(visiableCharacterRange) {
+            let rangeMain = visiableRange(true, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: lineCharacterRange)
+            let rangeExtra = visiableRange(false, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: lineCharacterRange)
             let lineTextViewMain = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeMain, color: fontColor)
             let lineTextViewExtra = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeExtra, color: fontColor)
             let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
             let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
+            guard let indexInRanges = characterRangesForEachLineInViewImitated.indexOf( { lineCharacterRange == $0 } ) else {
+                return [Line]()
+            }
+            let initialContentOffset = CGPointMake(lineMain.contentSize.width * CGFloat(indexInRanges), 0)
+            lineMain.contentOffset = initialContentOffset
+            lineExtra.contentOffset = initialContentOffset
             lines.append(lineMain)
             lines.append(lineExtra)
             i += 1
@@ -101,4 +90,3 @@ func prepareLines(imitateView: UITextView, visiableCharacterRange: NSRange) -> [
     }
     return lines
 }
-
