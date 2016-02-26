@@ -10,7 +10,11 @@ import Foundation
 import UIKit
 
 extension UITextView {
-    // FirstGlyphOrigin in it's textView's coordinates.
+    // ***** Get Point *****
+    func rectOriginForCharacterRangeInTextContainerCoordinates(characterRange: NSRange) -> CGPoint {
+        return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(characterRange, actualCharacterRange: nil), inTextContainer: textContainer).origin
+    }
+    // firstGlyphOrigin in it's textView's coordinates.
     var firstGlyphRectOrigin: CGPoint {
         let b = bounds.origin
         let g = layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
@@ -25,7 +29,15 @@ extension UITextView {
     func originInAnotherCoordinates(textRectOriginInAnotherCoordinates: CGPoint) -> CGPoint {
         return CGPointMake(textRectOriginInAnotherCoordinates.x - (bounds.origin.x + layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin.x + textContainerInset.left), textRectOriginInAnotherCoordinates.y - (bounds.origin.y + layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin.y + textContainerInset.top))
     }
-    
+    // GlyphOriginMatchingPoint is in superView's coordinates.
+    func originToMatch(glyphOriginMatchingPoint: CGPoint) -> CGPoint {
+        let b = bounds.origin
+        let g = layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
+        let i = textContainerInset
+        let p = convertPoint(glyphOriginMatchingPoint, fromView: superview)
+        return CGPointMake(p.x - b.x - g.x - i.left, p.y - b.y - g.y - i.top)
+    }
+    // ***** Get Range *****
     // NSLayoutManager's glyphRangeForBoundingRect
     // Bug: That documentation is incorrect; the glyphRangeForBoundingRect methods currently always return whole lines. http://www.cocoabuilder.com/archive/cocoa/17416-nslayoutmanager-glyphrangeforboundingrect-bug.html
     func glyphRangeForText(text: NSAttributedString) -> NSRange {
@@ -37,7 +49,7 @@ extension UITextView {
     }
     // textViewLinesInfo returns the visiableGlyphRanges for lines and corresponding rect in one textView's coordinates.
     // view's line break leaves no glyph outside of the visiable area, which means no need to worry about the glyph that is partly or not visiable here.
-    func linesGlyphRangesAndRects() -> (glyphRanges: [NSRange], lineRectsInSelfCoordinates: [CGRect]) {
+    func linesGlyphCharacterRangesAndRects() -> (glyphRanges: [NSRange], characterRanges: [NSRange], lineRectsInSelfCoordinates: [CGRect]) {
         var glyphRanges = [NSRange]()
         var lineRects = [CGRect]()
         let gRange = glyphRangeForText(attributedText)
@@ -55,15 +67,6 @@ extension UITextView {
                 }
             }
         }
-        return (glyphRanges, lineRects)
+        return (glyphRanges, glyphRanges.map { layoutManager.characterRangeForGlyphRange($0, actualGlyphRange: nil) }, lineRects)
     }
-    // GlyphOriginMatchingPoint is in superView's coordinates.
-    func originToMatch(glyphOriginMatchingPoint: CGPoint) -> CGPoint {
-        let b = bounds.origin
-        let g = layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
-        let i = textContainerInset
-        let p = convertPoint(glyphOriginMatchingPoint, fromView: superview)
-        return CGPointMake(p.x - b.x - g.x - i.left, p.y - b.y - g.y - i.top)
-    }
-    
 }

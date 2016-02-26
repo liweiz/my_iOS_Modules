@@ -17,8 +17,41 @@ var initialOffsetXs = [CGFloat]()
 var mainLeadingXs = [CGFloat]()
 var extraLeadingXs = [CGFloat]()
 
+// initLines generates [Line] that imitates the lines contain the visiableCharacterRange in ctx.
+func initLines(imitateView: UITextView, visiableCharacterRange: NSRange) -> [Line] {
+    var lines = [Line]()
+    let linesGlyphRangesAndRects = imitateView.linesGlyphCharacterRangesAndRects()
+    var characterRangesForEachLineInViewImitated = [NSRange]()
+    if linesGlyphRangesAndRects.glyphRanges.count > 0 {
+        for x in linesGlyphRangesAndRects.glyphRanges {
+            characterRangesForEachLineInViewImitated.append(imitateView.layoutManager.characterRangeForGlyphRange(x, actualGlyphRange: nil))
+        }
+        let lineTextViewRect = CGRectMake(0, 0, linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.width * CGFloat(linesGlyphRangesAndRects.lineRectsInSelfCoordinates.count), linesGlyphRangesAndRects.lineRectsInSelfCoordinates[0].size.height)
+        var i = 0
+        for lineCharacterRange in characterRangesForEachLineInViewImitated.rangesIntersect(visiableCharacterRange) {
+            let rangeMain = visiableRange(true, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: lineCharacterRange)
+            let rangeExtra = visiableRange(false, wordsCharacterRange: visiableCharacterRange, lineWordsCharacterRange: lineCharacterRange)
+            let lineTextViewMain = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeMain, color: fontColor)
+            let lineTextViewExtra = lineTextView(lineTextViewRect, attriString: imitateView.attributedText, visiableCharRange: rangeExtra, color: fontColor)
+            let lineMain = Line(textViewToInsert: lineTextViewMain, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
+            let lineExtra = Line(textViewToInsert: lineTextViewExtra, rect: linesGlyphRangesAndRects.lineRectsInSelfCoordinates[i])
+            guard let indexInRanges = characterRangesForEachLineInViewImitated.indexOf( { lineCharacterRange == $0 } ) else {
+                return [Line]()
+            }
+            let initialContentOffset = CGPointMake(lineMain.contentSize.width * CGFloat(indexInRanges), 0)
+            lineMain.contentOffset = initialContentOffset
+            lineExtra.contentOffset = initialContentOffset
+            lines.append(lineMain)
+            lines.append(lineExtra)
+            i += 1
+        }
+    }
+    return lines
+}
 
-
+func ==(lhs: NSRange, rhs: NSRange) -> Bool {
+    return NSEqualRanges(lhs, rhs)
+}
 
 func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRange: NSRange, color: UIColor) -> UITextView {
     let textViewToAdd = UITextView(frame: frame)
@@ -26,11 +59,6 @@ func lineTextView(frame: CGRect, attriString: NSAttributedString, visiableCharRa
     s.setAttributes(["NSFontAttributeName": sysFont], range: NSMakeRange(0, s.length))
     textViewToAdd.attributedText = s
     return textViewToAdd
-}
-
-// updateContentOffsets adjusts offsets for lines
-func updateContentOffsets(lines: [Line], newXs: [CGFloat]) {
-    lines.forEach { $0.contentOffset = CGPointMake(newXs[lines.indexOf($0)!], $0.contentOffset.y) }
 }
 
 // MARK: - Line geometric/character/glyph info
