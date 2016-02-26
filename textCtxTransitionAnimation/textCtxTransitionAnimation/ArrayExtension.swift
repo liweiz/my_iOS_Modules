@@ -48,7 +48,13 @@ extension Array where Element: Line {
     var baseXs: [CGFloat] {
         return map { return $0.contentOffset.x }
     }
-    func scrollAlongX(deltaX: CGFloat, animated: Bool) {
+    func scrollLeadingLineWithRestFollowAlongX(newX: CGFloat, animated: Bool, firstIsLeading: Bool) -> CGFloat {
+        let leadingLine = firstIsLeading ? first! : last!
+        let deltaX = leadingLine.scrollToAnotherState(CGPointMake(newX, first!.contentOffset.y), animated: animated)
+        filter { indexOf($0) > 0 }.scrollAllAlongX(deltaX, animated: animated)
+        return deltaX
+    }
+    func scrollAllAlongX(deltaX: CGFloat, animated: Bool) {
         forEach { $0.setContentOffset(CGPointMake($0.contentOffset.x + deltaX, $0.contentOffset.y), animated: animated) }
     }
     func rectOriginsForCharacterRanges(ranges: [NSRange]) -> [CGPoint] {

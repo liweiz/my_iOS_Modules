@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-func refreshLine(baseOffsetXs: [CGFloat], deltaOffsetX: CGFloat, lines: [Line]) {
-    lines.forEach { $0.contentOffset = CGPointMake(baseOffsetXs[lines.indexOf($0)!] + deltaOffsetX, $0.contentOffset.y) }
-}
-
 class Line: UIScrollView, UIScrollViewDelegate {
     var textView = UITextView(frame: CGRectMake(0, 0, 0, 0))
     // Properties for vislable glyphs.
@@ -29,6 +25,8 @@ class Line: UIScrollView, UIScrollViewDelegate {
     var visiableGlyphsIsHidden: Bool {
         return (visiableGlyphsRectX >= contentOffset.x + contentSize.width) || (visiableGlyphsRectRightEndX <= contentOffset.x) ? true : false
     }
+    var offsetForLeftState = CGPointZero
+    var offsetForRightState = CGPointZero
     init(textViewToInsert: UITextView, rect: CGRect) {
         super.init(frame: rect)
         decelerationRate = UIScrollViewDecelerationRateFast
@@ -38,6 +36,12 @@ class Line: UIScrollView, UIScrollViewDelegate {
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    // scrollToAnotherState scrolls view and returns delta on x axis.
+    func scrollToAnotherState(newOffset: CGPoint, animated: Bool) -> CGFloat {
+        let oldX = newOffset.x
+        setContentOffset(newOffset, animated: animated)
+        return newOffset.x - oldX
     }
     func scrollToRightToHideVisiableGlyphs(animated: Bool) -> Bool {
         if !visiableGlyphsIsHidden {
