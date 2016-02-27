@@ -68,7 +68,7 @@ func expectedOffsetXsForLines(textViews: [UITextView], glyphRangesForLines: [NSR
     for v in textViews {
         let boundingRect = v.layoutManager.boundingRectForGlyphRange(glyphRangesForLines[i], inTextContainer: v.textContainer)
         r.append(boundingRect.origin.x)
-        i++
+        i += 1
     }
     return r
 }

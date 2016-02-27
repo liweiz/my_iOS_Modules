@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EE2048F91C6722B700F0E1FA /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2048F81C6722B700F0E1FA /* CGPointExtension.swift */; };
-		EE3315271C7E4F3600CC663A /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3315261C7E4F3600CC663A /* Lines.swift */; };
 		EE386DBC1C686322003055A1 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE386DBB1C686322003055A1 /* UIViewExtension.swift */; };
 		EE44159E1C7C12EE00CBF5CE /* SequenceTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE44159D1C7C12EE00CBF5CE /* SequenceTypeExtension.swift */; };
 		EE8068B51C6F06D4007833FC /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8068B41C6F06D4007833FC /* ArrayExtension.swift */; };
@@ -43,7 +42,6 @@
 
 /* Begin PBXFileReference section */
 		EE2048F81C6722B700F0E1FA /* CGPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
-		EE3315261C7E4F3600CC663A /* Lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		EE386DBB1C686322003055A1 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		EE44159D1C7C12EE00CBF5CE /* SequenceTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTypeExtension.swift; sourceTree = "<group>"; };
 		EE8068B41C6F06D4007833FC /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 				EE386DBB1C686322003055A1 /* UIViewExtension.swift */,
 				EED9AA3D1C5DE20300AA7A34 /* Line.swift */,
 				EE9AF6441C6314C000BCFE95 /* Ctx.swift */,
-				EE3315261C7E4F3600CC663A /* Lines.swift */,
 				EE8068B41C6F06D4007833FC /* ArrayExtension.swift */,
 				EE44159D1C7C12EE00CBF5CE /* SequenceTypeExtension.swift */,
 			);
@@ -284,7 +281,6 @@
 				EE9AF6451C6314C000BCFE95 /* Ctx.swift in Sources */,
 				EED9AA3E1C5DE20300AA7A34 /* Line.swift in Sources */,
 				EED9AA3A1C5DDEEC00AA7A34 /* ModuleData.swift in Sources */,
-				EE3315271C7E4F3600CC663A /* Lines.swift in Sources */,
 				EE44159E1C7C12EE00CBF5CE /* SequenceTypeExtension.swift in Sources */,
 				EE386DBC1C686322003055A1 /* UIViewExtension.swift in Sources */,
 				EE8068B51C6F06D4007833FC /* ArrayExtension.swift in Sources */,

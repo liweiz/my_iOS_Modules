@@ -9,20 +9,34 @@
 import Foundation
 import UIKit
 
-struct DataNeeded {
+struct textCtxTransitionData {
     // 1. view with text.
-    let TextToShow: String
-    let TextRectOriginInParentCoordinates: CGPoint
-    let TextFont: UIFont
+    let textToShow: String
+    let textRectOriginInParentCoordinates: CGPoint
+    let textFont: UIFont
+    let viewWidth: CGFloat
     // 2. view with context.
-    let CtxToShow: String
-    let CtxRectInParentCoordinates: CGRect
+    let ctxToShow: String
+    let ctxRectInParentCoordinates: CGRect
     
+    var deltaXs = [CGFloat]()
+    var lines = [Line]()
     
+    var ctxViewToImitate: UITextView = {
+        let c = UITextView(frame: CGRectMake(0, 0, viewWidth, 100))
+    }
 }
 
-struct DataOut {
-    let OffsetXsForLines: [CGFloat]
+func fixedWidthFittedTextView(attributedText: NSAttributedString, width: CGFloat, origin: CGPoint?) -> UITextView {
+    let view = UITextView(frame: CGRectMake(origin == nil ? 0 : origin!.x, origin == nil ? 0 : origin!.y, width, 1000))
+    view.attributedText = attributedText
+    view.contentInset = UIEdgeInsetsZero
+    view.textContainer.lineBreakMode = NSLineBreakMode.ByCharWrapping
+    view.textContainer.lineFragmentPadding = 0
+    view.userInteractionEnabled = false
+    let targetHeight = view.layoutManager.boundingRectForGlyphRange(view.layoutManager.glyphRangeForTextContainer(view.textContainer), inTextContainer: view.textContainer).size.height
+    view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.width, targetHeight)
+    return view
 }
 
 // For each line the main moves first and the extra and following lines sync their offset.x with the main. Then the extra moves to adjust visiability, if it is needed.
