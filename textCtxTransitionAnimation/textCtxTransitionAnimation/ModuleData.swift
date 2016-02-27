@@ -9,22 +9,38 @@
 import Foundation
 import UIKit
 
-struct textCtxTransitionData {
-    // 1. view with text.
-    let textToShow: String
-    let textRectOriginInParentCoordinates: CGPoint
-    let textFont: UIFont
+struct dataForTextCtxTransition {
+    // String attributes
+    let font: UIFont
+    let textGlyphColor: UIColor
+    let nontextGlyphColor: UIColor
+    // Geometry: point
+    let textRectOriginInItsParentCoordinates: CGPoint
+    let ctxRectOriginInItsParentCoordinates: CGPoint
+    // Geometry: size
     let viewWidth: CGFloat
-    // 2. view with context.
-    let ctxToShow: String
-    let ctxRectInParentCoordinates: CGRect
+    let maxHeight: CGFloat
+    // Content
+    let text: String
+    let ctx: String
     
-    var deltaXs = [CGFloat]()
+    
     var lines = [Line]()
-    
-    var ctxViewToImitate: UITextView = {
-        let c = UITextView(frame: CGRectMake(0, 0, viewWidth, 100))
+    var deltaXs = [CGFloat]()
+    // Both states
+    var attributedText: NSAttributedString {
+        return NSAttributedString(string: text, attributes: ["NSFontAttributeName": font])
     }
+    var attributedCtx: NSAttributedString {
+        return NSAttributedString(string: ctx, attributes: ["NSFontAttributeName": font])
+    }
+    var textViewToImitate: UITextView {
+        return fixedWidthFittedTextView(attributedText, width: viewWidth, origin: textRectOriginInItsParentCoordinates)
+    }
+    var ctxViewToImitate: UITextView {
+        return fixedWidthFittedTextView(attributedCtx, width: viewWidth, origin: ctxRectOriginInItsParentCoordinates)
+    }
+    
 }
 
 func fixedWidthFittedTextView(attributedText: NSAttributedString, width: CGFloat, origin: CGPoint?) -> UITextView {
