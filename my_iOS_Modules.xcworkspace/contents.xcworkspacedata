@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:stirngExtractor/stirngExtractor.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:saleAlert/saleAlert.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:textCtxTransitionAnimation/textCtxTransitionAnimation.xcodeproj">
    </FileRef>
    <FileRef
