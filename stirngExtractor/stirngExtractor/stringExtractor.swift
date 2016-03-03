@@ -45,10 +45,71 @@ extension String {
         }
         return nil
     }
-    
-    func extractPrice(start: String, end: String) -> CGFloat? {
-        if let price = stirngWithoutHeadTailWhitespaceBetween(start, end) {
-            
+    // findNumber returns the first number found in Float. The number has to start with with digits in 0...9.
+    func findNumber() -> Float {
+        let numberCharacters: Set = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+        let decimalMark = ","
+        var digitsBeforeDot = [String]()
+        var digitsAfterDot = [String]()
+        var stopChecking = false
+        for c in characters {
+            if stopChecking {
+                break
+            }
+            let i = characters.indexOf(c)!
+            let characterStringNow = self[i..<i.advancedBy(1)]
+            if numberCharacters.contains(characterStringNow) {
+                stopChecking = true
+                var dotMet = false
+                var lastCharacterIsDecimalMark = false
+                for n in i..<endIndex {
+                    let characterStringToExam = self[n..<n.advancedBy(1)]
+                    if dotMet {
+                        if numberCharacters.contains(characterStringToExam) {
+                            digitsAfterDot.append()
+                        } else {
+                            break
+                        }
+                    } else {
+                        if lastCharacterIsDecimalMark {
+                            if numberCharacters.contains(characterStringToExam) {
+                                digitsBeforeDot.append(characterStringToExam)
+                                lastCharacterIsDecimalMark = false
+                            } else {
+                                break
+                            }
+                        } else {
+                            if characterStringToExam == decimalMark {
+                                lastCharacterIsDecimalMark = true
+                            } else if characterStringToExam == "." {
+                                dotMet = true
+                            } else if numberCharacters.contains(characterStringToExam) {
+                                digitsBeforeDot.append(characterStringToExam)
+                            } else {
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        var result = float(0)
+        let n = digitsBeforeDot.count
+        for d in digitsBeforeDot {
+            result += float(d) * powf(10, n - float(digitsBeforeDot.indexOf(d) + 1))
+        }
+        for d in digitsAfterDot {
+            result += float(d) * powf(10, -float(digitsAfterDot.indexOf(d) + 1))
+        }
+        return result
+    }
+    func stringInMiddle(start: String, end: String) -> String? {
+        if let startRange = rangeOfString(start) {
+            if let endRange = rangeOfString(end) {
+                if startRange.endIndex <= endRange.startIndex {
+                    
+                }
+            }
         }
     }
 }
