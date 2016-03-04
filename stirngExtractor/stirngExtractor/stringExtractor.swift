@@ -33,20 +33,9 @@ extension String {
         }
         return nil
     }
-    func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
-        if let splitByStart = split(start) {
-            if splitByStart.tailingString != "" {
-                if let splitByEnd = splitByStart.tailingString.split(end) {
-                    if splitByEnd.headingString != "" {
-                        return splitByEnd.headingString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                    }
-                }
-            }
-        }
-        return nil
-    }
+    
     // findNumber returns the first number found in Float. The number has to start with with digits in 0...9.
-    func findNumber() -> Float {
+    func findNumber() -> Float? {
         let numberCharacters: Set = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
         let decimalMark = ","
         var digitsBeforeDot = [String]()
@@ -95,21 +84,43 @@ extension String {
         }
         var result = float(0)
         let n = digitsBeforeDot.count
-        for d in digitsBeforeDot {
-            result += float(d) * powf(10, n - float(digitsBeforeDot.indexOf(d) + 1))
+        if n > 0 {
+            for d in digitsBeforeDot {
+                result += float(d) * powf(10, n - float(digitsBeforeDot.indexOf(d) + 1))
+            }
+            for d in digitsAfterDot {
+                result += float(d) * powf(10, -float(digitsAfterDot.indexOf(d) + 1))
+            }
+            return result
         }
-        for d in digitsAfterDot {
-            result += float(d) * powf(10, -float(digitsAfterDot.indexOf(d) + 1))
-        }
-        return result
+        return nil
     }
     func stringInMiddle(start: String, end: String) -> String? {
         if let startRange = rangeOfString(start) {
             if let endRange = rangeOfString(end) {
                 if startRange.endIndex <= endRange.startIndex {
-                    
+                    return self[startRange.endIndex..<endRange.startIndex]
                 }
             }
         }
+        return nil
+    }
+    func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
+        if let splitByStart = split(start) {
+            if splitByStart.tailingString != "" {
+                if let splitByEnd = splitByStart.tailingString.split(end) {
+                    if splitByEnd.headingString != "" {
+                        return splitByEnd.headingString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    func numberInMiddle(start: String, end: String) -> Float? {
+        return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
+    }
+    func findNumbers(numbersFound: [Float]) -> [Float] {
+        if
     }
 }
