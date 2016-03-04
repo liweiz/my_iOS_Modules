@@ -38,7 +38,7 @@ extension String {
     func findNumber() -> Float? {
         let numberCharacters: Set = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
         let decimalMark = ","
-        var digitsBeforeDot = [String]()
+        var numericalDigits = [String]()
         var decimalDigits = [String]()
         var stopChecking = false
         for c in characters {
@@ -62,7 +62,7 @@ extension String {
                     } else {
                         if lastCharacterIsDecimalPoint {
                             if numberCharacters.contains(characterStringToExam) {
-                                digitsBeforeDot.append(characterStringToExam)
+                                numericalDigits.append(characterStringToExam)
                                 lastCharacterIsDecimalPoint = false
                             } else {
                                 break
@@ -73,7 +73,7 @@ extension String {
                             } else if characterStringToExam == "." {
                                 decimalPointMet = true
                             } else if numberCharacters.contains(characterStringToExam) {
-                                digitsBeforeDot.append(characterStringToExam)
+                                numericalDigits.append(characterStringToExam)
                             } else {
                                 break
                             }
@@ -83,10 +83,10 @@ extension String {
             }
         }
         var result = float(0)
-        let n = digitsBeforeDot.count
+        let n = numericalDigits.count
         if n > 0 {
-            for d in digitsBeforeDot {
-                result += float(d) * powf(10, n - float(digitsBeforeDot.indexOf(d) + 1))
+            for d in numericalDigits {
+                result += float(d) * powf(10, n - float(numericalDigits.indexOf(d) + 1))
             }
             for d in decimalDigits {
                 result += float(d) * powf(10, -float(decimalDigits.indexOf(d) + 1))
