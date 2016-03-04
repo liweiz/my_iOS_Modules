@@ -39,7 +39,7 @@ extension String {
         let numberCharacters: Set = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
         let decimalMark = ","
         var digitsBeforeDot = [String]()
-        var digitsAfterDot = [String]()
+        var decimalDigits = [String]()
         var stopChecking = false
         for c in characters {
             if stopChecking {
@@ -49,29 +49,29 @@ extension String {
             let characterStringNow = self[i..<i.advancedBy(1)]
             if numberCharacters.contains(characterStringNow) {
                 stopChecking = true
-                var dotMet = false
-                var lastCharacterIsDecimalMark = false
+                var decimalPointMet = false
+                var lastCharacterIsDecimalPoint = false
                 for n in i..<endIndex {
                     let characterStringToExam = self[n..<n.advancedBy(1)]
-                    if dotMet {
+                    if decimalPointMet {
                         if numberCharacters.contains(characterStringToExam) {
-                            digitsAfterDot.append()
+                            decimalDigits.append()
                         } else {
                             break
                         }
                     } else {
-                        if lastCharacterIsDecimalMark {
+                        if lastCharacterIsDecimalPoint {
                             if numberCharacters.contains(characterStringToExam) {
                                 digitsBeforeDot.append(characterStringToExam)
-                                lastCharacterIsDecimalMark = false
+                                lastCharacterIsDecimalPoint = false
                             } else {
                                 break
                             }
                         } else {
                             if characterStringToExam == decimalMark {
-                                lastCharacterIsDecimalMark = true
+                                lastCharacterIsDecimalPoint = true
                             } else if characterStringToExam == "." {
-                                dotMet = true
+                                decimalPointMet = true
                             } else if numberCharacters.contains(characterStringToExam) {
                                 digitsBeforeDot.append(characterStringToExam)
                             } else {
@@ -88,8 +88,8 @@ extension String {
             for d in digitsBeforeDot {
                 result += float(d) * powf(10, n - float(digitsBeforeDot.indexOf(d) + 1))
             }
-            for d in digitsAfterDot {
-                result += float(d) * powf(10, -float(digitsAfterDot.indexOf(d) + 1))
+            for d in decimalDigits {
+                result += float(d) * powf(10, -float(decimalDigits.indexOf(d) + 1))
             }
             return result
         }
