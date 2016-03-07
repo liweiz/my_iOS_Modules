@@ -9,11 +9,24 @@
 import Foundation
 
 extension String {
+    func numberInMiddle(start: String, end: String) -> Float? {
+        return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
+    }
     func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
         let splitByStart = split(start)
         if let tail = splitByStart.tailingString {
             if let head = tail.split(end).headingString {
                 return head.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            }
+        }
+        return nil
+    }
+    func stringBetween(start: String, end: String) -> String? {
+        if let startRange = rangeOfString(start) {
+            if let endRange = rangeOfString(end) {
+                if startRange.endIndex <= endRange.startIndex {
+                    return self[startRange.endIndex..<endRange.startIndex]
+                }
             }
         }
         return nil
@@ -94,20 +107,9 @@ extension String {
         }
         return nil
     }
-    func stringInMiddle(start: String, end: String) -> String? {
-        if let startRange = rangeOfString(start) {
-            if let endRange = rangeOfString(end) {
-                if startRange.endIndex <= endRange.startIndex {
-                    return self[startRange.endIndex..<endRange.startIndex]
-                }
-            }
-        }
-        return nil
-    }
     
-    func numberInMiddle(start: String, end: String) -> Float? {
-        return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
-    }
+    
+    
 //    func findNumbers(numbersFound: [Float]) -> [Float] {
 //        if
 //    }
