@@ -9,29 +9,28 @@
 import Foundation
 
 extension String {
-    // findRange gets Range for a string and returns the Range follows. It returns nil, if no such substring found. It returns forString.endIndex..<forString.endIndex if there is no string left.
+    func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
+        let splitByStart = split(start)
+        if let tail = splitByStart.tailingString {
+            if let head = tail.split(end).headingString {
+                return head.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            }
+        }
+        return nil
+    }
+    // findRange gets Range for a string and returns the Range follows. It returns nil, if no such substring found. It returns self.endIndex..<self.endIndex if there is no string left.
     func findRange(forString: String) -> Range<String.Index>? {
         if let rangeFound = rangeOfString(forString) {
-            if rangeFound.endIndex == forString.endIndex {
-                return forString.endIndex..<forString.endIndex
-            }
-            return rangeFound.endIndex..<forString.endIndex
+            return rangeFound.endIndex..<endIndex
         }
         return nil
     }
     // split splits the string into max 3 parts: the heading part, the string that is used to split and the tailing part.
-    func split(byString: String) -> (headingString: String, tailingString: String)? {
-        if let range = findRange(byString) {
-            if range.startIndex == byString.startIndex && range.endIndex == byString.endIndex  {
-                return nil
-            } else if range.startIndex == byString.startIndex {
-                return ("", self[range.endIndex..<byString.endIndex])
-            } else if range.endIndex == byString.endIndex {
-                return (self[byString.startIndex..<range.startIndex], "")
-            }
-            return (self[byString.startIndex..<range.startIndex], self[range.endIndex..<byString.endIndex])
+    func split(byString: String) -> (headingString: String?, tailingString: String?) {
+        if let range = rangeOfString(byString) {
+            return (self[startIndex..<range.startIndex], self[range.endIndex..<endIndex])
         }
-        return nil
+        return (nil, nil)
     }
     
     // findNumber returns the first number found in Float. The number has to start with with digits in 0...9.
@@ -55,7 +54,7 @@ extension String {
                     let characterStringToExam = self[n..<n.advancedBy(1)]
                     if decimalPointMet {
                         if numberCharacters.contains(characterStringToExam) {
-                            decimalDigits.append()
+                            decimalDigits.append(characterStringToExam)
                         } else {
                             break
                         }
@@ -82,14 +81,14 @@ extension String {
                 }
             }
         }
-        var result = float(0)
-        let n = numericalDigits.count
+        var result = Float(0)
+        let n = Float(numericalDigits.count)
         if n > 0 {
             for d in numericalDigits {
-                result += float(d) * powf(10, n - float(numericalDigits.indexOf(d) + 1))
+                result += Float(d)! * powf(10, n - Float(numericalDigits.indexOf(d)! + 1))
             }
             for d in decimalDigits {
-                result += float(d) * powf(10, -float(decimalDigits.indexOf(d) + 1))
+                result += Float(d)! * powf(10, -Float(decimalDigits.indexOf(d)! + 1))
             }
             return result
         }
@@ -105,22 +104,11 @@ extension String {
         }
         return nil
     }
-    func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
-        if let splitByStart = split(start) {
-            if splitByStart.tailingString != "" {
-                if let splitByEnd = splitByStart.tailingString.split(end) {
-                    if splitByEnd.headingString != "" {
-                        return splitByEnd.headingString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                    }
-                }
-            }
-        }
-        return nil
-    }
+    
     func numberInMiddle(start: String, end: String) -> Float? {
         return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
     }
-    func findNumbers(numbersFound: [Float]) -> [Float] {
-        if
-    }
+//    func findNumbers(numbersFound: [Float]) -> [Float] {
+//        if
+//    }
 }
