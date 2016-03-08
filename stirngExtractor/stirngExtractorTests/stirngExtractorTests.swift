@@ -135,6 +135,31 @@ class stirngExtractorTests: XCTestCase {
         }
     }
     
+    func testStrings() {
+        struct Tests {
+            let testName: String
+            let stringArrayToTest: [String]
+            let input: String
+            let expectedOutput: [String?]
+        }
+        let toTests = [
+            Tests(testName: "strings *** all found with non-empty results", stringArrayToTest: [" ", "to", "my", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like ", " name ", " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "strings *** all found with some empty results", stringArrayToTest: [" ", "to", "my", "so", "."], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like ", " name ", " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is", ""]),
+            Tests(testName: "strings *** all found with some nil results", stringArrayToTest: [" ", "goo", "my", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like to name ", nil, " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "strings *** all found except the first one", stringArrayToTest: ["  ", "to", "my", "so", "."], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, " name ", " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is", ""]),
+            Tests(testName: "strings *** all not found except the last one", stringArrayToTest: ["  ", "goo", "myd", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, nil, nil, " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "strings *** all not found except the first and last one", stringArrayToTest: [" ", "goo", "myd", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like to name my 1342 Test Case ", nil, nil, " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "strings *** all not found", stringArrayToTest: ["  ", "goo", "myd", "soe"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, nil, nil, nil]),
+        ]
+        for t in toTests {
+            print("TEST_NAME: " + t.testName + " *** START")
+            for i in 0..<t.expectedOutput.count {
+                XCTAssertEqual(t.stringArrayToTest.strings(t.input)[i], t.expectedOutput[i])
+            }
+            print("TEST_NAME: " + t.testName + " *** END")
+        }
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock {

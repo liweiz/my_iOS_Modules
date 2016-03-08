@@ -199,6 +199,7 @@
 				TargetAttributes = {
 					EEA35FD71C8741BA00B44C85 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 4LRPEBVABG;
 					};
 					EEA35FEE1C8741BA00B44C85 = {
 						CreatedOnToolsVersion = 7.3;
@@ -409,6 +410,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = stirngExtractor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractor;
@@ -420,6 +422,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = stirngExtractor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractor;
@@ -492,6 +495,7 @@
 				EEA360051C8741BA00B44C85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEA360061C8741BA00B44C85 /* Build configuration list for PBXNativeTarget "stirngExtractorTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +504,7 @@
 				EEA360081C8741BA00B44C85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEA360091C8741BA00B44C85 /* Build configuration list for PBXNativeTarget "stirngExtractorUITests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +513,7 @@
 				EEA3600B1C8741BA00B44C85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

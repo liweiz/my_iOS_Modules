@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE54B6DD1C8E190200808FF6 /* FootLockerWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE54B6DC1C8E190200808FF6 /* FootLockerWatcher.swift */; };
+		EE54B6DF1C8E193600808FF6 /* stringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE54B6DE1C8E193600808FF6 /* stringExtractor.swift */; };
 		EE61B7221C83ECE900412ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61B7211C83ECE900412ADF /* AppDelegate.swift */; };
 		EE61B7241C83ECE900412ADF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61B7231C83ECE900412ADF /* ViewController.swift */; };
 		EE61B7271C83ECE900412ADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE61B7251C83ECE900412ADF /* Main.storyboard */; };
@@ -16,7 +18,6 @@
 		EE61B73A1C83ECE900412ADF /* saleAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61B7391C83ECE900412ADF /* saleAlertTests.swift */; };
 		EE61B7451C83ECE900412ADF /* saleAlertUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61B7441C83ECE900412ADF /* saleAlertUITests.swift */; };
 		EE61B7531C83EF1900412ADF /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE61B7521C83EF1900412ADF /* Alamofire.framework */; };
-		EE61B7551C83EF3800412ADF /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE61B7541C83EF3800412ADF /* Kanna.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE54B6DC1C8E190200808FF6 /* FootLockerWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FootLockerWatcher.swift; sourceTree = "<group>"; };
+		EE54B6DE1C8E193600808FF6 /* stringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = stringExtractor.swift; sourceTree = "<group>"; };
 		EE61B71E1C83ECE900412ADF /* saleAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = saleAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE61B7211C83ECE900412ADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE61B7231C83ECE900412ADF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -52,7 +55,6 @@
 		EE61B7441C83ECE900412ADF /* saleAlertUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saleAlertUITests.swift; sourceTree = "<group>"; };
 		EE61B7461C83ECE900412ADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE61B7521C83EF1900412ADF /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		EE61B7541C83EF3800412ADF /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE61B7531C83EF1900412ADF /* Alamofire.framework in Frameworks */,
-				EE61B7551C83EF3800412ADF /* Kanna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +86,6 @@
 		EE61B7151C83ECE900412ADF = {
 			isa = PBXGroup;
 			children = (
-				EE61B7541C83EF3800412ADF /* Kanna.framework */,
 				EE61B7521C83EF1900412ADF /* Alamofire.framework */,
 				EE61B7201C83ECE900412ADF /* saleAlert */,
 				EE61B7381C83ECE900412ADF /* saleAlertTests */,
@@ -114,6 +114,8 @@
 				EE61B72D1C83ECE900412ADF /* LaunchScreen.storyboard */,
 				EE61B7301C83ECE900412ADF /* Info.plist */,
 				EE61B7281C83ECE900412ADF /* saleAlert.xcdatamodeld */,
+				EE54B6DE1C8E193600808FF6 /* stringExtractor.swift */,
+				EE54B6DC1C8E190200808FF6 /* FootLockerWatcher.swift */,
 			);
 			path = saleAlert;
 			sourceTree = "<group>";
@@ -271,7 +273,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Kanna.framework",
 			);
 			outputPaths = (
 			);
@@ -286,6 +287,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE54B6DF1C8E193600808FF6 /* stringExtractor.swift in Sources */,
+				EE54B6DD1C8E190200808FF6 /* FootLockerWatcher.swift in Sources */,
 				EE61B7241C83ECE900412ADF /* ViewController.swift in Sources */,
 				EE61B72A1C83ECE900412ADF /* saleAlert.xcdatamodeld in Sources */,
 				EE61B7221C83ECE900412ADF /* AppDelegate.swift in Sources */,
@@ -525,6 +528,7 @@
 				EE61B74B1C83ECE900412ADF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EE61B74C1C83ECE900412ADF /* Build configuration list for PBXNativeTarget "saleAlertTests" */ = {
 			isa = XCConfigurationList;
@@ -533,6 +537,7 @@
 				EE61B74E1C83ECE900412ADF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EE61B74F1C83ECE900412ADF /* Build configuration list for PBXNativeTarget "saleAlertUITests" */ = {
 			isa = XCConfigurationList;
@@ -541,6 +546,7 @@
 				EE61B7511C83ECE900412ADF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

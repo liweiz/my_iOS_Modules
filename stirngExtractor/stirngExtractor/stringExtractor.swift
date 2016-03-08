@@ -107,10 +107,48 @@ extension String {
         }
         return nil
     }
-    
-    
-    
-//    func findNumbers(numbersFound: [Float]) -> [Float] {
-//        if
-//    }
 }
+
+/*
+ Assuming the text we are working on is composed of same tree-structured components. Each text anchor that notifies the start of a component is also the end of last component. It is also applied to the sub-components in component that a component's start is the end of the last one.
+ */
+//An Array<String> can be used here to show the structure of one layer of the tree structure.
+extension SequenceType where Generator.Element == String {
+    func strings(fromString: String) -> [String?] {
+        var stringLeft = fromString
+        var r = [String?]()
+        var nilStringArray = [String?]()
+        for s in self {
+            if let tail = stringLeft.split(s).tailingString {
+                r.append(stringLeft.split(s).headingString!)
+                if nilStringArray.count > 0 {
+                    r.appendContentsOf(nilStringArray)
+                    nilStringArray.removeAll()
+                }
+                stringLeft = tail
+            } else {
+                nilStringArray.append(nil)
+            }
+        }
+        var allNil = true
+        for x in r {
+            if x != nil {
+                allNil = false
+                break
+            }
+        }
+        if allNil {
+            r = nilStringArray
+        } else {
+            if r.count > 0 { r.append(stringLeft) }
+        }
+        if r.count > self.underestimateCount() { r.removeFirst() }
+        return r
+    }
+}
+
+
+
+
+
+
