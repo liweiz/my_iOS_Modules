@@ -19,42 +19,50 @@ struct Item {
     }
 }
 
-func item(fromString: String, dividers: [String], stringLocators: [(String, String)?], size: Float, seller: String) -> (Item?, String?) {
-    var item = Item()
-    var stringLeft: String?
-    var numberA: Float = 0
-    var numberB: Float = 0
-    if dividers.count == stringLocators.count {
+enum ItemSearchError: ErrorType {
+    case NumberNotFound
+    case StringNotFound
+    case NoItem
+}
+
+// item return the first item fully found in the string and the last string left for further process. If there is absolute nothing (dividersAndStringLocators return all nil or name's counterpart not found) can be found or no more string to dig ("" returned as the string), return the string part of return value as nil. If only part of the item can be found, return a nil Item and the string after the name divider.
+func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], size: Float, seller: String) -> (Item?, String?) {
+    if dividersAndStringLocators.count > 0 {
+        var item = Item()
+        var numberA: Float? = nil
+        var numberB: Float? = nil
+        let dividers = dividersAndStringLocators.map { $0.0 }
+        let locators = dividersAndStringLocators.map { $0.1 }
         let strings = dividers.strings(fromString)
+        var stringLeft: String?
+        if strings.first! != nil {
+            stringLeft = [dividers.first!].strings(fromString).last!
+        }
         var i = 0
         for aString in strings {
-            if i == strings.count - 1 {
-                stringLeft = strings[i]
+            guard let s = aString else {
+                return (nil, nil)
             }
-            if let s = aString {
-                if let locator = stringLocators[i] {
-                    if let name = s.stirngWithoutHeadTailWhitespaceBetween(locator.0, end: locator.1) {
-                        item.name = name
-                    }
-                } else {
-                    if let n = s.findNumber() {
-                        print(n)
-                        if numberA > 0 {
-                            numberB = n
-                        }
-                        numberA = n
-                    }
+            if let aLocator = locators[i] {
+                guard let name = s.stirngWithoutHeadTailWhitespaceBetween(aLocator.0, end: aLocator.1) else {
+                    return (nil, stringLeft)
                 }
+                item.name = name
+            } else {
+                guard let n = s.findNumber() else {
+                    return (nil, stringLeft)
+                }
+                numberA == nil ? (numberA = n) : (numberB = n)
             }
             i += 1
         }
+        item.seller = seller
+        item.size = size
+        item.originalPrice = max(numberA!, numberB!)
+        item.salePrice = min(numberA!, numberB!)
+        return (item, stringLeft)
     }
-    item.seller = seller
-    item.size = size
-    if numberA * numberB == 0 { return (nil, stringLeft) }
-    item.originalPrice = max(numberA, numberB)
-    item.salePrice = min(numberA, numberB)
-    return (item, stringLeft)
+    return (nil, nil)
 }
 
 extension String {

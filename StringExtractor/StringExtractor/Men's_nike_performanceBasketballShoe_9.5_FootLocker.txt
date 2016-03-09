@@ -1831,7 +1831,7 @@ function replaceURL (URL, paramName, paramValue) {
 
 								<p class="other_product_attributes">Width - D - Medium<br />41-01971-04</p>
 
-									<p class="product_price"><STRIKE><B>$165.00</B></STRIKE><BR><em><B>Now $139.99</B></em><BR></p>
+									<p class="product_price"><STRIKE><B>$167.00</B></STRIKE><BR><em><B>Now $139.99</B></em><BR></p>
 
 									<div class="product_tierPrice"> </div>
 

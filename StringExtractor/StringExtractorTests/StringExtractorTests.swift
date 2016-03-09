@@ -47,7 +47,19 @@ class StirngExtractorTests: XCTestCase {
             let expectedOutput: Item?
         }
         let toTests = [
-            Tests(testName: "item *** found", fromString: loadHTMLFromBundle(), dividers: footlockerShoeDividers, stringLocators: [(footlockerShoeNameStart, footlockerShoeNameEnd), nil, nil], size: 9.5, seller: "footlocker", expectedOutput: Item(name: "Nike LeBron Zoom Soldier IX  - Men's - Blue / White", originalPrice: 165.00, salePrice: 139.99, size: 9.5, seller: "footlocker"))
+            Tests(
+                testName: "item *** found",
+                fromString: loadHTMLFromBundle(),
+                dividers: footlockerShoeDividers,
+                stringLocators: [(footlockerShoeNameStart, footlockerShoeNameEnd), nil, nil],
+                size: 9.5,
+                seller: "footlocker",
+                expectedOutput: Item(
+                    name: "Nike LeBron Zoom Soldier IX  - Men's - Blue / White",
+                    originalPrice: 167.00,
+                    salePrice: 139.99,
+                    size: 9.5,
+                    seller: "footlocker"))
         ]
         for t in toTests {
             print("TEST_NAME: " + t.testName + " *** START")
