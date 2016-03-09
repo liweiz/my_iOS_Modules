@@ -38,6 +38,7 @@ func item(fromString: String, dividers: [String], stringLocators: [(String, Stri
                     }
                 } else {
                     if let n = s.findNumber() {
+                        print(n)
                         if numberA > 0 {
                             numberB = n
                         }

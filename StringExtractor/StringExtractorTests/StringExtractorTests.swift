@@ -9,6 +9,16 @@
 import XCTest
 @testable import StringExtractor
 
+let footlockerNikePerformanceBasketballShoeSize95 = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Basketball-Shoes/_-_/N-1z141w4Z24ZzzZrjZseZca"
+let footlockerShoeNamePoint = "quickviewEnabled" // Look for "title" follows.
+let footlockerShoeOriginalPricePoint = "product_price"
+let footlockerShoeSalePricePoint = "<B>Now"
+
+let footlockerShoeNameStart = "title=\""
+let footlockerShoeNameEnd = "\" href="
+
+let footlockerShoeDividers = [footlockerShoeNamePoint, footlockerShoeOriginalPricePoint, footlockerShoeSalePricePoint]
+
 class StirngExtractorTests: XCTestCase {
     
     override func setUp() {
@@ -29,8 +39,24 @@ class StirngExtractorTests: XCTestCase {
     func testItem() {
         struct Tests {
             let testName: String
-            let input: String
-            let expectedOutput: Range<String.Index>?
+            let fromString: String
+            let dividers: [String]
+            let stringLocators: [(String, String)?]
+            let size: Float
+            let seller: String
+            let expectedOutput: Item?
+        }
+        let toTests = [
+            Tests(testName: "item *** found", fromString: loadHTMLFromBundle(), dividers: footlockerShoeDividers, stringLocators: [(footlockerShoeNameStart, footlockerShoeNameEnd), nil, nil], size: 9.5, seller: "footlocker", expectedOutput: Item(name: "Nike LeBron Zoom Soldier IX  - Men's - Blue / White", originalPrice: 165.00, salePrice: 139.99, size: 9.5, seller: "footlocker"))
+        ]
+        for t in toTests {
+            print("TEST_NAME: " + t.testName + " *** START")
+            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.name, t.expectedOutput?.name)
+            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.originalPrice, t.expectedOutput?.originalPrice)
+            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.salePrice, t.expectedOutput?.salePrice)
+            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.size, t.expectedOutput?.size)
+            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.seller, t.expectedOutput?.seller)
+            print("TEST_NAME: " + t.testName + " *** END")
         }
     }
     
@@ -169,11 +195,12 @@ class StirngExtractorTests: XCTestCase {
         loadHTMLFromBundle()
     }
     // From https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-file-in-your-bundle
-    func loadHTMLFromBundle() {
+    func loadHTMLFromBundle() -> String {
         if let filepath = NSBundle.mainBundle().pathForResource("Men's_nike_performanceBasketballShoe_9.5_FootLocker", ofType: "txt") {
             do {
                 let contents = try NSString(contentsOfFile: filepath, usedEncoding: nil) as String
-                print(contents)
+//                print(contents)
+                return contents
                 //            return content
             } catch {
                 // contents could not be loaded
@@ -183,6 +210,7 @@ class StirngExtractorTests: XCTestCase {
             // example.txt not found!
             print("html could not be loaded")
         }
+        return ""
     }
     
     func testPerformanceExample() {
