@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  stirngExtractor
+//  StringExtractor
 //
-//  Created by Liwei Zhang on 2016-03-02.
+//  Created by Liwei Zhang on 2016-03-08.
 //  Copyright © 2016 Liwei Zhang. All rights reserved.
 //
 

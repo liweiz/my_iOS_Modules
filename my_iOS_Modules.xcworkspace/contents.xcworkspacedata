@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/stirngExtractor/StirngExtractor.xcodeproj">
+      location = "group:StringExtractor/StringExtractor.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/saleAlert/SaleAlert.xcodeproj">

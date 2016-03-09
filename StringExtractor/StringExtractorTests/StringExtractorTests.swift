@@ -1,13 +1,13 @@
 //
-//  StirngExtractorTests.swift
-//  StirngExtractorTests
+//  StringExtractorTests.swift
+//  StringExtractor
 //
-//  Created by Liwei Zhang on 2016-03-02.
+//  Created by Liwei Zhang on 2016-03-08.
 //  Copyright © 2016 Liwei Zhang. All rights reserved.
 //
 
 import XCTest
-@testable import StirngExtractor
+@testable import StringExtractor
 
 class StirngExtractorTests: XCTestCase {
     
@@ -81,7 +81,7 @@ class StirngExtractorTests: XCTestCase {
             Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** both are in the middle", input0: "like", input1: "is", expectedOutput: "to name my Test Case so it"),
             Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** both are at the ends", input0: "I", input1: ".", expectedOutput: "like to name my Test Case so it is obvious to see what method is being called and what the assertion is"),
             Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** one not found", input0: "cool", input1: "like", expectedOutput: nil),
-        ]
+            ]
         for t in toTests {
             print("TEST_NAME: " + t.testName + " *** START")
             XCTAssertEqual(stringToTest.stirngWithoutHeadTailWhitespaceBetween(t.input0, end: t.input1), t.expectedOutput)
@@ -150,7 +150,7 @@ class StirngExtractorTests: XCTestCase {
             Tests(testName: "strings *** all not found except the last one", stringArrayToTest: ["  ", "goo", "myd", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, nil, nil, " it is obvious to see what method is being called and what the assertion is."]),
             Tests(testName: "strings *** all not found except the first and last one", stringArrayToTest: [" ", "goo", "myd", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like to name my 1342 Test Case ", nil, nil, " it is obvious to see what method is being called and what the assertion is."]),
             Tests(testName: "strings *** all not found", stringArrayToTest: ["  ", "goo", "myd", "soe"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, nil, nil, nil]),
-        ]
+            ]
         for t in toTests {
             print("TEST_NAME: " + t.testName + " *** START")
             for i in 0..<t.expectedOutput.count {

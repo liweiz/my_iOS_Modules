@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>stirngExtractor.xcscheme</key>
+		<key>StringExtractor.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
@@ -12,17 +12,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>EEA35FD71C8741BA00B44C85</key>
+		<key>EEF480041C8FD84B00B09EFD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEA35FEE1C8741BA00B44C85</key>
+		<key>EEF4801B1C8FD84C00B09EFD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEA35FF91C8741BA00B44C85</key>
+		<key>EEF480261C8FD84C00B09EFD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
