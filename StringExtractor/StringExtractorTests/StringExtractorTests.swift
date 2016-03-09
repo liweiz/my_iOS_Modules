@@ -40,8 +40,7 @@ class StirngExtractorTests: XCTestCase {
         struct Tests {
             let testName: String
             let fromString: String
-            let dividers: [String]
-            let stringLocators: [(String, String)?]
+            let dividersAndStringLocators: [(String, (String, String)?)]
             let size: Float
             let seller: String
             let expectedOutput: Item?
@@ -50,8 +49,9 @@ class StirngExtractorTests: XCTestCase {
             Tests(
                 testName: "item *** found",
                 fromString: loadHTMLFromBundle(),
-                dividers: footlockerShoeDividers,
-                stringLocators: [(footlockerShoeNameStart, footlockerShoeNameEnd), nil, nil],
+                dividersAndStringLocators: [(footlockerShoeNamePoint,
+                    (footlockerShoeNameStart, footlockerShoeNameEnd)),
+                    (footlockerShoeOriginalPricePoint, nil), (footlockerShoeSalePricePoint, nil)],
                 size: 9.5,
                 seller: "footlocker",
                 expectedOutput: Item(
@@ -63,11 +63,31 @@ class StirngExtractorTests: XCTestCase {
         ]
         for t in toTests {
             print("TEST_NAME: " + t.testName + " *** START")
-            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.name, t.expectedOutput?.name)
-            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.originalPrice, t.expectedOutput?.originalPrice)
-            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.salePrice, t.expectedOutput?.salePrice)
-            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.size, t.expectedOutput?.size)
-            XCTAssertEqual(item(t.fromString, dividers: t.dividers, stringLocators: t.stringLocators, size: t.size, seller: t.seller).0?.seller, t.expectedOutput?.seller)
+            XCTAssertEqual(item(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller).0?.name, t.expectedOutput?.name)
+            XCTAssertEqual(item(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller).0?.originalPrice, t.expectedOutput?.originalPrice)
+            XCTAssertEqual(item(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller).0?.salePrice, t.expectedOutput?.salePrice)
+            XCTAssertEqual(item(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller).0?.size, t.expectedOutput?.size)
+            XCTAssertEqual(item(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller).0?.seller, t.expectedOutput?.seller)
             print("TEST_NAME: " + t.testName + " *** END")
         }
     }
