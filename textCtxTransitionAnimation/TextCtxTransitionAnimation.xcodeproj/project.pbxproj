@@ -46,15 +46,15 @@
 		EE44159D1C7C12EE00CBF5CE /* SequenceTypeExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTypeExtension.swift; sourceTree = "<group>"; };
 		EE8068B41C6F06D4007833FC /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		EE9AF6441C6314C000BCFE95 /* Ctx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ctx.swift; sourceTree = "<group>"; };
-		EED9AA081C5DDDC900AA7A34 /* textCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = textCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EED9AA081C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextCtxTransitionAnimation.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EED9AA0B1C5DDDC900AA7A34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EED9AA0D1C5DDDC900AA7A34 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EED9AA121C5DDDC900AA7A34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EED9AA171C5DDDC900AA7A34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EED9AA1C1C5DDDC900AA7A34 /* textCtxTransitionAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = textCtxTransitionAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EED9AA1C1C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EED9AA201C5DDDC900AA7A34 /* textCtxTransitionAnimationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textCtxTransitionAnimationTests.swift; sourceTree = "<group>"; };
 		EED9AA221C5DDDC900AA7A34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EED9AA271C5DDDC900AA7A34 /* textCtxTransitionAnimationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = textCtxTransitionAnimationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EED9AA271C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EED9AA2B1C5DDDC900AA7A34 /* textCtxTransitionAnimationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textCtxTransitionAnimationUITests.swift; sourceTree = "<group>"; };
 		EED9AA2D1C5DDDC900AA7A34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EED9AA391C5DDEEC00AA7A34 /* ModuleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleData.swift; sourceTree = "<group>"; };
@@ -101,9 +101,9 @@
 		EED9AA091C5DDDC900AA7A34 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EED9AA081C5DDDC900AA7A34 /* textCtxTransitionAnimation.app */,
-				EED9AA1C1C5DDDC900AA7A34 /* textCtxTransitionAnimationTests.xctest */,
-				EED9AA271C5DDDC900AA7A34 /* textCtxTransitionAnimationUITests.xctest */,
+				EED9AA081C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.app */,
+				EED9AA1C1C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest */,
+				EED9AA271C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,7 +163,7 @@
 			);
 			name = textCtxTransitionAnimation;
 			productName = textCtxTransitionAnimation;
-			productReference = EED9AA081C5DDDC900AA7A34 /* textCtxTransitionAnimation.app */;
+			productReference = EED9AA081C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EED9AA1B1C5DDDC900AA7A34 /* textCtxTransitionAnimationTests */ = {
@@ -181,7 +181,7 @@
 			);
 			name = textCtxTransitionAnimationTests;
 			productName = textCtxTransitionAnimationTests;
-			productReference = EED9AA1C1C5DDDC900AA7A34 /* textCtxTransitionAnimationTests.xctest */;
+			productReference = EED9AA1C1C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		EED9AA261C5DDDC900AA7A34 /* textCtxTransitionAnimationUITests */ = {
@@ -199,7 +199,7 @@
 			);
 			name = textCtxTransitionAnimationUITests;
 			productName = textCtxTransitionAnimationUITests;
-			productReference = EED9AA271C5DDDC900AA7A34 /* textCtxTransitionAnimationUITests.xctest */;
+			productReference = EED9AA271C5DDDC900AA7A34 /* TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -225,7 +225,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EED9AA031C5DDDC900AA7A34 /* Build configuration list for PBXProject "textCtxTransitionAnimation" */;
+			buildConfigurationList = EED9AA031C5DDDC900AA7A34 /* Build configuration list for PBXProject "TextCtxTransitionAnimation" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -411,7 +411,7 @@
 				INFOPLIST_FILE = textCtxTransitionAnimation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.textCtxTransitionAnimation;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TextCtxTransitionAnimation.temp_caseinsensitive_rename;
 			};
 			name = Debug;
 		};
@@ -422,7 +422,7 @@
 				INFOPLIST_FILE = textCtxTransitionAnimation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.textCtxTransitionAnimation;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TextCtxTransitionAnimation.temp_caseinsensitive_rename;
 			};
 			name = Release;
 		};
@@ -433,8 +433,8 @@
 				INFOPLIST_FILE = textCtxTransitionAnimationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.textCtxTransitionAnimationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/textCtxTransitionAnimation.app/textCtxTransitionAnimation";
+				PRODUCT_NAME = TextCtxTransitionAnimation.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TextCtxTransitionAnimation.temp_caseinsensitive_rename.app/TextCtxTransitionAnimation.temp_caseinsensitive_rename";
 			};
 			name = Debug;
 		};
@@ -445,8 +445,8 @@
 				INFOPLIST_FILE = textCtxTransitionAnimationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.textCtxTransitionAnimationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/textCtxTransitionAnimation.app/textCtxTransitionAnimation";
+				PRODUCT_NAME = TextCtxTransitionAnimation.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TextCtxTransitionAnimation.temp_caseinsensitive_rename.app/TextCtxTransitionAnimation.temp_caseinsensitive_rename";
 			};
 			name = Release;
 		};
@@ -456,7 +456,7 @@
 				INFOPLIST_FILE = textCtxTransitionAnimationUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.textCtxTransitionAnimationUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TextCtxTransitionAnimation.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = textCtxTransitionAnimation;
 				USES_XCTRUNNER = YES;
 			};
@@ -468,7 +468,7 @@
 				INFOPLIST_FILE = textCtxTransitionAnimationUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.textCtxTransitionAnimationUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TextCtxTransitionAnimation.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = textCtxTransitionAnimation;
 				USES_XCTRUNNER = YES;
 			};
@@ -477,7 +477,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EED9AA031C5DDDC900AA7A34 /* Build configuration list for PBXProject "textCtxTransitionAnimation" */ = {
+		EED9AA031C5DDDC900AA7A34 /* Build configuration list for PBXProject "TextCtxTransitionAnimation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EED9AA2E1C5DDDC900AA7A34 /* Debug */,

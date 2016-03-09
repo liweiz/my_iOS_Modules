@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EED9AA071C5DDDC900AA7A34"
-               BuildableName = "textCtxTransitionAnimation.app"
+               BuildableName = "TextCtxTransitionAnimation.temp_caseinsensitive_rename.app"
                BlueprintName = "textCtxTransitionAnimation"
-               ReferencedContainer = "container:textCtxTransitionAnimation.xcodeproj">
+               ReferencedContainer = "container:TextCtxTransitionAnimation.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EED9AA1B1C5DDDC900AA7A34"
-               BuildableName = "textCtxTransitionAnimationTests.xctest"
+               BuildableName = "TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest"
                BlueprintName = "textCtxTransitionAnimationTests"
-               ReferencedContainer = "container:textCtxTransitionAnimation.xcodeproj">
+               ReferencedContainer = "container:TextCtxTransitionAnimation.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EED9AA261C5DDDC900AA7A34"
-               BuildableName = "textCtxTransitionAnimationUITests.xctest"
+               BuildableName = "TextCtxTransitionAnimation.temp_caseinsensitive_rename.xctest"
                BlueprintName = "textCtxTransitionAnimationUITests"
-               ReferencedContainer = "container:textCtxTransitionAnimation.xcodeproj">
+               ReferencedContainer = "container:TextCtxTransitionAnimation.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EED9AA071C5DDDC900AA7A34"
-            BuildableName = "textCtxTransitionAnimation.app"
+            BuildableName = "TextCtxTransitionAnimation.temp_caseinsensitive_rename.app"
             BlueprintName = "textCtxTransitionAnimation"
-            ReferencedContainer = "container:textCtxTransitionAnimation.xcodeproj">
+            ReferencedContainer = "container:TextCtxTransitionAnimation.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EED9AA071C5DDDC900AA7A34"
-            BuildableName = "textCtxTransitionAnimation.app"
+            BuildableName = "TextCtxTransitionAnimation.temp_caseinsensitive_rename.app"
             BlueprintName = "textCtxTransitionAnimation"
-            ReferencedContainer = "container:textCtxTransitionAnimation.xcodeproj">
+            ReferencedContainer = "container:TextCtxTransitionAnimation.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EED9AA071C5DDDC900AA7A34"
-            BuildableName = "textCtxTransitionAnimation.app"
+            BuildableName = "TextCtxTransitionAnimation.temp_caseinsensitive_rename.app"
             BlueprintName = "textCtxTransitionAnimation"
-            ReferencedContainer = "container:textCtxTransitionAnimation.xcodeproj">
+            ReferencedContainer = "container:TextCtxTransitionAnimation.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

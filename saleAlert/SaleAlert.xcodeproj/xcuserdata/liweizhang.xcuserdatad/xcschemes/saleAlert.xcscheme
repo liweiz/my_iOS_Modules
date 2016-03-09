@@ -11,14 +11,13 @@
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
-            buildForAnalyzing = "YES"
-            hideIssues = "NO">
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EE61B71D1C83ECE900412ADF"
-               BuildableName = "saleAlert.app"
+               BuildableName = "SaleAlert.temp_caseinsensitive_rename.app"
                BlueprintName = "saleAlert"
-               ReferencedContainer = "container:saleAlert.xcodeproj">
+               ReferencedContainer = "container:SaleAlert.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EE61B7341C83ECE900412ADF"
-               BuildableName = "saleAlertTests.xctest"
+               BuildableName = "SaleAlert.temp_caseinsensitive_rename.xctest"
                BlueprintName = "saleAlertTests"
-               ReferencedContainer = "container:saleAlert.xcodeproj">
+               ReferencedContainer = "container:SaleAlert.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -44,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EE61B73F1C83ECE900412ADF"
-               BuildableName = "saleAlertUITests.xctest"
+               BuildableName = "SaleAlert.temp_caseinsensitive_rename.xctest"
                BlueprintName = "saleAlertUITests"
-               ReferencedContainer = "container:saleAlert.xcodeproj">
+               ReferencedContainer = "container:SaleAlert.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -54,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EE61B71D1C83ECE900412ADF"
-            BuildableName = "saleAlert.app"
+            BuildableName = "SaleAlert.temp_caseinsensitive_rename.app"
             BlueprintName = "saleAlert"
-            ReferencedContainer = "container:saleAlert.xcodeproj">
+            ReferencedContainer = "container:SaleAlert.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -77,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EE61B71D1C83ECE900412ADF"
-            BuildableName = "saleAlert.app"
+            BuildableName = "SaleAlert.temp_caseinsensitive_rename.app"
             BlueprintName = "saleAlert"
-            ReferencedContainer = "container:saleAlert.xcodeproj">
+            ReferencedContainer = "container:SaleAlert.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EE61B71D1C83ECE900412ADF"
-            BuildableName = "saleAlert.app"
+            BuildableName = "SaleAlert.temp_caseinsensitive_rename.app"
             BlueprintName = "saleAlert"
-            ReferencedContainer = "container:saleAlert.xcodeproj">
+            ReferencedContainer = "container:SaleAlert.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

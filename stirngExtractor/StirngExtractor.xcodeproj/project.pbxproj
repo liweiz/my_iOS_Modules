@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE0C68B71C8F6F53001B246E /* FootLockerWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C68B61C8F6F53001B246E /* FootLockerWatcher.swift */; };
+		EE3EA2411C8F7113007B4116 /* SampleHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3EA2401C8F7113007B4116 /* SampleHTML.swift */; };
 		EEA35FDC1C8741BA00B44C85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA35FDB1C8741BA00B44C85 /* AppDelegate.swift */; };
 		EEA35FDE1C8741BA00B44C85 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA35FDD1C8741BA00B44C85 /* ViewController.swift */; };
 		EEA35FE11C8741BA00B44C85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEA35FDF1C8741BA00B44C85 /* Main.storyboard */; };
 		EEA35FE41C8741BA00B44C85 /* stirngExtractor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EEA35FE21C8741BA00B44C85 /* stirngExtractor.xcdatamodeld */; };
 		EEA35FE61C8741BA00B44C85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEA35FE51C8741BA00B44C85 /* Assets.xcassets */; };
 		EEA35FE91C8741BA00B44C85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEA35FE71C8741BA00B44C85 /* LaunchScreen.storyboard */; };
-		EEA35FF41C8741BA00B44C85 /* stirngExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA35FF31C8741BA00B44C85 /* stirngExtractorTests.swift */; };
+		EEA35FF41C8741BA00B44C85 /* StirngExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA35FF31C8741BA00B44C85 /* StirngExtractorTests.swift */; };
 		EEA35FFF1C8741BA00B44C85 /* stirngExtractorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA35FFE1C8741BA00B44C85 /* stirngExtractorUITests.swift */; };
-		EEA3600F1C87420700B44C85 /* stringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3600E1C87420700B44C85 /* stringExtractor.swift */; };
+		EEA3600F1C87420700B44C85 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3600E1C87420700B44C85 /* StringExtractor.swift */; };
+		EEF47FF51C8FC18B00B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.html in Resources */ = {isa = PBXBuildFile; fileRef = EEF47FF41C8FC18B00B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EEA35FD81C8741BA00B44C85 /* stirngExtractor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stirngExtractor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE0C68B61C8F6F53001B246E /* FootLockerWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FootLockerWatcher.swift; sourceTree = "<group>"; };
+		EE3EA2401C8F7113007B4116 /* SampleHTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleHTML.swift; sourceTree = "<group>"; };
+		EEA35FD81C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StirngExtractor.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEA35FDB1C8741BA00B44C85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEA35FDD1C8741BA00B44C85 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EEA35FE01C8741BA00B44C85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,13 +49,14 @@
 		EEA35FE51C8741BA00B44C85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EEA35FE81C8741BA00B44C85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EEA35FEA1C8741BA00B44C85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EEA35FEF1C8741BA00B44C85 /* stirngExtractorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stirngExtractorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EEA35FF31C8741BA00B44C85 /* stirngExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stirngExtractorTests.swift; sourceTree = "<group>"; };
+		EEA35FEF1C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StirngExtractor.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEA35FF31C8741BA00B44C85 /* StirngExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StirngExtractorTests.swift; sourceTree = "<group>"; };
 		EEA35FF51C8741BA00B44C85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EEA35FFA1C8741BA00B44C85 /* stirngExtractorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stirngExtractorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEA35FFA1C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StirngExtractor.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEA35FFE1C8741BA00B44C85 /* stirngExtractorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stirngExtractorUITests.swift; sourceTree = "<group>"; };
 		EEA360001C8741BA00B44C85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EEA3600E1C87420700B44C85 /* stringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = stringExtractor.swift; sourceTree = "<group>"; };
+		EEA3600E1C87420700B44C85 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
+		EEF47FF41C8FC18B00B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "Men's_nike_performanceBasketballShoe_9.5_FootLocker.html"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,9 +97,9 @@
 		EEA35FD91C8741BA00B44C85 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EEA35FD81C8741BA00B44C85 /* stirngExtractor.app */,
-				EEA35FEF1C8741BA00B44C85 /* stirngExtractorTests.xctest */,
-				EEA35FFA1C8741BA00B44C85 /* stirngExtractorUITests.xctest */,
+				EEA35FD81C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.app */,
+				EEA35FEF1C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.xctest */,
+				EEA35FFA1C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,9 +107,12 @@
 		EEA35FDA1C8741BA00B44C85 /* stirngExtractor */ = {
 			isa = PBXGroup;
 			children = (
-				EEA3600E1C87420700B44C85 /* stringExtractor.swift */,
+				EEA3600E1C87420700B44C85 /* StringExtractor.swift */,
+				EE3EA2401C8F7113007B4116 /* SampleHTML.swift */,
 				EEA35FDB1C8741BA00B44C85 /* AppDelegate.swift */,
 				EEA35FDD1C8741BA00B44C85 /* ViewController.swift */,
+				EE0C68B61C8F6F53001B246E /* FootLockerWatcher.swift */,
+				EEF47FF41C8FC18B00B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.html */,
 				EEA35FDF1C8741BA00B44C85 /* Main.storyboard */,
 				EEA35FE51C8741BA00B44C85 /* Assets.xcassets */,
 				EEA35FE71C8741BA00B44C85 /* LaunchScreen.storyboard */,
@@ -116,7 +125,7 @@
 		EEA35FF21C8741BA00B44C85 /* stirngExtractorTests */ = {
 			isa = PBXGroup;
 			children = (
-				EEA35FF31C8741BA00B44C85 /* stirngExtractorTests.swift */,
+				EEA35FF31C8741BA00B44C85 /* StirngExtractorTests.swift */,
 				EEA35FF51C8741BA00B44C85 /* Info.plist */,
 			);
 			path = stirngExtractorTests;
@@ -148,7 +157,7 @@
 			);
 			name = stirngExtractor;
 			productName = stirngExtractor;
-			productReference = EEA35FD81C8741BA00B44C85 /* stirngExtractor.app */;
+			productReference = EEA35FD81C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EEA35FEE1C8741BA00B44C85 /* stirngExtractorTests */ = {
@@ -166,7 +175,7 @@
 			);
 			name = stirngExtractorTests;
 			productName = stirngExtractorTests;
-			productReference = EEA35FEF1C8741BA00B44C85 /* stirngExtractorTests.xctest */;
+			productReference = EEA35FEF1C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		EEA35FF91C8741BA00B44C85 /* stirngExtractorUITests */ = {
@@ -184,7 +193,7 @@
 			);
 			name = stirngExtractorUITests;
 			productName = stirngExtractorUITests;
-			productReference = EEA35FFA1C8741BA00B44C85 /* stirngExtractorUITests.xctest */;
+			productReference = EEA35FFA1C8741BA00B44C85 /* StirngExtractor.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -211,7 +220,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EEA35FD31C8741BA00B44C85 /* Build configuration list for PBXProject "stirngExtractor" */;
+			buildConfigurationList = EEA35FD31C8741BA00B44C85 /* Build configuration list for PBXProject "StirngExtractor" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -238,6 +247,7 @@
 			files = (
 				EEA35FE91C8741BA00B44C85 /* LaunchScreen.storyboard in Resources */,
 				EEA35FE61C8741BA00B44C85 /* Assets.xcassets in Resources */,
+				EEF47FF51C8FC18B00B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.html in Resources */,
 				EEA35FE11C8741BA00B44C85 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,10 +273,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE0C68B71C8F6F53001B246E /* FootLockerWatcher.swift in Sources */,
 				EEA35FE41C8741BA00B44C85 /* stirngExtractor.xcdatamodeld in Sources */,
+				EE3EA2411C8F7113007B4116 /* SampleHTML.swift in Sources */,
 				EEA35FDE1C8741BA00B44C85 /* ViewController.swift in Sources */,
 				EEA35FDC1C8741BA00B44C85 /* AppDelegate.swift in Sources */,
-				EEA3600F1C87420700B44C85 /* stringExtractor.swift in Sources */,
+				EEA3600F1C87420700B44C85 /* StringExtractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,7 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEA35FF41C8741BA00B44C85 /* stirngExtractorTests.swift in Sources */,
+				EEA35FF41C8741BA00B44C85 /* StirngExtractorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +426,7 @@
 				INFOPLIST_FILE = stirngExtractor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractor;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = StirngExtractor.temp_caseinsensitive_rename;
 			};
 			name = Debug;
 		};
@@ -426,7 +438,7 @@
 				INFOPLIST_FILE = stirngExtractor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractor;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = StirngExtractor.temp_caseinsensitive_rename;
 			};
 			name = Release;
 		};
@@ -437,8 +449,8 @@
 				INFOPLIST_FILE = stirngExtractorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractorTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/stirngExtractor.app/stirngExtractor";
+				PRODUCT_NAME = StirngExtractor.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StirngExtractor.temp_caseinsensitive_rename.app/StirngExtractor.temp_caseinsensitive_rename";
 			};
 			name = Debug;
 		};
@@ -449,8 +461,8 @@
 				INFOPLIST_FILE = stirngExtractorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractorTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/stirngExtractor.app/stirngExtractor";
+				PRODUCT_NAME = StirngExtractor.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StirngExtractor.temp_caseinsensitive_rename.app/StirngExtractor.temp_caseinsensitive_rename";
 			};
 			name = Release;
 		};
@@ -460,7 +472,7 @@
 				INFOPLIST_FILE = stirngExtractorUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = StirngExtractor.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = stirngExtractor;
 			};
 			name = Debug;
@@ -471,7 +483,7 @@
 				INFOPLIST_FILE = stirngExtractorUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.stirngExtractorUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = StirngExtractor.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = stirngExtractor;
 			};
 			name = Release;
@@ -479,7 +491,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EEA35FD31C8741BA00B44C85 /* Build configuration list for PBXProject "stirngExtractor" */ = {
+		EEA35FD31C8741BA00B44C85 /* Build configuration list for PBXProject "StirngExtractor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EEA360011C8741BA00B44C85 /* Debug */,

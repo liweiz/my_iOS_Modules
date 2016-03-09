@@ -19,6 +19,7 @@ class ViewController: UIViewController {
             responsedString in
             if let s = responsedString.result.value {
                 print(s)
+                print
                 var stringLeft = s
                 while stringLeft.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
                     

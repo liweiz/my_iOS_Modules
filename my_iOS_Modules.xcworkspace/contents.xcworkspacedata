@@ -2,13 +2,13 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:stirngExtractor/stirngExtractor.xcodeproj">
+      location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/stirngExtractor/StirngExtractor.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:saleAlert/saleAlert.xcodeproj">
+      location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/saleAlert/SaleAlert.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:textCtxTransitionAnimation/textCtxTransitionAnimation.xcodeproj">
+      location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/textCtxTransitionAnimation/TextCtxTransitionAnimation.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:wordsToCtxTransitionAnimation/wordsToCtxTransitionAnimation.xcodeproj">

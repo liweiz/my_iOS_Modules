@@ -21,3 +21,18 @@ let footlockerShoeSalePriceEnd = "</B>"
 
 
 let aPairOfShoesInFootLocker = []
+
+// From https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-file-in-your-bundle
+func loadHTMLFromBundle() {
+    if let filepath = NSBundle.mainBundle().pathForResource("Men's_nike_performanceBasketballShoe_9.5_FootLocker", ofType: "html") {
+        do {
+            let contents = try NSString(contentsOfFile: filepath, usedEncoding: nil) as String
+            print(contents)
+//            return content
+        } catch {
+            // contents could not be loaded
+        }
+    } else {
+        // example.txt not found!
+    }
+}

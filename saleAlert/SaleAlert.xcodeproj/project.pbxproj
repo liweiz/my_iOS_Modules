@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EE54B6DD1C8E190200808FF6 /* FootLockerWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE54B6DC1C8E190200808FF6 /* FootLockerWatcher.swift */; };
-		EE54B6DF1C8E193600808FF6 /* stringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE54B6DE1C8E193600808FF6 /* stringExtractor.swift */; };
 		EE61B7221C83ECE900412ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61B7211C83ECE900412ADF /* AppDelegate.swift */; };
 		EE61B7241C83ECE900412ADF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61B7231C83ECE900412ADF /* ViewController.swift */; };
 		EE61B7271C83ECE900412ADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE61B7251C83ECE900412ADF /* Main.storyboard */; };
@@ -39,8 +38,7 @@
 
 /* Begin PBXFileReference section */
 		EE54B6DC1C8E190200808FF6 /* FootLockerWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FootLockerWatcher.swift; sourceTree = "<group>"; };
-		EE54B6DE1C8E193600808FF6 /* stringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = stringExtractor.swift; sourceTree = "<group>"; };
-		EE61B71E1C83ECE900412ADF /* saleAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = saleAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE61B71E1C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaleAlert.temp_caseinsensitive_rename.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE61B7211C83ECE900412ADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE61B7231C83ECE900412ADF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EE61B7261C83ECE900412ADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,10 +46,10 @@
 		EE61B72B1C83ECE900412ADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE61B72E1C83ECE900412ADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE61B7301C83ECE900412ADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE61B7351C83ECE900412ADF /* saleAlertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = saleAlertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE61B7351C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaleAlert.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE61B7391C83ECE900412ADF /* saleAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saleAlertTests.swift; sourceTree = "<group>"; };
 		EE61B73B1C83ECE900412ADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE61B7401C83ECE900412ADF /* saleAlertUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = saleAlertUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE61B7401C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaleAlert.temp_caseinsensitive_rename.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE61B7441C83ECE900412ADF /* saleAlertUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saleAlertUITests.swift; sourceTree = "<group>"; };
 		EE61B7461C83ECE900412ADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE61B7521C83EF1900412ADF /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
@@ -97,9 +95,9 @@
 		EE61B71F1C83ECE900412ADF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EE61B71E1C83ECE900412ADF /* saleAlert.app */,
-				EE61B7351C83ECE900412ADF /* saleAlertTests.xctest */,
-				EE61B7401C83ECE900412ADF /* saleAlertUITests.xctest */,
+				EE61B71E1C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.app */,
+				EE61B7351C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.xctest */,
+				EE61B7401C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,7 +112,6 @@
 				EE61B72D1C83ECE900412ADF /* LaunchScreen.storyboard */,
 				EE61B7301C83ECE900412ADF /* Info.plist */,
 				EE61B7281C83ECE900412ADF /* saleAlert.xcdatamodeld */,
-				EE54B6DE1C8E193600808FF6 /* stringExtractor.swift */,
 				EE54B6DC1C8E190200808FF6 /* FootLockerWatcher.swift */,
 			);
 			path = saleAlert;
@@ -156,7 +153,7 @@
 			);
 			name = saleAlert;
 			productName = saleAlert;
-			productReference = EE61B71E1C83ECE900412ADF /* saleAlert.app */;
+			productReference = EE61B71E1C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EE61B7341C83ECE900412ADF /* saleAlertTests */ = {
@@ -174,7 +171,7 @@
 			);
 			name = saleAlertTests;
 			productName = saleAlertTests;
-			productReference = EE61B7351C83ECE900412ADF /* saleAlertTests.xctest */;
+			productReference = EE61B7351C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		EE61B73F1C83ECE900412ADF /* saleAlertUITests */ = {
@@ -192,7 +189,7 @@
 			);
 			name = saleAlertUITests;
 			productName = saleAlertUITests;
-			productReference = EE61B7401C83ECE900412ADF /* saleAlertUITests.xctest */;
+			productReference = EE61B7401C83ECE900412ADF /* SaleAlert.temp_caseinsensitive_rename.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -218,7 +215,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EE61B7191C83ECE900412ADF /* Build configuration list for PBXProject "saleAlert" */;
+			buildConfigurationList = EE61B7191C83ECE900412ADF /* Build configuration list for PBXProject "SaleAlert" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -287,7 +284,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE54B6DF1C8E193600808FF6 /* stringExtractor.swift in Sources */,
 				EE54B6DD1C8E190200808FF6 /* FootLockerWatcher.swift in Sources */,
 				EE61B7241C83ECE900412ADF /* ViewController.swift in Sources */,
 				EE61B72A1C83ECE900412ADF /* saleAlert.xcdatamodeld in Sources */,
@@ -443,7 +439,7 @@
 				INFOPLIST_FILE = saleAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.saleAlert;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SaleAlert.temp_caseinsensitive_rename;
 			};
 			name = Debug;
 		};
@@ -459,7 +455,7 @@
 				INFOPLIST_FILE = saleAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.saleAlert;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SaleAlert.temp_caseinsensitive_rename;
 			};
 			name = Release;
 		};
@@ -470,8 +466,8 @@
 				INFOPLIST_FILE = saleAlertTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.saleAlertTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/saleAlert.app/saleAlert";
+				PRODUCT_NAME = SaleAlert.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaleAlert.temp_caseinsensitive_rename.app/SaleAlert.temp_caseinsensitive_rename";
 			};
 			name = Debug;
 		};
@@ -482,8 +478,8 @@
 				INFOPLIST_FILE = saleAlertTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.saleAlertTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/saleAlert.app/saleAlert";
+				PRODUCT_NAME = SaleAlert.temp_caseinsensitive_rename;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaleAlert.temp_caseinsensitive_rename.app/SaleAlert.temp_caseinsensitive_rename";
 			};
 			name = Release;
 		};
@@ -493,7 +489,7 @@
 				INFOPLIST_FILE = saleAlertUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.saleAlertUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SaleAlert.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = saleAlert;
 			};
 			name = Debug;
@@ -504,7 +500,7 @@
 				INFOPLIST_FILE = saleAlertUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.saleAlertUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SaleAlert.temp_caseinsensitive_rename;
 				TEST_TARGET_NAME = saleAlert;
 			};
 			name = Release;
@@ -512,7 +508,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EE61B7191C83ECE900412ADF /* Build configuration list for PBXProject "saleAlert" */ = {
+		EE61B7191C83ECE900412ADF /* Build configuration list for PBXProject "SaleAlert" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EE61B7471C83ECE900412ADF /* Debug */,

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EEA35FD71C8741BA00B44C85"
-               BuildableName = "stirngExtractor.app"
+               BuildableName = "StirngExtractor.temp_caseinsensitive_rename.app"
                BlueprintName = "stirngExtractor"
-               ReferencedContainer = "container:stirngExtractor.xcodeproj">
+               ReferencedContainer = "container:StirngExtractor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +34,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EEA35FEE1C8741BA00B44C85"
-               BuildableName = "stirngExtractorTests.xctest"
+               BuildableName = "StirngExtractor.temp_caseinsensitive_rename.xctest"
                BlueprintName = "stirngExtractorTests"
-               ReferencedContainer = "container:stirngExtractor.xcodeproj">
+               ReferencedContainer = "container:StirngExtractor.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -44,9 +44,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EEA35FF91C8741BA00B44C85"
-               BuildableName = "stirngExtractorUITests.xctest"
+               BuildableName = "StirngExtractor.temp_caseinsensitive_rename.xctest"
                BlueprintName = "stirngExtractorUITests"
-               ReferencedContainer = "container:stirngExtractor.xcodeproj">
+               ReferencedContainer = "container:StirngExtractor.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -54,9 +54,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EEA35FD71C8741BA00B44C85"
-            BuildableName = "stirngExtractor.app"
+            BuildableName = "StirngExtractor.temp_caseinsensitive_rename.app"
             BlueprintName = "stirngExtractor"
-            ReferencedContainer = "container:stirngExtractor.xcodeproj">
+            ReferencedContainer = "container:StirngExtractor.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EEA35FD71C8741BA00B44C85"
-            BuildableName = "stirngExtractor.app"
+            BuildableName = "StirngExtractor.temp_caseinsensitive_rename.app"
             BlueprintName = "stirngExtractor"
-            ReferencedContainer = "container:stirngExtractor.xcodeproj">
+            ReferencedContainer = "container:StirngExtractor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EEA35FD71C8741BA00B44C85"
-            BuildableName = "stirngExtractor.app"
+            BuildableName = "StirngExtractor.temp_caseinsensitive_rename.app"
             BlueprintName = "stirngExtractor"
-            ReferencedContainer = "container:stirngExtractor.xcodeproj">
+            ReferencedContainer = "container:StirngExtractor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
