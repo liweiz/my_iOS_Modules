@@ -17,6 +17,7 @@
 		EEF4803A1C8FD86400B09EFD /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480391C8FD86400B09EFD /* StringExtractor.swift */; };
 		EEF4803E1C8FD89600B09EFD /* FootLockerWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */; };
 		EEF480401C8FD8EB00B09EFD /* StringExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4803F1C8FD8EB00B09EFD /* StringExtractorTests.swift */; };
+		EEF480441C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt in Resources */ = {isa = PBXBuildFile; fileRef = EEF480431C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		EEF480391C8FD86400B09EFD /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
 		EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FootLockerWatcher.swift; sourceTree = "<group>"; };
 		EEF4803F1C8FD8EB00B09EFD /* StringExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractorTests.swift; sourceTree = "<group>"; };
+		EEF480431C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				EEF4800A1C8FD84B00B09EFD /* ViewController.swift */,
 				EEF480391C8FD86400B09EFD /* StringExtractor.swift */,
 				EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */,
+				EEF480431C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt */,
 				EEF4800C1C8FD84B00B09EFD /* Main.storyboard */,
 				EEF480121C8FD84B00B09EFD /* Assets.xcassets */,
 				EEF480141C8FD84C00B09EFD /* LaunchScreen.storyboard */,
@@ -238,6 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEF480441C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt in Resources */,
 				EEF480161C8FD84C00B09EFD /* LaunchScreen.storyboard in Resources */,
 				EEF480131C8FD84B00B09EFD /* Assets.xcassets in Resources */,
 				EEF4800E1C8FD84B00B09EFD /* Main.storyboard in Resources */,

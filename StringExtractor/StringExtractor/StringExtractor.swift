@@ -8,6 +8,54 @@
 
 import Foundation
 
+struct Item {
+    var name: String = ""
+    var originalPrice: Float = 0
+    var salePrice: Float = 0.1
+    var size: Float = 0
+    var seller: String = ""
+    var discount: Float {
+        return salePrice / originalPrice
+    }
+}
+
+func item(fromString: String, dividers: [String], stringLocators: [(String, String)?], size: Float, seller: String) -> (Item?, String?) {
+    var item = Item()
+    var stringLeft: String?
+    var numberA: Float = 0
+    var numberB: Float = 0
+    if dividers.count == stringLocators.count {
+        let strings = dividers.strings(fromString)
+        var i = 0
+        for aString in strings {
+            if i == strings.count - 1 {
+                stringLeft = strings[i]
+            }
+            if let s = aString {
+                if let locator = stringLocators[i] {
+                    if let name = s.stirngWithoutHeadTailWhitespaceBetween(locator.0, end: locator.1) {
+                        item.name = name
+                    }
+                } else {
+                    if let n = s.findNumber() {
+                        if numberA > 0 {
+                            numberB = n
+                        }
+                        numberA = n
+                    }
+                }
+            }
+            i += 1
+        }
+    }
+    item.seller = seller
+    item.size = size
+    if numberA * numberB == 0 { return (nil, stringLeft) }
+    item.originalPrice = max(numberA, numberB)
+    item.salePrice = min(numberA, numberB)
+    return (item, stringLeft)
+}
+
 extension String {
     func numberInMiddle(start: String, end: String) -> Float? {
         return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()

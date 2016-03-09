@@ -26,6 +26,14 @@ class StirngExtractorTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testItem() {
+        struct Tests {
+            let testName: String
+            let input: String
+            let expectedOutput: Range<String.Index>?
+        }
+    }
+    
     func testFindRange() {
         struct Tests {
             let testName: String
@@ -157,6 +165,23 @@ class StirngExtractorTests: XCTestCase {
                 XCTAssertEqual(t.stringArrayToTest.strings(t.input)[i], t.expectedOutput[i])
             }
             print("TEST_NAME: " + t.testName + " *** END")
+        }
+        loadHTMLFromBundle()
+    }
+    // From https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-file-in-your-bundle
+    func loadHTMLFromBundle() {
+        if let filepath = NSBundle.mainBundle().pathForResource("Men's_nike_performanceBasketballShoe_9.5_FootLocker", ofType: "txt") {
+            do {
+                let contents = try NSString(contentsOfFile: filepath, usedEncoding: nil) as String
+                print(contents)
+                //            return content
+            } catch {
+                // contents could not be loaded
+                print("contents could not be loaded")
+            }
+        } else {
+            // example.txt not found!
+            print("html could not be loaded")
         }
     }
     
