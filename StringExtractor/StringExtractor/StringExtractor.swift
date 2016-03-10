@@ -10,12 +10,18 @@ import Foundation
 
 struct Item {
     var name: String = ""
-    var originalPrice: Float = 0
-    var salePrice: Float = 0.1
-    var size: Float = 0
+    var originalPrice: String = ""
+    var salePrice: String = ""
+    var size: String = ""
     var seller: String = ""
-    var discount: Float {
-        return salePrice / originalPrice
+    var discount: Float? {
+        guard let up = Float(salePrice) else {
+            return nil
+        }
+        guard let down = Float(originalPrice) else {
+            return nil
+        }
+        return up * down == 0 ? nil : up / down
     }
 }
 
@@ -26,11 +32,12 @@ enum ItemSearchError: ErrorType {
 }
 
 // item return the first item fully found in the string and the last string left for further process. If there is absolute nothing (dividersAndStringLocators return all nil or name's counterpart not found) can be found or no more string to dig ("" returned as the string), return the string part of return value as nil. If only part of the item can be found, return a nil Item and the string after the name divider.
-func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], size: Float, seller: String) -> (Item?, String?) {
+func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], size: String, seller: String) -> (Item?, String?) {
+    print("called")
     if dividersAndStringLocators.count > 0 {
         var item = Item()
-        var numberA: Float? = nil
-        var numberB: Float? = nil
+        var numberA: NumberInDigits? = nil
+        var numberB: NumberInDigits? = nil
         let dividers = dividersAndStringLocators.map { $0.0 }
         let locators = dividersAndStringLocators.map { $0.1 }
         let strings = dividers.strings(fromString)
@@ -43,6 +50,7 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
             guard let s = aString else {
                 return (nil, nil)
             }
+//            print("HTML Divided: " + s)
             if let aLocator = locators[i] {
                 guard let name = s.stirngWithoutHeadTailWhitespaceBetween(aLocator.0, end: aLocator.1) else {
                     return (nil, stringLeft)
@@ -52,21 +60,27 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
                 guard let n = s.findNumber() else {
                     return (nil, stringLeft)
                 }
+//                print(n)
                 numberA == nil ? (numberA = n) : (numberB = n)
             }
             i += 1
         }
         item.seller = seller
         item.size = size
-        item.originalPrice = max(numberA!, numberB!)
-        item.salePrice = min(numberA!, numberB!)
+        if numberA!.float! == max(numberA!.float!, numberB!.float!) {
+            item.originalPrice = (numberA?.string)!
+            item.salePrice = (numberB?.string)!
+        } else {
+            item.originalPrice = (numberB?.string)!
+            item.salePrice = (numberA?.string)!
+        }
         return (item, stringLeft)
     }
     return (nil, nil)
 }
 
 extension String {
-    func numberInMiddle(start: String, end: String) -> Float? {
+    func numberInMiddle(start: String, end: String) -> NumberInDigits? {
         return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
     }
     func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
@@ -103,8 +117,8 @@ extension String {
         return (nil, nil)
     }
     
-    // findNumber returns the first number found in Float. The number has to start with with digits in 0...9.
-    func findNumber() -> Float? {
+    // findNumber returns the first number found in TBD. The number has to start with with digits in 0...9.
+    func findNumber() -> NumberInDigits? {
         let numberCharacters: Set = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
         let decimalMark = ","
         var numericalDigits = [String]()
@@ -151,20 +165,52 @@ extension String {
                 }
             }
         }
+        return numericalDigits.count > 0 ? NumberInDigits(numericalDigits: numericalDigits, decimalDigits: decimalDigits) : nil
+    }
+}
+
+struct NumberInDigits {
+    let numericalDigits: [String]
+    let decimalDigits: [String]
+    var isValid: Bool {
+        return numericalDigits.count > 0 ? true : false
+    }
+    var string: String {
+        var i = 0
+        for n in numericalDigits {
+            if n == "0" {
+                i += 1
+            } else {
+                break
+            }
+        }
+        var num = [String]()
+        i > 0 ? num.appendContentsOf(numericalDigits.dropFirst(i)) : num.appendContentsOf(numericalDigits)
+        let s = num.reduce("", combine: { $0 + $1 })
+        return decimalDigits.count > 0 ? decimalDigits.reduce(s + ".", combine: { $0 + $1 }) : (s == "" ? "0" : s)
+    }
+    var float: Float? {
         var result = Float(0)
         let n = Float(numericalDigits.count)
         if n > 0 {
+            var i  = 1
             for d in numericalDigits {
-                result += Float(d)! * powf(10, n - Float(numericalDigits.indexOf(d)! + 1))
+                result += Float(d)! * powf(10, n - Float(i))
+                i += 1
             }
+            var j  = 1
             for d in decimalDigits {
-                result += Float(d)! * powf(10, -Float(decimalDigits.indexOf(d)! + 1))
+                result += Float(d)! * powf(0.1, Float(j))
+                j += 1
             }
+//            print("result: ", result)
             return result
         }
         return nil
     }
 }
+
+
 
 /*
  Assuming the text we are working on is composed of same tree-structured components. Each text anchor that notifies the start of a component is also the end of last component. It is also applied to the sub-components in component that a component's start is the end of the last one.
