@@ -19,6 +19,9 @@ let footlockerShoeNameEnd = "\" href="
 
 let footlockerShoeDividers = [footlockerShoeNamePoint, footlockerShoeOriginalPricePoint, footlockerShoeSalePricePoint]
 
+let Html1Item = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item"
+let Html2Items = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items"
+
 class StirngExtractorTests: XCTestCase {
     
     override func setUp() {
@@ -36,6 +39,94 @@ class StirngExtractorTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testAllItems() {
+        struct Tests {
+            let testName: String
+            let fromString: String
+            let dividersAndStringLocators: [(String, (String, String)?)]
+            let size: String
+            let seller: String
+            let expectedOutput: [Item]
+        }
+        let toTests = [
+            Tests(
+                testName: "allItem *** found",
+                fromString: loadHTMLFromBundle(Html2Items),
+                dividersAndStringLocators: [(footlockerShoeNamePoint,
+                    (footlockerShoeNameStart, footlockerShoeNameEnd)),
+                    (footlockerShoeOriginalPricePoint, nil), (footlockerShoeSalePricePoint, nil)],
+                size: "9.5",
+                seller: "footlocker",
+                expectedOutput: [
+                    Item(
+                        name: "Nike LeBron Zoom Soldier IX  - Men's - Blue / White",
+                        originalPrice: "165.00",
+                        salePrice: "139.99",
+                        size: "9.5",
+                        seller: "footlocker"),
+                    Item(
+                        name: "Nike Air Visi Pro IV  - Men's - Grey / Black",
+                        originalPrice: "94.99",
+                        salePrice: "79.99",
+                        size: "9.5",
+                        seller: "footlocker")])
+        ]
+        for t in toTests {
+            print("TEST_NAME: " + t.testName + " *** START")
+            XCTAssertEqual(allItems(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller)[0].name, t.expectedOutput[0].name)
+            XCTAssertEqual(allItems(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller)[1].name, t.expectedOutput[1].name)
+            XCTAssertEqual(allItems(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller)[0].originalPrice, t.expectedOutput[0].originalPrice)
+            XCTAssertEqual(allItems(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller)[1].originalPrice, t.expectedOutput[1].originalPrice)
+            XCTAssertEqual(allItems(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller)[0].salePrice, t.expectedOutput[0].salePrice)
+            XCTAssertEqual(allItems(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                size: t.size,
+                seller: t.seller)[1].salePrice, t.expectedOutput[1].salePrice)
+//            XCTAssertEqual(item(
+//                t.fromString,
+//                dividersAndStringLocators: t.dividersAndStringLocators,
+//                size: t.size,
+//                seller: t.seller).0?.originalPrice, t.expectedOutput?.originalPrice)
+//            XCTAssertEqual(item(
+//                t.fromString,
+//                dividersAndStringLocators: t.dividersAndStringLocators,
+//                size: t.size,
+//                seller: t.seller).0?.salePrice, t.expectedOutput?.salePrice)
+//            XCTAssertEqual(item(
+//                t.fromString,
+//                dividersAndStringLocators: t.dividersAndStringLocators,
+//                size: t.size,
+//                seller: t.seller).0?.size, t.expectedOutput?.size)
+//            XCTAssertEqual(item(
+//                t.fromString,
+//                dividersAndStringLocators: t.dividersAndStringLocators,
+//                size: t.size,
+//                seller: t.seller).0?.seller, t.expectedOutput?.seller)
+            print("TEST_NAME: " + t.testName + " *** END")
+        }
+    }
+    
     func testItem() {
         struct Tests {
             let testName: String
@@ -48,7 +139,7 @@ class StirngExtractorTests: XCTestCase {
         let toTests = [
             Tests(
                 testName: "item *** found",
-                fromString: loadHTMLFromBundle(),
+                fromString: loadHTMLFromBundle(Html1Item),
                 dividersAndStringLocators: [(footlockerShoeNamePoint,
                     (footlockerShoeNameStart, footlockerShoeNameEnd)),
                     (footlockerShoeOriginalPricePoint, nil), (footlockerShoeSalePricePoint, nil)],
@@ -225,11 +316,10 @@ class StirngExtractorTests: XCTestCase {
             }
             print("TEST_NAME: " + t.testName + " *** END")
         }
-        loadHTMLFromBundle()
     }
     // From https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-file-in-your-bundle
-    func loadHTMLFromBundle() -> String {
-        if let filepath = NSBundle.mainBundle().pathForResource("Men's_nike_performanceBasketballShoe_9.5_FootLocker", ofType: "txt") {
+    func loadHTMLFromBundle(fileName: String) -> String {
+        if let filepath = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt") {
             do {
                 let contents = try NSString(contentsOfFile: filepath, usedEncoding: nil) as String
 //                print(contents)

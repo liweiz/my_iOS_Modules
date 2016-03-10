@@ -17,7 +17,8 @@
 		EEF4803A1C8FD86400B09EFD /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480391C8FD86400B09EFD /* StringExtractor.swift */; };
 		EEF4803E1C8FD89600B09EFD /* FootLockerWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */; };
 		EEF480401C8FD8EB00B09EFD /* StringExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4803F1C8FD8EB00B09EFD /* StringExtractorTests.swift */; };
-		EEF480441C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt in Resources */ = {isa = PBXBuildFile; fileRef = EEF480431C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt */; };
+		EEF4804A1C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt in Resources */ = {isa = PBXBuildFile; fileRef = EEF480481C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt */; };
+		EEF4804B1C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt in Resources */ = {isa = PBXBuildFile; fileRef = EEF480491C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +55,8 @@
 		EEF480391C8FD86400B09EFD /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
 		EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FootLockerWatcher.swift; sourceTree = "<group>"; };
 		EEF4803F1C8FD8EB00B09EFD /* StringExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractorTests.swift; sourceTree = "<group>"; };
-		EEF480431C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt"; sourceTree = "<group>"; };
+		EEF480481C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt"; sourceTree = "<group>"; };
+		EEF480491C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +111,7 @@
 				EEF4800A1C8FD84B00B09EFD /* ViewController.swift */,
 				EEF480391C8FD86400B09EFD /* StringExtractor.swift */,
 				EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */,
-				EEF480431C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt */,
+				EEF480451C91E2A300B09EFD /* HtmlInTxt */,
 				EEF4800C1C8FD84B00B09EFD /* Main.storyboard */,
 				EEF480121C8FD84B00B09EFD /* Assets.xcassets */,
 				EEF480141C8FD84C00B09EFD /* LaunchScreen.storyboard */,
@@ -135,6 +137,15 @@
 				EEF4802D1C8FD84C00B09EFD /* Info.plist */,
 			);
 			path = StringExtractorUITests;
+			sourceTree = "<group>";
+		};
+		EEF480451C91E2A300B09EFD /* HtmlInTxt */ = {
+			isa = PBXGroup;
+			children = (
+				EEF480481C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt */,
+				EEF480491C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt */,
+			);
+			name = HtmlInTxt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,8 +252,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEF480441C8FDF6700B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker.txt in Resources */,
 				EEF480161C8FD84C00B09EFD /* LaunchScreen.storyboard in Resources */,
+				EEF4804B1C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt in Resources */,
+				EEF4804A1C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt in Resources */,
 				EEF480131C8FD84B00B09EFD /* Assets.xcassets in Resources */,
 				EEF4800E1C8FD84B00B09EFD /* Main.storyboard in Resources */,
 			);
@@ -505,6 +517,7 @@
 				EEF480321C8FD84C00B09EFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEF480331C8FD84C00B09EFD /* Build configuration list for PBXNativeTarget "StringExtractorTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +526,7 @@
 				EEF480351C8FD84C00B09EFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEF480361C8FD84C00B09EFD /* Build configuration list for PBXNativeTarget "StringExtractorUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +535,7 @@
 				EEF480381C8FD84C00B09EFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
