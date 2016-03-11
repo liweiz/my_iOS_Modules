@@ -8,6 +8,9 @@
 
 import Foundation
 import Alamofire
+import RealmSwift
+
+let realm = try! Realm()
 
 func scanner_Lego() -> scanner {
     let url = "http://shop.lego.com/en-CA/Sales-And-Deals"
@@ -62,7 +65,11 @@ struct scanner {
         Alamofire.request(.GET, url).responseString(completionHandler: {
             if $0.result.isSuccess {
                 if let stringReturned = $0.result.value {
-                    print(allItems(stringReturned, dividersAndStringLocators: self.dividersAndStringLocators, specifications: self.specifications, seller: self.seller))
+                    for i in allItems(stringReturned, dividersAndStringLocators: self.dividersAndStringLocators, specifications: self.specifications, seller: self.seller) {
+                        try! realm.write {
+                            realm.add(itemToModel(i))
+                        }
+                    }
                 } else {
                     print("Error: no string received for " + self.seller)
                 }
@@ -73,3 +80,31 @@ struct scanner {
     }
 }
 
+func itemToModel(item: Item) -> ItemOnSale {
+    let i = ItemOnSale()
+    i.name = item.name
+    i.originalPrice = item.originalPrice
+    i.salePrice = item.salePrice
+    i.seller = item.seller
+    var s = ""
+    var n = 1
+    for k in item.specifications.keys {
+        if k != "" && item.specifications[k] != nil {
+            s.appendContentsOf(k)
+            s.appendContentsOf(": ")
+            s.appendContentsOf(item.specifications[k]!)
+            if n == item.specifications.keys.count {
+                s.appendContentsOf(".")
+            } else {
+                s.appendContentsOf(", ")
+            }
+        }
+        n += 1
+    }
+    i.specifications = s
+    i.discount = item.discount ?? 0
+    i.timestamp = NSDate().timeIntervalSince1970
+    return i
+}
+
+func findItem
