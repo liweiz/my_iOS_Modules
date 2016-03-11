@@ -25,12 +25,7 @@ struct Item {
     }
 }
 
-enum ItemSearchError: ErrorType {
-    case NumberNotFound
-    case StringNotFound
-    case NoItem
-}
-
+// allItems return all items found in a string.
 func allItems(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], size: String, seller: String) -> [Item] {
     return item(fromString, dividersAndStringLocators: dividersAndStringLocators, size: size, seller: seller, existingItems: [Item]())
 }
@@ -188,6 +183,7 @@ extension String {
     }
 }
 
+// NumberInDigits stores all digits in a number as strings.
 struct NumberInDigits {
     let numericalDigits: [String]
     let decimalDigits: [String]
@@ -228,8 +224,6 @@ struct NumberInDigits {
         return nil
     }
 }
-
-
 
 /*
  Assuming the text we are working on is composed of same tree-structured components. Each text anchor that notifies the start of a component is also the end of last component. It is also applied to the sub-components in component that a component's start is the end of the last one.

@@ -103,26 +103,6 @@ class StirngExtractorTests: XCTestCase {
                 dividersAndStringLocators: t.dividersAndStringLocators,
                 size: t.size,
                 seller: t.seller)[1].salePrice, t.expectedOutput[1].salePrice)
-//            XCTAssertEqual(item(
-//                t.fromString,
-//                dividersAndStringLocators: t.dividersAndStringLocators,
-//                size: t.size,
-//                seller: t.seller).0?.originalPrice, t.expectedOutput?.originalPrice)
-//            XCTAssertEqual(item(
-//                t.fromString,
-//                dividersAndStringLocators: t.dividersAndStringLocators,
-//                size: t.size,
-//                seller: t.seller).0?.salePrice, t.expectedOutput?.salePrice)
-//            XCTAssertEqual(item(
-//                t.fromString,
-//                dividersAndStringLocators: t.dividersAndStringLocators,
-//                size: t.size,
-//                seller: t.seller).0?.size, t.expectedOutput?.size)
-//            XCTAssertEqual(item(
-//                t.fromString,
-//                dividersAndStringLocators: t.dividersAndStringLocators,
-//                size: t.size,
-//                seller: t.seller).0?.seller, t.expectedOutput?.seller)
             print("TEST_NAME: " + t.testName + " *** END")
         }
     }
@@ -317,6 +297,7 @@ class StirngExtractorTests: XCTestCase {
             print("TEST_NAME: " + t.testName + " *** END")
         }
     }
+    
     // From https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-file-in-your-bundle
     func loadHTMLFromBundle(fileName: String) -> String {
         if let filepath = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt") {
