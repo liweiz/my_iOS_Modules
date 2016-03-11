@@ -26,28 +26,28 @@ struct Item {
 }
 
 // allItems return all items found in a string.
-func allItems(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], size: String, seller: String) -> [Item] {
-    return item(fromString, dividersAndStringLocators: dividersAndStringLocators, size: size, seller: seller, existingItems: [Item]())
+func allItems(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], specifications: [String: String], seller: String) -> [Item] {
+    return item(fromString, dividersAndStringLocators: dividersAndStringLocators, specifications: specifications, seller: seller, existingItems: [Item]())
 }
 
-func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], size: String, seller: String, existingItems: [Item]) -> [Item] {
-    let itemFound = item(fromString, dividersAndStringLocators: dividersAndStringLocators, size: size, seller: seller)
+func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], specifications: [String: String], seller: String, existingItems: [Item]) -> [Item] {
+    let itemFound = item(fromString, dividersAndStringLocators: dividersAndStringLocators, specifications: specifications, seller: seller)
     if let i = itemFound.0 {
         let items = existingItems + [i]
         if let s = itemFound.1 {
             if s != "" {
-                return item(s, dividersAndStringLocators: dividersAndStringLocators, size: size, seller: seller, existingItems: items)
+                return item(s, dividersAndStringLocators: dividersAndStringLocators, specifications: specifications, seller: seller, existingItems: items)
             }
         }
         return items
     }
-    print(existingItems)
+//    print(existingItems)
     return existingItems
 }
 
 // item return the first item fully found in the string and the last string left for further process. If there is absolute nothing (dividersAndStringLocators return all nil or name's counterpart not found) can be found or no more string to dig ("" returned as the string), return the string part of return value as nil. If only part of the item can be found, return a nil Item and the string after the name divider.
-func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], size: String, seller: String) -> (Item?, String?) {
-    print("called")
+func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], specifications: [String: String], seller: String) -> (Item?, String?) {
+    print("item called")
     if dividersAndStringLocators.count > 0 {
         var item = Item()
         var numberA: NumberInDigits? = nil
@@ -80,7 +80,7 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
             i += 1
         }
         item.seller = seller
-        item.size = size
+        item.specifications = specifications
         if numberA!.float! == max(numberA!.float!, numberB!.float!) {
             item.originalPrice = (numberA?.string)!
             item.salePrice = (numberB?.string)!

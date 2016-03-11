@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EED15E541C928BAC00FB0D81 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED15E531C928BAC00FB0D81 /* StringExtractor.swift */; };
+		EED15E561C9292E600FB0D81 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED15E551C9292E600FB0D81 /* StringExtractor.swift */; };
 		EEF480591C925D6D00B09EFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480581C925D6D00B09EFD /* AppDelegate.swift */; };
 		EEF4805B1C925D6D00B09EFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4805A1C925D6D00B09EFD /* ViewController.swift */; };
 		EEF4805E1C925D6D00B09EFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEF4805C1C925D6D00B09EFD /* Main.storyboard */; };
@@ -37,7 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EED15E531C928BAC00FB0D81 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
+		EED15E551C9292E600FB0D81 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
 		EEF480551C925D6D00B09EFD /* SaleWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaleWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF480581C925D6D00B09EFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEF4805A1C925D6D00B09EFD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 				EEF480581C925D6D00B09EFD /* AppDelegate.swift */,
 				EEF4805A1C925D6D00B09EFD /* ViewController.swift */,
 				EEF480891C92724A00B09EFD /* Scanner.swift */,
-				EED15E531C928BAC00FB0D81 /* StringExtractor.swift */,
+				EED15E551C9292E600FB0D81 /* StringExtractor.swift */,
 				EEF4805C1C925D6D00B09EFD /* Main.storyboard */,
 				EEF4805F1C925D6D00B09EFD /* Assets.xcassets */,
 				EEF480611C925D6D00B09EFD /* LaunchScreen.storyboard */,
@@ -288,7 +288,7 @@
 				EEF4805B1C925D6D00B09EFD /* ViewController.swift in Sources */,
 				EEF4808A1C92724A00B09EFD /* Scanner.swift in Sources */,
 				EEF480591C925D6D00B09EFD /* AppDelegate.swift in Sources */,
-				EED15E541C928BAC00FB0D81 /* StringExtractor.swift in Sources */,
+				EED15E561C9292E600FB0D81 /* StringExtractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
