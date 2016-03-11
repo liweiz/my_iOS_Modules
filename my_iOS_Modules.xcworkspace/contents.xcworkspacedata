@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:StringExtractor/StringExtractor.xcodeproj">
+      location = "group:SaleWatcher/SaleWatcher.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/saleAlert/SaleAlert.xcodeproj">
+      location = "group:StringExtractor/StringExtractor.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/textCtxTransitionAnimation/TextCtxTransitionAnimation.xcodeproj">

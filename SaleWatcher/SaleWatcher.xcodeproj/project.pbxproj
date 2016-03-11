@@ -1,0 +1,553 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EED15E541C928BAC00FB0D81 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED15E531C928BAC00FB0D81 /* StringExtractor.swift */; };
+		EEF480591C925D6D00B09EFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480581C925D6D00B09EFD /* AppDelegate.swift */; };
+		EEF4805B1C925D6D00B09EFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4805A1C925D6D00B09EFD /* ViewController.swift */; };
+		EEF4805E1C925D6D00B09EFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEF4805C1C925D6D00B09EFD /* Main.storyboard */; };
+		EEF480601C925D6D00B09EFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEF4805F1C925D6D00B09EFD /* Assets.xcassets */; };
+		EEF480631C925D6D00B09EFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEF480611C925D6D00B09EFD /* LaunchScreen.storyboard */; };
+		EEF4806E1C925D6D00B09EFD /* SaleWatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4806D1C925D6D00B09EFD /* SaleWatcherTests.swift */; };
+		EEF480791C925D6D00B09EFD /* SaleWatcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480781C925D6D00B09EFD /* SaleWatcherUITests.swift */; };
+		EEF480871C92719600B09EFD /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEF480861C92719600B09EFD /* Alamofire.framework */; };
+		EEF4808A1C92724A00B09EFD /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480891C92724A00B09EFD /* Scanner.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EEF4806A1C925D6D00B09EFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEF4804D1C925D6D00B09EFD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEF480541C925D6D00B09EFD;
+			remoteInfo = SaleWatcher;
+		};
+		EEF480751C925D6D00B09EFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEF4804D1C925D6D00B09EFD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEF480541C925D6D00B09EFD;
+			remoteInfo = SaleWatcher;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EED15E531C928BAC00FB0D81 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
+		EEF480551C925D6D00B09EFD /* SaleWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaleWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEF480581C925D6D00B09EFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EEF4805A1C925D6D00B09EFD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EEF4805D1C925D6D00B09EFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EEF4805F1C925D6D00B09EFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EEF480621C925D6D00B09EFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EEF480641C925D6D00B09EFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEF480691C925D6D00B09EFD /* SaleWatcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaleWatcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEF4806D1C925D6D00B09EFD /* SaleWatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleWatcherTests.swift; sourceTree = "<group>"; };
+		EEF4806F1C925D6D00B09EFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEF480741C925D6D00B09EFD /* SaleWatcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaleWatcherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEF480781C925D6D00B09EFD /* SaleWatcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleWatcherUITests.swift; sourceTree = "<group>"; };
+		EEF4807A1C925D6D00B09EFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEF480861C92719600B09EFD /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		EEF480891C92724A00B09EFD /* Scanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EEF480521C925D6D00B09EFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEF480871C92719600B09EFD /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEF480661C925D6D00B09EFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEF480711C925D6D00B09EFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EEF4804C1C925D6D00B09EFD = {
+			isa = PBXGroup;
+			children = (
+				EEF480861C92719600B09EFD /* Alamofire.framework */,
+				EEF480571C925D6D00B09EFD /* SaleWatcher */,
+				EEF4806C1C925D6D00B09EFD /* SaleWatcherTests */,
+				EEF480771C925D6D00B09EFD /* SaleWatcherUITests */,
+				EEF480561C925D6D00B09EFD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EEF480561C925D6D00B09EFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EEF480551C925D6D00B09EFD /* SaleWatcher.app */,
+				EEF480691C925D6D00B09EFD /* SaleWatcherTests.xctest */,
+				EEF480741C925D6D00B09EFD /* SaleWatcherUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EEF480571C925D6D00B09EFD /* SaleWatcher */ = {
+			isa = PBXGroup;
+			children = (
+				EEF480581C925D6D00B09EFD /* AppDelegate.swift */,
+				EEF4805A1C925D6D00B09EFD /* ViewController.swift */,
+				EEF480891C92724A00B09EFD /* Scanner.swift */,
+				EED15E531C928BAC00FB0D81 /* StringExtractor.swift */,
+				EEF4805C1C925D6D00B09EFD /* Main.storyboard */,
+				EEF4805F1C925D6D00B09EFD /* Assets.xcassets */,
+				EEF480611C925D6D00B09EFD /* LaunchScreen.storyboard */,
+				EEF480641C925D6D00B09EFD /* Info.plist */,
+			);
+			path = SaleWatcher;
+			sourceTree = "<group>";
+		};
+		EEF4806C1C925D6D00B09EFD /* SaleWatcherTests */ = {
+			isa = PBXGroup;
+			children = (
+				EEF4806D1C925D6D00B09EFD /* SaleWatcherTests.swift */,
+				EEF4806F1C925D6D00B09EFD /* Info.plist */,
+			);
+			path = SaleWatcherTests;
+			sourceTree = "<group>";
+		};
+		EEF480771C925D6D00B09EFD /* SaleWatcherUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EEF480781C925D6D00B09EFD /* SaleWatcherUITests.swift */,
+				EEF4807A1C925D6D00B09EFD /* Info.plist */,
+			);
+			path = SaleWatcherUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EEF480541C925D6D00B09EFD /* SaleWatcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEF4807D1C925D6D00B09EFD /* Build configuration list for PBXNativeTarget "SaleWatcher" */;
+			buildPhases = (
+				EEF480511C925D6D00B09EFD /* Sources */,
+				EEF480521C925D6D00B09EFD /* Frameworks */,
+				EEF480531C925D6D00B09EFD /* Resources */,
+				EEF4808B1C9274B900B09EFD /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SaleWatcher;
+			productName = SaleWatcher;
+			productReference = EEF480551C925D6D00B09EFD /* SaleWatcher.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EEF480681C925D6D00B09EFD /* SaleWatcherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEF480801C925D6D00B09EFD /* Build configuration list for PBXNativeTarget "SaleWatcherTests" */;
+			buildPhases = (
+				EEF480651C925D6D00B09EFD /* Sources */,
+				EEF480661C925D6D00B09EFD /* Frameworks */,
+				EEF480671C925D6D00B09EFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EEF4806B1C925D6D00B09EFD /* PBXTargetDependency */,
+			);
+			name = SaleWatcherTests;
+			productName = SaleWatcherTests;
+			productReference = EEF480691C925D6D00B09EFD /* SaleWatcherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EEF480731C925D6D00B09EFD /* SaleWatcherUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEF480831C925D6D00B09EFD /* Build configuration list for PBXNativeTarget "SaleWatcherUITests" */;
+			buildPhases = (
+				EEF480701C925D6D00B09EFD /* Sources */,
+				EEF480711C925D6D00B09EFD /* Frameworks */,
+				EEF480721C925D6D00B09EFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EEF480761C925D6D00B09EFD /* PBXTargetDependency */,
+			);
+			name = SaleWatcherUITests;
+			productName = SaleWatcherUITests;
+			productReference = EEF480741C925D6D00B09EFD /* SaleWatcherUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EEF4804D1C925D6D00B09EFD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Liwei Zhang";
+				TargetAttributes = {
+					EEF480541C925D6D00B09EFD = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 4LRPEBVABG;
+					};
+					EEF480681C925D6D00B09EFD = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = EEF480541C925D6D00B09EFD;
+					};
+					EEF480731C925D6D00B09EFD = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = EEF480541C925D6D00B09EFD;
+					};
+				};
+			};
+			buildConfigurationList = EEF480501C925D6D00B09EFD /* Build configuration list for PBXProject "SaleWatcher" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EEF4804C1C925D6D00B09EFD;
+			productRefGroup = EEF480561C925D6D00B09EFD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EEF480541C925D6D00B09EFD /* SaleWatcher */,
+				EEF480681C925D6D00B09EFD /* SaleWatcherTests */,
+				EEF480731C925D6D00B09EFD /* SaleWatcherUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EEF480531C925D6D00B09EFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEF480631C925D6D00B09EFD /* LaunchScreen.storyboard in Resources */,
+				EEF480601C925D6D00B09EFD /* Assets.xcassets in Resources */,
+				EEF4805E1C925D6D00B09EFD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEF480671C925D6D00B09EFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEF480721C925D6D00B09EFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EEF4808B1C9274B900B09EFD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EEF480511C925D6D00B09EFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEF4805B1C925D6D00B09EFD /* ViewController.swift in Sources */,
+				EEF4808A1C92724A00B09EFD /* Scanner.swift in Sources */,
+				EEF480591C925D6D00B09EFD /* AppDelegate.swift in Sources */,
+				EED15E541C928BAC00FB0D81 /* StringExtractor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEF480651C925D6D00B09EFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEF4806E1C925D6D00B09EFD /* SaleWatcherTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEF480701C925D6D00B09EFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEF480791C925D6D00B09EFD /* SaleWatcherUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EEF4806B1C925D6D00B09EFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEF480541C925D6D00B09EFD /* SaleWatcher */;
+			targetProxy = EEF4806A1C925D6D00B09EFD /* PBXContainerItemProxy */;
+		};
+		EEF480761C925D6D00B09EFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEF480541C925D6D00B09EFD /* SaleWatcher */;
+			targetProxy = EEF480751C925D6D00B09EFD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EEF4805C1C925D6D00B09EFD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEF4805D1C925D6D00B09EFD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EEF480611C925D6D00B09EFD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEF480621C925D6D00B09EFD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EEF4807B1C925D6D00B09EFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EEF4807C1C925D6D00B09EFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EEF4807E1C925D6D00B09EFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = SaleWatcher/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.SaleWatcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		EEF4807F1C925D6D00B09EFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = SaleWatcher/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.SaleWatcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		EEF480811C925D6D00B09EFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SaleWatcherTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.SaleWatcherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaleWatcher.app/SaleWatcher";
+			};
+			name = Debug;
+		};
+		EEF480821C925D6D00B09EFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SaleWatcherTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.SaleWatcherTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaleWatcher.app/SaleWatcher";
+			};
+			name = Release;
+		};
+		EEF480841C925D6D00B09EFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SaleWatcherUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.SaleWatcherUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SaleWatcher;
+			};
+			name = Debug;
+		};
+		EEF480851C925D6D00B09EFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SaleWatcherUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.remolet.SaleWatcherUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SaleWatcher;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EEF480501C925D6D00B09EFD /* Build configuration list for PBXProject "SaleWatcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEF4807B1C925D6D00B09EFD /* Debug */,
+				EEF4807C1C925D6D00B09EFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEF4807D1C925D6D00B09EFD /* Build configuration list for PBXNativeTarget "SaleWatcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEF4807E1C925D6D00B09EFD /* Debug */,
+				EEF4807F1C925D6D00B09EFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEF480801C925D6D00B09EFD /* Build configuration list for PBXNativeTarget "SaleWatcherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEF480811C925D6D00B09EFD /* Debug */,
+				EEF480821C925D6D00B09EFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEF480831C925D6D00B09EFD /* Build configuration list for PBXNativeTarget "SaleWatcherUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEF480841C925D6D00B09EFD /* Debug */,
+				EEF480851C925D6D00B09EFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EEF4804D1C925D6D00B09EFD /* Project object */;
+}

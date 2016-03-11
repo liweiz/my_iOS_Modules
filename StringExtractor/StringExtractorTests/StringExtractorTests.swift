@@ -44,7 +44,7 @@ class StirngExtractorTests: XCTestCase {
             let testName: String
             let fromString: String
             let dividersAndStringLocators: [(String, (String, String)?)]
-            let size: String
+            let specifications: [String: String]
             let seller: String
             let expectedOutput: [Item]
         }
@@ -55,20 +55,20 @@ class StirngExtractorTests: XCTestCase {
                 dividersAndStringLocators: [(footlockerShoeNamePoint,
                     (footlockerShoeNameStart, footlockerShoeNameEnd)),
                     (footlockerShoeOriginalPricePoint, nil), (footlockerShoeSalePricePoint, nil)],
-                size: "9.5",
+                specifications: ["size": "9.5"],
                 seller: "footlocker",
                 expectedOutput: [
                     Item(
                         name: "Nike LeBron Zoom Soldier IX  - Men's - Blue / White",
                         originalPrice: "165.00",
                         salePrice: "139.99",
-                        size: "9.5",
+                        specifications: ["size": "9.5"],
                         seller: "footlocker"),
                     Item(
                         name: "Nike Air Visi Pro IV  - Men's - Grey / Black",
                         originalPrice: "94.99",
                         salePrice: "79.99",
-                        size: "9.5",
+                        specifications: ["size": "9.5"],
                         seller: "footlocker")])
         ]
         for t in toTests {
@@ -76,32 +76,32 @@ class StirngExtractorTests: XCTestCase {
             XCTAssertEqual(allItems(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller)[0].name, t.expectedOutput[0].name)
             XCTAssertEqual(allItems(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller)[1].name, t.expectedOutput[1].name)
             XCTAssertEqual(allItems(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller)[0].originalPrice, t.expectedOutput[0].originalPrice)
             XCTAssertEqual(allItems(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller)[1].originalPrice, t.expectedOutput[1].originalPrice)
             XCTAssertEqual(allItems(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller)[0].salePrice, t.expectedOutput[0].salePrice)
             XCTAssertEqual(allItems(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller)[1].salePrice, t.expectedOutput[1].salePrice)
             print("TEST_NAME: " + t.testName + " *** END")
         }
@@ -112,7 +112,7 @@ class StirngExtractorTests: XCTestCase {
             let testName: String
             let fromString: String
             let dividersAndStringLocators: [(String, (String, String)?)]
-            let size: String
+            let specifications: [String: String]
             let seller: String
             let expectedOutput: Item?
         }
@@ -123,13 +123,13 @@ class StirngExtractorTests: XCTestCase {
                 dividersAndStringLocators: [(footlockerShoeNamePoint,
                     (footlockerShoeNameStart, footlockerShoeNameEnd)),
                     (footlockerShoeOriginalPricePoint, nil), (footlockerShoeSalePricePoint, nil)],
-                size: "9.5",
+                specifications: ["size": "9.5"],
                 seller: "footlocker",
                 expectedOutput: Item(
                     name: "Nike LeBron Zoom Soldier IX  - Men's - Blue / White",
                     originalPrice: "167.00",
                     salePrice: "139.99",
-                    size: "9.5",
+                    specifications: ["size": "9.5"],
                     seller: "footlocker"))
         ]
         for t in toTests {
@@ -137,27 +137,27 @@ class StirngExtractorTests: XCTestCase {
             XCTAssertEqual(item(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller).0?.name, t.expectedOutput?.name)
             XCTAssertEqual(item(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller).0?.originalPrice, t.expectedOutput?.originalPrice)
             XCTAssertEqual(item(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller).0?.salePrice, t.expectedOutput?.salePrice)
+            XCTAssertEqual((item(
+                t.fromString,
+                dividersAndStringLocators: t.dividersAndStringLocators,
+                specifications: t.specifications,
+                seller: t.seller).0?.specifications)!, (t.expectedOutput?.specifications)!)
             XCTAssertEqual(item(
                 t.fromString,
                 dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
-                seller: t.seller).0?.size, t.expectedOutput?.size)
-            XCTAssertEqual(item(
-                t.fromString,
-                dividersAndStringLocators: t.dividersAndStringLocators,
-                size: t.size,
+                specifications: t.specifications,
                 seller: t.seller).0?.seller, t.expectedOutput?.seller)
             print("TEST_NAME: " + t.testName + " *** END")
         }
