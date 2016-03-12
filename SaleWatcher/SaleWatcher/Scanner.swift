@@ -65,11 +65,9 @@ struct scanner {
         Alamofire.request(.GET, url).responseString(completionHandler: {
             if $0.result.isSuccess {
                 if let stringReturned = $0.result.value {
-                    for i in allItems(stringReturned, dividersAndStringLocators: self.dividersAndStringLocators, specifications: self.specifications, seller: self.seller) {
-                        try! realm.write {
-                            realm.add(itemToModel(i))
-                        }
-                    }
+                    let items = allItems(stringReturned, dividersAndStringLocators: self.dividersAndStringLocators, specifications: self.specifications, seller: self.seller)
+                    handleItems(items, seller: self.seller, db: realm)
+                    print(items)
                 } else {
                     print("Error: no string received for " + self.seller)
                 }
@@ -77,6 +75,17 @@ struct scanner {
                 print("Error: request failed for " + self.seller)
             }
         })
+    }
+}
+
+func handleItems(items: [Item], seller: String, db: Realm) {
+    let itemsToSave = items.map { itemToModel($0) }
+    itemsToSave.forEach { $0.setupAlreadyInDb(realm) }
+    clearAllItems(seller)
+    itemsToSave.forEach {x in
+        try! db.write {
+            db.add(x)
+        }
     }
 }
 
@@ -107,4 +116,22 @@ func itemToModel(item: Item) -> ItemOnSale {
     return i
 }
 
-func findItem
+func clearAllItems(fromSeller: String) {
+    for i in findItems(fromSeller) {
+        try! realm.write {
+            realm.delete(i)
+        }
+    }
+}
+
+func findItems(fromSeller: String) -> Results<ItemOnSale> {
+    let condition = "seller = '" + fromSeller + "'"
+    return realm.objects(ItemOnSale).filter(condition)
+}
+
+func sameItemFound(fromSeller: String, name: String, specifications: String) -> Bool {
+    let condition = "seller = '" + fromSeller + "' AND name = '" + name + "' AND specifications = '" + specifications + "'"
+    return realm.objects(ItemOnSale).filter(condition).count > 0 ? true : false
+}
+
+
