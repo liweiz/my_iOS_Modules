@@ -10,8 +10,6 @@ import Foundation
 import Alamofire
 import RealmSwift
 
-let realm = try! Realm()
-
 func scanner_Lego() -> scanner {
     let url = "http://shop.lego.com/en-CA/Sales-And-Deals"
     let namePoint = "Quick View" // Look for "title" follows.
@@ -56,7 +54,6 @@ struct scanner {
     let seller: String
     let specifications: [String: String]
     
-    
     let dividersAndStringLocators: [(String, (String, String)?)]
     
 //    var scanIntervalInSec = 600
@@ -87,51 +84,8 @@ func handleItems(items: [Item], seller: String, db: Realm) {
             db.add(x)
         }
     }
+    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "scan done", object: nil))
 }
 
-func itemToModel(item: Item) -> ItemOnSale {
-    let i = ItemOnSale()
-    i.name = item.name
-    i.originalPrice = item.originalPrice
-    i.salePrice = item.salePrice
-    i.seller = item.seller
-    var s = ""
-    var n = 1
-    for k in item.specifications.keys {
-        if k != "" && item.specifications[k] != nil {
-            s.appendContentsOf(k)
-            s.appendContentsOf(": ")
-            s.appendContentsOf(item.specifications[k]!)
-            if n == item.specifications.keys.count {
-                s.appendContentsOf(".")
-            } else {
-                s.appendContentsOf(", ")
-            }
-        }
-        n += 1
-    }
-    i.specifications = s
-    i.discount = item.discount ?? 0
-    i.timestamp = NSDate().timeIntervalSince1970
-    return i
-}
-
-func clearAllItems(fromSeller: String) {
-    for i in findItems(fromSeller) {
-        try! realm.write {
-            realm.delete(i)
-        }
-    }
-}
-
-func findItems(fromSeller: String) -> Results<ItemOnSale> {
-    let condition = "seller = '" + fromSeller + "'"
-    return realm.objects(ItemOnSale).filter(condition)
-}
-
-func sameItemFound(fromSeller: String, name: String, specifications: String) -> Bool {
-    let condition = "seller = '" + fromSeller + "' AND name = '" + name + "' AND specifications = '" + specifications + "'"
-    return realm.objects(ItemOnSale).filter(condition).count > 0 ? true : false
-}
 
 

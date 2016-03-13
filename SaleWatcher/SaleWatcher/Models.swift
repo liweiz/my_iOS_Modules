@@ -23,3 +23,16 @@ class ItemOnSale: Object {
         alreadyInDb = sameItemFound(seller, name: name, specifications: specifications) ? true : false
     }
 }
+
+func itemsFromDb(db: Realm) -> [String: [ItemOnSale]] {
+    var r = [String: [ItemOnSale]]()
+    let items = db.objects(ItemOnSale)
+    let sellers = Set(items.map { $0.seller })
+    for s in sellers {
+        let condition = "name = '" + s + "'"
+        var i = [ItemOnSale]()
+        items.filter(condition).forEach { i.append($0) }
+        r[s] = i
+    }
+    return r
+}

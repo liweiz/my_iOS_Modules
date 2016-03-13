@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import RealmSwift
 
 //func tableViewController(rect: CGRect) -> UITableViewController {
 //    var ctl = UITableViewController(style: UITableViewStyle.Plain)
@@ -18,7 +18,6 @@ import UIKit
 //    return ctl
 //}
 
-
 class TableViewController: UITableViewController {
     override func loadView() {
         if tableView == nil {
@@ -26,15 +25,40 @@ class TableViewController: UITableViewController {
             tableView.delegate = self
             tableView.dataSource = self
         }
+        refreshItems(realm)
         tableView.reloadData()
     }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        <#code#>
+    let sellers = ["Foot Locker", "Nike", "Lego"]
+    var sellersAvailable: [String] {
+        return sellers.filter { items.keys.contains($0) }
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        <#code#>
+    var items = [String: [ItemOnSale]]()
+    func refreshItems(db: Realm) {
+        items = itemsFromDb(db)
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return items.keys.count
     }
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sellersAvailable[section]
+    }
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (items[sellersAvailable[section]]?.count)!
+    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cellIdentifier = "aCell"
+        let cell: UITableViewCell
+        if let c = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
+            cell = c
+        } else {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellIdentifier)
+        }
+        let i = items[sellersAvailable[indexPath.section]]![indexPath.row]
+        cell.textLabel?.text = i.name + " " + i.specifications
+        cell.detailTextLabel?.text = String(i.discount) + " " + i.salePrice + " " + i.originalPrice
+        cell.backgroundColor = i.alreadyInDb ? UIColor.clearColor() : UIColor.greenColor()
+        return cell
+    }
+    
 }

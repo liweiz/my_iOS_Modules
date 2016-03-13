@@ -10,6 +10,7 @@
 		EEAC0BC41C9334C800B61967 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAC0BC31C9334C800B61967 /* TableViewController.swift */; };
 		EEAC0BC61C93671200B61967 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEAC0BC51C93671200B61967 /* RealmSwift.framework */; };
 		EEAC0BC81C93677D00B61967 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAC0BC71C93677D00B61967 /* Models.swift */; };
+		EEAC0BCA1C93FE7300B61967 /* DBHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAC0BC91C93FE7300B61967 /* DBHandler.swift */; };
 		EED15E561C9292E600FB0D81 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED15E551C9292E600FB0D81 /* StringExtractor.swift */; };
 		EEF480591C925D6D00B09EFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480581C925D6D00B09EFD /* AppDelegate.swift */; };
 		EEF4805B1C925D6D00B09EFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4805A1C925D6D00B09EFD /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 		EEAC0BC31C9334C800B61967 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		EEAC0BC51C93671200B61967 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		EEAC0BC71C93677D00B61967 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		EEAC0BC91C93FE7300B61967 /* DBHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBHandler.swift; sourceTree = "<group>"; };
 		EED15E551C9292E600FB0D81 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
 		EEF480551C925D6D00B09EFD /* SaleWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaleWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF480581C925D6D00B09EFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				EEAC0BC71C93677D00B61967 /* Models.swift */,
 				EEAC0BC31C9334C800B61967 /* TableViewController.swift */,
 				EEF480891C92724A00B09EFD /* Scanner.swift */,
+				EEAC0BC91C93FE7300B61967 /* DBHandler.swift */,
 				EED15E551C9292E600FB0D81 /* StringExtractor.swift */,
 				EEF4805C1C925D6D00B09EFD /* Main.storyboard */,
 				EEF4805F1C925D6D00B09EFD /* Assets.xcassets */,
@@ -297,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEF4805B1C925D6D00B09EFD /* ViewController.swift in Sources */,
+				EEAC0BCA1C93FE7300B61967 /* DBHandler.swift in Sources */,
 				EEAC0BC41C9334C800B61967 /* TableViewController.swift in Sources */,
 				EEF4808A1C92724A00B09EFD /* Scanner.swift in Sources */,
 				EEAC0BC81C93677D00B61967 /* Models.swift in Sources */,
