@@ -20,6 +20,7 @@ import RealmSwift
 
 class TableViewController: UITableViewController {
     override func loadView() {
+        super.loadView()
         if tableView == nil {
             tableView = UITableView(frame: UIScreen.mainScreen().bounds, style: UITableViewStyle.Plain)
             tableView.delegate = self

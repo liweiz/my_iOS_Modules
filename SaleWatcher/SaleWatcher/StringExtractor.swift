@@ -47,7 +47,6 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
 
 // item return the first item fully found in the string and the last string left for further process. If there is absolute nothing (dividersAndStringLocators return all nil or name's counterpart not found) can be found or no more string to dig ("" returned as the string), return the string part of return value as nil. If only part of the item can be found, return a nil Item and the string after the name divider.
 func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], specifications: [String: String], seller: String) -> (Item?, String?) {
-    print("item called")
     if dividersAndStringLocators.count > 0 {
         var item = Item()
         var numberA: NumberInDigits? = nil
@@ -64,7 +63,6 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
             guard let s = aString else {
                 return (nil, nil)
             }
-//            print("HTML Divided: " + s)
             if let aLocator = locators[i] {
                 guard let name = s.stirngWithoutHeadTailWhitespaceBetween(aLocator.0, end: aLocator.1) else {
                     return (nil, stringLeft)
@@ -74,7 +72,6 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
                 guard let n = s.findNumber() else {
                     return (nil, stringLeft)
                 }
-//                print(n)
                 numberA == nil ? (numberA = n) : (numberB = n)
             }
             i += 1
@@ -218,7 +215,6 @@ struct NumberInDigits {
                 result += Float(d)! * powf(0.1, Float(j))
                 j += 1
             }
-//            print("result: ", result)
             return result
         }
         return nil

@@ -52,6 +52,6 @@ func findItems(fromSeller: String) -> Results<ItemOnSale> {
 }
 
 func sameItemFound(fromSeller: String, name: String, specifications: String) -> Bool {
-    let condition = "seller = '" + fromSeller + "' AND name = '" + name + "' AND specifications = '" + specifications + "'"
-    return realm.objects(ItemOnSale).filter(condition).count > 0 ? true : false
+    let predicate = NSPredicate(format: "seller = %@ AND name = %@ AND specifications = %@", fromSeller, name, specifications)
+    return realm.objects(ItemOnSale).filter(predicate).count > 0 ? true : false
 }
