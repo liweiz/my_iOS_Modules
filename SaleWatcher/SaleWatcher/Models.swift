@@ -18,6 +18,7 @@ class ItemOnSale: Object {
     dynamic var specifications: String = ""
     dynamic var timestamp: Double = 0
     dynamic var alreadyInDb: Bool = false
+    dynamic var shownBefore: Bool = false
     
     func setupAlreadyInDb(db: Realm) {
         alreadyInDb = sameItemFound(seller, name: name, specifications: specifications) ? true : false

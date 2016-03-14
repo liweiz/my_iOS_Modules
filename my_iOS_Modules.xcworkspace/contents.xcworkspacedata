@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:TimeWorker/TimeWorker.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:SaleWatcher/SaleWatcher.xcodeproj">
    </FileRef>
    <FileRef

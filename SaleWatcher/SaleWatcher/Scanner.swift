@@ -10,6 +10,12 @@ import Foundation
 import Alamofire
 import RealmSwift
 
+func scanAll() {
+    scanner_FootLocker_men_95_performance_basketball_shoes().scan()
+    scanner_Lego().scan()
+    scanner_Nike_men_95_running_shoes().scan()
+}
+
 func scanner_Lego() -> scanner {
     let url = "http://shop.lego.com/en-CA/Sales-And-Deals"
     let namePoint = "Quick View" // Look for "title" follows.

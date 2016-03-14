@@ -11,14 +11,18 @@ import Alamofire
 
 class ViewController: UIViewController {
     var tableViewController: UITableViewController? = nil
-    
+    var timer: NSTimer? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        scanner_FootLocker_men_95_performance_basketball_shoes().scan()
-        scanner_Lego().scan()
-        scanner_Nike_men_95_running_shoes().scan()
-        
+        scanAll()
+        if timer == nil {
+            if let n = nextTime(["0", "10", "20", "30", "40", "50"]) {
+                timer = NSTimer(fireDate: n, interval: 10 * 60, target: self, selector: #selector(scan), userInfo: nil, repeats: true)
+            } else {
+                print("nextTime Error")
+            }
+        }
         if tableViewController == nil {
             tableViewController = TableViewController(style: UITableViewStyle.Plain)
             addChildViewController(tableViewController!)
@@ -31,14 +35,13 @@ class ViewController: UIViewController {
         }
         
     }
-
+    func scan() {
+        scanAll()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-
 }
 
 

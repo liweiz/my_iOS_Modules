@@ -10,14 +10,6 @@ import Foundation
 import UIKit
 import RealmSwift
 
-//func tableViewController(rect: CGRect) -> UITableViewController {
-//    var ctl = UITableViewController(style: UITableViewStyle.Plain)
-//    ctl.refreshControl = UIRefreshControl()
-//    ctl.tableView = UITableView(frame: rect)
-//    ctl.
-//    return ctl
-//}
-
 class TableViewController: UITableViewController {
     override func loadView() {
         super.loadView()
