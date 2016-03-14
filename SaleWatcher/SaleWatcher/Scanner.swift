@@ -83,7 +83,8 @@ struct scanner {
 
 func handleItems(items: [Item], seller: String, db: Realm) {
     let itemsToSave = items.map { itemToModel($0) }
-    itemsToSave.forEach { $0.setupAlreadyInDb(realm) }
+//    itemsToSave.forEach { $0.setupAlreadyInDb(realm) }
+    itemsToSave.forEach { $0.setupShownBefore(realm) }
     clearAllItems(seller)
     itemsToSave.forEach {x in
         try! db.write {

@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        setupIconBadge()
         scanAll()
         if timer == nil {
             if let n = nextTime(["0", "10", "20", "30", "40", "50"]) {
@@ -44,6 +45,10 @@ class ViewController: UIViewController {
     }
 }
 
+func setupIconBadge() {
+    UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil
+        ))
+}
 
 
 

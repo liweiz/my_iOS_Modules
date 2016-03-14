@@ -50,8 +50,12 @@ class TableViewController: UITableViewController {
         let i = items[sellersAvailable[indexPath.section]]![indexPath.row]
         cell.textLabel?.text = i.name + " " + i.specifications
         cell.detailTextLabel?.text = String(i.discount) + " " + i.salePrice + " " + i.originalPrice
-        cell.backgroundColor = i.alreadyInDb ? UIColor.clearColor() : UIColor.greenColor()
+        cell.backgroundColor = i.shownBefore ? UIColor.clearColor() : UIColor.greenColor()
         return cell
     }
-    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let i = (items[sellersAvailable[indexPath.section]])![indexPath.row]
+        markAsShown(realm, obj: i)
+        tableView.cellForRowAtIndexPath(indexPath)!.backgroundColor = UIColor.clearColor()
+    }
 }
