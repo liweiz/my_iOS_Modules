@@ -11,12 +11,15 @@ import Alamofire
 import RealmSwift
 
 func scanAll() {
-    scanner_FootLocker_men_95_performance_basketball_shoes().scan()
+    scanner_FootLocker_men_95_performance_running_shoes_Nike().scan()
+    scanner_FootLocker_men_95_classic_basketball_shoes_Jordan().scan()
+    scanner_FootLocker_men_100_performance_basketball_shoes_Nike().scan()
+    scanner_FootLocker_men_95_performance_basketball_shoes_Nike().scan()
     scanner_Lego().scan()
     scanner_Nike_men_95_running_shoes().scan()
 }
 
-func scanner_Lego() -> scanner {
+func scanner_Lego() -> Scanner {
     let url = "http://shop.lego.com/en-CA/Sales-And-Deals"
     let namePoint = "Quick View" // Look for "title" follows.
     let originalPricePoint = "was-price"
@@ -26,11 +29,30 @@ func scanner_Lego() -> scanner {
     let nameEnd = "\" href=\""
     
     let dividersAndStringLocators: [(String, (String, String)?)] = [(namePoint, (nameStart, nameEnd)), (originalPricePoint, nil), (salePricePoint, nil)]
-    return scanner(url: url, seller: "Lego", specifications: ["": ""], dividersAndStringLocators: dividersAndStringLocators)
+    return Scanner(url: url, seller: "Lego", specifications: ["": ""], dividersAndStringLocators: dividersAndStringLocators)
 }
 
-func scanner_FootLocker_men_95_performance_basketball_shoes() -> scanner {
+func scanner_FootLocker_men_95_performance_running_shoes_Nike() -> Scanner {
+    let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Running-Shoes/_-_/N-1z141w4Z24ZzzZrjZgrZca"
+    return scanner_FootLocker_shoe("9.5", urlToScan: url)
+}
+
+func scanner_FootLocker_men_95_classic_basketball_shoes_Jordan() -> Scanner {
+    let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Jordan/Shoes/Classic-Basketball-Shoes/_-_/N-1z141w4Z24Z11cZrjZ1ssZca"
+    return scanner_FootLocker_shoe("9.5", urlToScan: url)
+}
+
+func scanner_FootLocker_men_100_performance_basketball_shoes_Nike() -> Scanner {
+    let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Basketball-Shoes/_-_/N-1z141w4Z24ZzzZrjZseZ5v"
+    return scanner_FootLocker_shoe("10.0", urlToScan: url)
+}
+
+func scanner_FootLocker_men_95_performance_basketball_shoes_Nike() -> Scanner {
     let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Basketball-Shoes/_-_/N-1z141w4Z24ZzzZrjZseZca"
+    return scanner_FootLocker_shoe("9.5", urlToScan: url)
+}
+
+func scanner_FootLocker_shoe(sizeToScan: String, urlToScan: String) -> Scanner {
     let namePoint = "quickviewEnabled" // Look for "title" follows.
     let originalPricePoint = "product_price"
     let salePricePoint = "<B>Now"
@@ -39,11 +61,20 @@ func scanner_FootLocker_men_95_performance_basketball_shoes() -> scanner {
     let nameEnd = "\" href="
     
     let dividersAndStringLocators: [(String, (String, String)?)] = [(namePoint, (nameStart, nameEnd)), (originalPricePoint, nil), (salePricePoint, nil)]
-    return scanner(url: url, seller: "Foot Locker", specifications: ["size": "9.5"], dividersAndStringLocators: dividersAndStringLocators)
+    return Scanner(url: urlToScan, seller: "Foot Locker", specifications: ["size": sizeToScan], dividersAndStringLocators: dividersAndStringLocators)
 }
 
-func scanner_Nike_men_95_running_shoes() -> scanner {
+func scanner_Nike_men_95_basketball_shoes() -> Scanner {
+    let url = ""
+    return scanner_Nike_shoe("9.5", urlToScan: url)
+}
+
+func scanner_Nike_men_95_running_shoes() -> Scanner {
     let url = "http://store.nike.com/ca/en_gb/pw/mens-sale-running-shoes/47Z60wZ7puZ8yzZoi3"
+    return scanner_Nike_shoe("9.5", urlToScan: url)
+}
+
+func scanner_Nike_shoe(sizeToScan: String, urlToScan: String) -> Scanner {
     let namePoint = "grid-item-info" // Look for "title" follows.
     let originalPricePoint = "<span class=\"overridden nsg-font-family--base\">"
     let salePricePoint = "<span class=\"local nsg-font-family--base\">"
@@ -52,10 +83,10 @@ func scanner_Nike_men_95_running_shoes() -> scanner {
     let nameEnd = "</p>"
     
     let dividersAndStringLocators: [(String, (String, String)?)] = [(namePoint, (nameStart, nameEnd)), (originalPricePoint, nil), (salePricePoint, nil)]
-    return scanner(url: url, seller: "Nike", specifications: ["size": "9.5"], dividersAndStringLocators: dividersAndStringLocators)
+    return Scanner(url: urlToScan, seller: "Nike", specifications: ["size": sizeToScan], dividersAndStringLocators: dividersAndStringLocators)
 }
 
-struct scanner {
+struct Scanner {
     let url: String
     let seller: String
     let specifications: [String: String]

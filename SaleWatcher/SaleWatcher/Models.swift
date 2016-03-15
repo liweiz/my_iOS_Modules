@@ -42,6 +42,9 @@ func itemsFromDb(db: Realm) -> [String: [ItemOnSale]] {
         items.filter(condition).forEach { i.append($0) }
         r[s] = i
     }
+    // BUG here, should not remove all all existing items every time.
+    print("itemsFromDb: "); print(r["Foot Locker"])
+    
     UIApplication.sharedApplication().applicationIconBadgeNumber = items.filter { $0.shownBefore == false }.count
     return r
 }

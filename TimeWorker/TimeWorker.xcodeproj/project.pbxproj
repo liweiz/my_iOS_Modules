@@ -99,9 +99,9 @@
 		EEC11B631C9657C700AAD931 /* TimeWorker */ = {
 			isa = PBXGroup;
 			children = (
-				EEC11B921C9657E100AAD931 /* TimeWorker.swift */,
 				EEC11B641C9657C700AAD931 /* AppDelegate.swift */,
 				EEC11B661C9657C700AAD931 /* ViewController.swift */,
+				EEC11B921C9657E100AAD931 /* TimeWorker.swift */,
 				EEC11B681C9657C700AAD931 /* Main.storyboard */,
 				EEC11B6B1C9657C700AAD931 /* Assets.xcassets */,
 				EEC11B6D1C9657C700AAD931 /* LaunchScreen.storyboard */,
@@ -486,6 +486,7 @@
 				EEC11B8B1C9657C800AAD931 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEC11B8C1C9657C800AAD931 /* Build configuration list for PBXNativeTarget "TimeWorkerTests" */ = {
 			isa = XCConfigurationList;
@@ -494,6 +495,7 @@
 				EEC11B8E1C9657C800AAD931 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EEC11B8F1C9657C800AAD931 /* Build configuration list for PBXNativeTarget "TimeWorkerUITests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +504,7 @@
 				EEC11B911C9657C800AAD931 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

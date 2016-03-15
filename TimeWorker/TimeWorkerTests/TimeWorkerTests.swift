@@ -26,6 +26,28 @@ class TimeWorkerTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testNextMinuteDigit() {
+        struct Test {
+            let testName: String
+            let currentMin: Int
+            let minPresets: [Int]
+            let expectedOutput: Int
+        }
+        let minPresets = [0, 20, 40, 45, 55]
+        let toTestExpectingNoError = [
+            Test(testName: "nextMinuteDigit *** NoError, greater digit found", currentMin: 43, minPresets: minPresets, expectedOutput: 45),
+            Test(testName: "nextMinuteDigit *** NoError, less digit found", currentMin: 56, minPresets: minPresets, expectedOutput: 0),
+            Test(testName: "nextMinuteDigit *** NoError, digit from preset", currentMin: 20, minPresets: minPresets, expectedOutput: 40)
+        ]
+        var i = 0
+        for t in toTestExpectingNoError {
+            print("TEST_NAME [\(i)]: " + t.testName + " *** START")
+            XCTAssertEqual(try! nextMinuteDigit(t.currentMin, minPresets: t.minPresets), t.expectedOutput)
+            print("TEST_NAME [\(i)]: " + t.testName + " *** END")
+            i += 1
+        }
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock {
