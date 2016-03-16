@@ -49,4 +49,3 @@ func nextMinuteDigit(currentMin: Int, minPresets: [Int]) throws -> Int {
     if let shortestDistance = (differencesInMin.filter { $0 > 0 }).minElement() { return currentMin + shortestDistance }
     return minPresets.first!
 }
-

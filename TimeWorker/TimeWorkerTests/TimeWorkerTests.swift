@@ -21,11 +21,6 @@ class TimeWorkerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
     func testWhenIsNextTime() {
         let fromTimeComponent = NSDateComponents()
         fromTimeComponent.year = 2016
@@ -78,7 +73,7 @@ class TimeWorkerTests: XCTestCase {
         let toTestExpectingError = [
             Test(testName: "Error, empty Presets input", fromTime: NSDate(), amongMinutePresets: [], delayedBy: 0, expectedOutput: nil, expectedError: TimeError.InvalidInput("Invalid input: preset minute digit array should not be empty")),
             Test(testName: "Error, out of range input", fromTime: NSDate(), amongMinutePresets: ["60"], delayedBy: 0, expectedOutput: nil, expectedError: TimeError.InvalidInput("Invalid input: minute digit: 60")),
-            Test(testName: "Error, amongMinutePresets not convertible to [Int] from [String]", fromTime: NSDate(), amongMinutePresets: ["60"], delayedBy: 0, expectedOutput: nil, expectedError: TimeError.InvalidInput("Invalid input: preset minute digit array failed to be converted to [Int]"))
+            Test(testName: "Error, amongMinutePresets not convertible to [Int] from [String]", fromTime: NSDate(), amongMinutePresets: ["0,"], delayedBy: 0, expectedOutput: nil, expectedError: TimeError.InvalidInput("Invalid input: preset minute digit array failed to be converted to [Int]"))
         ]
         var j = 0
         for t in toTestExpectingError {
