@@ -94,6 +94,9 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
 }
 
 extension String {
+    enum StringError: ErrorType {
+        case String
+    }
     func numberInMiddle(start: String, end: String) -> NumberInDigits? {
         return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
     }
@@ -124,11 +127,11 @@ extension String {
         return nil
     }
     // split splits the string into max 3 parts: the heading part, the string that is used to split and the tailing part.
-    func split(byString: String) -> (headingString: String?, tailingString: String?) {
+    func split(byString: String) -> (headingString: String, tailingString: String)? {
         if let range = rangeOfString(byString) {
             return (self[startIndex..<range.startIndex], self[range.endIndex..<endIndex])
         }
-        return (nil, nil)
+        return nil
     }
     
     // findNumber returns the first number found in TBD. The number has to start with with digits in 0...9.

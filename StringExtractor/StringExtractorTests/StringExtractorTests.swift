@@ -22,7 +22,45 @@ let footlockerShoeDividers = [footlockerShoeNamePoint, footlockerShoeOriginalPri
 let Html1Item = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item"
 let Html2Items = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items"
 
+
 class StirngExtractorTests: XCTestCase {
+    
+    let testHead = "TEST_NAME "
+    let testStartNotice = " *** START"
+    let testFuncMultiReturn = " * Return."
+    let testEndNotice = " *** END"
+    
+    func printStart(testFuncName: String, testName: String, testIndex: Int) {
+        print(testHead + "\(i): " + testFuncName + " *** " + testName + testStartNotice)
+    }
+    func printFuncReturn(testName: String, testIndex: Int, returnIndex: Int) {
+        print(testHead + "\(i): " + testFuncName + " *** " + testName + testFuncReturn + "\(returnIndex)")
+    }
+    func printEnd(testFuncName: String, testName: String, testIndex: Int) {
+        print(testHead + "\(i): " + testFuncName + " *** " + testName + testEndNotice)
+    }
+    
+    func testEqualWithLog<T>(expression1: T?, expression2: T?, testFuncName: String, testName: String, testIndex: Int, numberOfReturns: Int = 1) {
+        printStart(testFuncName, testName: testName, testIndex: testIndex)
+        for n in 1...numberOfReturns {
+            if numberOfReturns == 1 {
+                XCTAssertEqual(expression1, expression2)
+            } else {
+                printFuncReturn(testName, testIndex: testIndex, returnIndex: n)
+                switch n {
+                case 1:
+                    XCTAssertEqual(expression1.0, expression2.0)
+                case 2:
+                    XCTAssertEqual(expression1.1, expression2.1)
+                case 3:
+                    XCTAssertEqual(expression1.2, expression2.2)
+                default:
+                    print("ATTENTION: one or more return value(s) are not tested.")
+                }
+            }
+        }
+        printEnd(testFuncName, testName: testName, testIndex: testIndex)
+    }
     
     override func setUp() {
         super.setUp()
@@ -186,23 +224,27 @@ class StirngExtractorTests: XCTestCase {
         struct Tests {
             let testName: String
             let input: String
-            let expectedOutput: (String?, String?)
+            let expectedOutput: (String, String)?
         }
         let stringToTest = "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is."
         let toTests = [
-            Tests(testName: "split *** splitted with both head and tail", input: "like", expectedOutput: ("I ", " to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
-            Tests(testName: "split *** splitted with head only", input: "assertion is.", expectedOutput: ("I like to name my Test Case so it is obvious to see what method is being called and what the ", "")),
-            Tests(testName: "split *** splitted with tail only", input: "I like ", expectedOutput: ("", "to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
-            Tests(testName: "split *** splitted with empty on both sides", input: "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ("", "")),
-            Tests(testName: "split *** splitted with split string not found", input: "dds", expectedOutput: (nil, nil))
+            Tests(testName: "splitted with both head and tail", input: "like", expectedOutput: ("I ", " to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
+            Tests(testName: "splitted with head only", input: "assertion is.", expectedOutput: ("I like to name my Test Case so it is obvious to see what method is being called and what the ", "")),
+            Tests(testName: "splitted with tail only", input: "I like ", expectedOutput: ("", "to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
+            Tests(testName: "splitted with empty on both sides", input: "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ("", "")),
+            Tests(testName: "splitted with split string not found", input: "dds", expectedOutput: nil)
         ]
+        let testFuncName = "split *** "
+        var i = 0
         for t in toTests {
-            print("TEST_NAME: " + t.testName + " *** START")
-            print("TEST_NAME: " + t.testName + " * Return.0")
-            XCTAssertEqual(stringToTest.split(t.input).headingString, t.expectedOutput.0)
-            print("TEST_NAME: " + t.testName + " * Return.1")
-            XCTAssertEqual(stringToTest.split(t.input).tailingString, t.expectedOutput.1)
-            print("TEST_NAME: " + t.testName + " *** END")
+            testEqualWithLog(stringToTest.split(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i, numberOfReturns: 2)
+//            print(testHead + t.testName + " *** START")
+//            print(testHead + t.testName + " * Return.0")
+//            XCTAssertEqual(stringToTest.split(t.input).headingString, t.expectedOutput.0)
+//            print(testHead + t.testName + " * Return.1")
+//            XCTAssertEqual(stringToTest.split(t.input).tailingString, t.expectedOutput.1)
+//            print(testHead + t.testName + " *** END")
+            i += 1
         }
     }
     
