@@ -25,26 +25,22 @@ class StringTestTests: XCTestCase {
     func printEnd(testFuncName: String, testName: String, testIndex: Int) {
         print(testHead + "\(testIndex): " + testFuncName + " *** " + testName + testEndNotice)
     }
-    
-    func testEqualWithLog<T: Equatable>(expression1: T?, expression2: T?, testFuncName: String, testName: String, testIndex: Int, numberOfReturns: Int = 1) {
+    func testNonCollectionEqualWithLog<T: Equatable>(expression1: T?, expression2: T?, testFuncName: String, testName: String, testIndex: Int) {
         printStart(testFuncName, testName: testName, testIndex: testIndex)
-        for n in 1...numberOfReturns {
-            if numberOfReturns == 1 {
-                XCTAssertEqual(expression1, expression2)
-            } else {
-                printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: n)
-                switch n {
-                case 1:
-                    XCTAssertEqual(expression1.0, expression2.0)
-                case 2:
-                    XCTAssertEqual(expression1.1, expression2.1)
-                case 3:
-                    XCTAssertEqual(expression1.2, expression2.2)
-                default:
-                    print("ATTENTION: one or more return value(s) are not tested.")
-                }
-            }
-        }
+        XCTAssertEqual(expression1, expression2)
+        printEnd(testFuncName, testName: testName, testIndex: testIndex)
+    }
+    func testIsNilWithLog<T: Equatable>(expression: T?, testFuncName: String, testName: String, testIndex: Int) {
+        printStart(testFuncName, testName: testName, testIndex: testIndex)
+        XCTAssertNil(expression)
+        printEnd(testFuncName, testName: testName, testIndex: testIndex)
+    }
+    func testTwoElemTupleEqualWithLog<T: Equatable, U: Equatable>(expression1: (T, U), expression2: (T, U), testFuncName: String, testName: String, testIndex: Int) {
+        printStart(testFuncName, testName: testName, testIndex: testIndex)
+        printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: 0)
+        XCTAssertEqual(expression1.0, expression2.0)
+        printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: 1)
+        XCTAssertEqual(expression1.1, expression2.1)
         printEnd(testFuncName, testName: testName, testIndex: testIndex)
     }
     
@@ -69,21 +65,16 @@ class StringTestTests: XCTestCase {
             Tests(testName: "splitted with both head and tail", input: "like", expectedOutput: ("I ", " to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
             Tests(testName: "splitted with head only", input: "assertion is.", expectedOutput: ("I like to name my Test Case so it is obvious to see what method is being called and what the ", "")),
             Tests(testName: "splitted with tail only", input: "I like ", expectedOutput: ("", "to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
-            Tests(testName: "splitted with empty on both sides", input: "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ("", "")),
-            Tests(testName: "splitted with split string not found", input: "dds", expectedOutput: nil)
+            Tests(testName: "splitted with empty on both sides", input: "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ("", ""))
         ]
-        let testFuncName = "split *** "
+        let testFuncName = "split"
         var i = 0
         for t in toTests {
-            testEqualWithLog(stringToTest.split(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i, numberOfReturns: 2)
-            //            print(testHead + t.testName + " *** START")
-            //            print(testHead + t.testName + " * Return.0")
-            //            XCTAssertEqual(stringToTest.split(t.input).headingString, t.expectedOutput.0)
-            //            print(testHead + t.testName + " * Return.1")
-            //            XCTAssertEqual(stringToTest.split(t.input).tailingString, t.expectedOutput.1)
-            //            print(testHead + t.testName + " *** END")
+            testTwoElemTupleEqualWithLog(stringToTest.split(t.input)!, expression2: t.expectedOutput!, testFuncName: testFuncName, testName: t.testName, testIndex: i)
             i += 1
         }
+        let toTestNotFound = Tests(testName: "splitted with split string not found", input: "dds", expectedOutput: nil)
+        testIsNilWithLog(stringToTest.split(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
     }
     
     func testPerformanceExample() {
