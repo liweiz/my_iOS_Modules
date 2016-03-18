@@ -44,6 +44,11 @@ class StirngExtractorTests: XCTestCase {
         XCTAssertEqual(expression1, expression2)
         printEnd(testFuncName, testName: testName, testIndex: testIndex)
     }
+    func testIsNilWithLog<T>(expression: T?, testFuncName: String, testName: String, testIndex: Int) {
+        printStart(testFuncName, testName: testName, testIndex: testIndex)
+        XCTAssertNil(expression)
+        printEnd(testFuncName, testName: testName, testIndex: testIndex)
+    }
     func testTwoElemTupleEqualWithLog<T: Equatable, U: Equatable>(expression1: (T, U), expression2: (T, U), testFuncName: String, testName: String, testIndex: Int) {
         printStart(testFuncName, testName: testName, testIndex: testIndex)
         printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: 0)
@@ -218,7 +223,7 @@ class StirngExtractorTests: XCTestCase {
             let expectedOutput: (String, String)?
         }
         let stringToTest = "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is."
-        let toTestsFound = [
+        let toTests = [
             Tests(testName: "splitted with both head and tail", input: "like", expectedOutput: ("I ", " to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
             Tests(testName: "splitted with head only", input: "assertion is.", expectedOutput: ("I like to name my Test Case so it is obvious to see what method is being called and what the ", "")),
             Tests(testName: "splitted with tail only", input: "I like ", expectedOutput: ("", "to name my Test Case so it is obvious to see what method is being called and what the assertion is.")),
@@ -226,12 +231,12 @@ class StirngExtractorTests: XCTestCase {
         ]
         let testFuncName = "split"
         var i = 0
-        for t in toTestsFound {
+        for t in toTests {
             testTwoElemTupleEqualWithLog(stringToTest.split(t.input)!, expression2: t.expectedOutput!, testFuncName: testFuncName, testName: t.testName, testIndex: i)
             i += 1
         }
         let toTestNotFound = Tests(testName: "splitted with split string not found", input: "dds", expectedOutput: nil)
-        testNonCollectionEqualWithLog(stringToTest.split(toTestNotFound.input), expression2: nil, testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
+        testIsNilWithLog(stringToTest.split(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
     }
     
     func testStirngWithoutHeadTailWhitespaceBetween() {

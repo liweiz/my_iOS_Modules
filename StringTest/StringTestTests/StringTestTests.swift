@@ -30,7 +30,7 @@ class StringTestTests: XCTestCase {
         XCTAssertEqual(expression1, expression2)
         printEnd(testFuncName, testName: testName, testIndex: testIndex)
     }
-    func testIsNilWithLog<T: Equatable>(expression: T?, testFuncName: String, testName: String, testIndex: Int) {
+    func testIsNilWithLog<T>(expression: T?, testFuncName: String, testName: String, testIndex: Int) {
         printStart(testFuncName, testName: testName, testIndex: testIndex)
         XCTAssertNil(expression)
         printEnd(testFuncName, testName: testName, testIndex: testIndex)
