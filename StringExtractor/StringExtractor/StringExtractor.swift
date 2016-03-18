@@ -100,15 +100,7 @@ extension String {
     func numberInMiddle(start: String, end: String) -> NumberInDigits? {
         return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
     }
-    func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
-        let splitByStart = split(start)
-        if let tail = splitByStart.tailingString {
-            if let head = tail.split(end).headingString {
-                return head.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-            }
-        }
-        return nil
-    }
+    
     func stringBetween(start: String, end: String) -> String? {
         if let startRange = rangeOfString(start) {
             if let endRange = rangeOfString(end) {
@@ -126,7 +118,17 @@ extension String {
         }
         return nil
     }
-    // split splits the string into max 3 parts: the heading part, the string that is used to split and the tailing part.
+    // stirngWithoutHeadTailWhitespaceBetween returns the Whitespace-trimmed string between two strings. It returns nil if start and end are not found.
+    func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
+        guard let splitByStart = split(start) else {
+            return nil
+        }
+        guard let splitByEnd = splitByStart.tailingString.split(end) else {
+            return nil
+        }
+        return splitByEnd.headingString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
+    // split splits the string into max 3 parts: the heading part, the string that is used to split and the tailing part. It returns nil if byString is not found.
     func split(byString: String) -> (headingString: String, tailingString: String)? {
         if let range = rangeOfString(byString) {
             return (self[startIndex..<range.startIndex], self[range.endIndex..<endIndex])

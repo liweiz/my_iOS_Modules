@@ -9,6 +9,16 @@
 import Foundation
 
 extension String {
+    func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
+        guard let splitByStart = split(start) else {
+            return nil
+        }
+        guard let splitByEnd = splitByStart.tailingString.split(end) else {
+            return nil
+        }
+        return splitByEnd.headingString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
+    
     // split splits the string into max 3 parts: the heading part, the string that is used to split and the tailing part.
     func split(byString: String) -> (headingString: String, tailingString: String)? {
         if let range = rangeOfString(byString) {

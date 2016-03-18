@@ -242,21 +242,23 @@ class StirngExtractorTests: XCTestCase {
     func testStirngWithoutHeadTailWhitespaceBetween() {
         struct Tests {
             let testName: String
-            let input0: String
-            let input1: String
+            let start: String
+            let end: String
             let expectedOutput: String?
         }
         let stringToTest = "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is."
         let toTests = [
-            Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** both are in the middle", input0: "like", input1: "is", expectedOutput: "to name my Test Case so it"),
-            Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** both are at the ends", input0: "I", input1: ".", expectedOutput: "like to name my Test Case so it is obvious to see what method is being called and what the assertion is"),
-            Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** one not found", input0: "cool", input1: "like", expectedOutput: nil),
-            ]
+            Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** both are in the middle", start: "like", end: "is", expectedOutput: "to name my Test Case so it"),
+            Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** both are at the ends", start: "I", end: ".", expectedOutput: "like to name my Test Case so it is obvious to see what method is being called and what the assertion is")
+        ]
+        let testFuncName = "stirngWithoutHeadTailWhitespaceBetween"
+        var i = 0
         for t in toTests {
-            print("TEST_NAME: " + t.testName + " *** START")
-            XCTAssertEqual(stringToTest.stirngWithoutHeadTailWhitespaceBetween(t.input0, end: t.input1), t.expectedOutput)
-            print("TEST_NAME: " + t.testName + " *** END")
+            testNonCollectionEqualWithLog(stringToTest.stirngWithoutHeadTailWhitespaceBetween(t.start, end: t.end), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
         }
+        let toTestNotFound = Tests(testName: "stirngWithoutHeadTailWhitespaceBetween *** one not found", start: "cool", end: "like", expectedOutput: nil)
+        testIsNilWithLog(stringToTest.stirngWithoutHeadTailWhitespaceBetween(toTestNotFound.start, end: toTestNotFound.end), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
     }
     
     func testStringBetween() {
