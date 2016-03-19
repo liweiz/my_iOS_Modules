@@ -25,6 +25,16 @@ class StringTestTests: XCTestCase {
     func printEnd(testFuncName: String, testName: String, testIndex: Int) {
         print(testHead + "\(testIndex): " + testFuncName + " *** " + testName + testEndNotice)
     }
+    func testArrayEqualWithLog<T: Equatable>(expression1: [T?], expression2: [T?], testFuncName: String, testName: String, testIndex: Int) {
+        printStart(testFuncName, testName: testName, testIndex: testIndex)
+        var i = 0
+        for t in expression1 {
+            printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: i)
+            XCTAssertEqual(t, expression2[i])
+            i += 1
+        }
+        printEnd(testFuncName, testName: testName, testIndex: testIndex)
+    }
     func testNonCollectionEqualWithLog<T: Equatable>(expression1: T?, expression2: T?, testFuncName: String, testName: String, testIndex: Int) {
         printStart(testFuncName, testName: testName, testIndex: testIndex)
         XCTAssertEqual(expression1, expression2)
@@ -139,5 +149,27 @@ class StringTestTests: XCTestCase {
         let toTestNotFound = Tests(testName: "not found", input: "assertiof", expectedOutput: nil)
         testIsNilWithLog(stringToTest.findRange(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
     }
-    
+    func testAllStrings() {
+        struct Tests {
+            let testName: String
+            let stringArrayToTest: [String]
+            let input: String
+            let expectedOutput: [String?]
+        }
+        let toTests = [
+            Tests(testName: "all found with non-empty results", stringArrayToTest: [" ", "to", "my", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like ", " name ", " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "all found with some empty results", stringArrayToTest: [" ", "to", "my", "so", "."], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like ", " name ", " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is", ""]),
+            Tests(testName: "all found with some nil results", stringArrayToTest: [" ", "goo", "my", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like to name ", nil, " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "all found except the first one", stringArrayToTest: ["  ", "to", "my", "so", "."], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, " name ", " 1342 Test Case ", " it is obvious to see what method is being called and what the assertion is", ""]),
+            Tests(testName: "all not found except the last one", stringArrayToTest: ["  ", "goo", "myd", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, nil, nil, " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "all not found except the first and last one", stringArrayToTest: [" ", "goo", "myd", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like to name my 1342 Test Case ", nil, nil, " it is obvious to see what method is being called and what the assertion is."]),
+            Tests(testName: "all not found", stringArrayToTest: ["  ", "goo", "myd", "soe"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, nil, nil, nil]),
+            ]
+        let testFuncName = "allStrings"
+        var i = 0
+        for t in toTests {
+            testArrayEqualWithLog(t.stringArrayToTest.allStrings(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
+    }
 }

@@ -43,3 +43,33 @@ extension String {
     }
 
 }
+
+
+
+extension SequenceType where Generator.Element == String {
+    // allStrings uses the String SequenceType as marks to find out all strings from a string. It returns the content strings as [String?]. Nil is for content not found.
+    func allStrings(fromString: String) -> [String?] {
+        var stringLeft = fromString
+        var results = [String?]()
+        var nilStringArray = [String?]()
+        for mark in self {
+            if let splitStrings = stringLeft.split(mark) {
+                results.append(splitStrings.headingString)
+                if nilStringArray.count > 0 {
+                    results.appendContentsOf(nilStringArray)
+                    nilStringArray.removeAll()
+                }
+                stringLeft = splitStrings.tailingString
+            } else {
+                nilStringArray.append(nil)
+            }
+        }
+        if (results.filter { $0 != nil }).count == 0 {
+            results = nilStringArray
+        } else {
+            if results.count > 0 { results.append(stringLeft) }
+        }
+        if results.count > self.underestimateCount() { results.removeFirst() }
+        return results
+    }
+}

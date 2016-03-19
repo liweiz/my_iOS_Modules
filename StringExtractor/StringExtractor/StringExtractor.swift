@@ -100,23 +100,7 @@ extension String {
     func numberInMiddle(start: String, end: String) -> NumberInDigits? {
         return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
     }
-    // stringBetween returns the string between two strings. It returns nil if any of the end strings can not be found.
-    func stringBetween(start: String, end: String) -> String? {
-        guard let startRange = rangeOfString(start) else {
-            return nil
-        }
-        guard let endRange = rangeOfString(end) else {
-            return nil
-        }
-        return startRange.endIndex <= endRange.startIndex ? self[startRange.endIndex..<endRange.startIndex] : ""
-    }
-    // findRange gets Range for a string and returns the Range follows. It returns nil, if no such substring found. It returns self.endIndex..<self.endIndex if there is no string left.
-    func findRange(forString: String) -> Range<String.Index>? {
-        if let rangeFound = rangeOfString(forString) {
-            return rangeFound.endIndex..<endIndex
-        }
-        return nil
-    }
+    
     // stirngWithoutHeadTailWhitespaceBetween returns the Whitespace-trimmed string between two strings. It returns nil if start and end are not found.
     func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
         guard let splitByStart = split(start) else {
@@ -134,7 +118,23 @@ extension String {
         }
         return nil
     }
-    
+    // stringBetween returns the string between two strings. It returns nil if any of the end strings can not be found.
+    func stringBetween(start: String, end: String) -> String? {
+        guard let startRange = rangeOfString(start) else {
+            return nil
+        }
+        guard let endRange = rangeOfString(end) else {
+            return nil
+        }
+        return startRange.endIndex <= endRange.startIndex ? self[startRange.endIndex..<endRange.startIndex] : ""
+    }
+    // findRange gets Range for a string and returns the Range follows. It returns nil, if no such substring found. It returns self.endIndex..<self.endIndex if there is no string left.
+    func findRange(forString: String) -> Range<String.Index>? {
+        if let rangeFound = rangeOfString(forString) {
+            return rangeFound.endIndex..<endIndex
+        }
+        return nil
+    }
     // findNumber returns the first number found in TBD. The number has to start with with digits in 0...9.
     func findNumber() -> NumberInDigits? {
         let numberCharacters: Set = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -229,40 +229,33 @@ struct NumberInDigits {
     }
 }
 
-/*
- Assuming the text we are working on is composed of same tree-structured components. Each text anchor that notifies the start of a component is also the end of last component. It is also applied to the sub-components in component that a component's start is the end of the last one.
- */
-//An Array<String> can be used here to show the structure of one layer of the tree structure.
+//Assuming the text to work on is composed of same tree-structured components.
+//Each text anchor marking the start of a component is also the end of last component.
+//An Array<String> can be used here as the structure for one layer of the tree structure.
 extension SequenceType where Generator.Element == String {
-    func strings(fromString: String) -> [String?] {
+    // allStrings uses the String SequenceType as marks to find out all strings from a string. It returns the content strings as [String?]. Nil is for content not found.
+    func allStrings(fromString: String) -> [String?] {
         var stringLeft = fromString
-        var r = [String?]()
+        var results = [String?]()
         var nilStringArray = [String?]()
-        for s in self {
-            if let tail = stringLeft.split(s).tailingString {
-                r.append(stringLeft.split(s).headingString!)
+        for mark in self {
+            if let splitStrings = stringLeft.split(mark) {
+                results.append(splitStrings.headingString)
                 if nilStringArray.count > 0 {
-                    r.appendContentsOf(nilStringArray)
+                    results.appendContentsOf(nilStringArray)
                     nilStringArray.removeAll()
                 }
-                stringLeft = tail
+                stringLeft = splitStrings.tailingString
             } else {
                 nilStringArray.append(nil)
             }
         }
-        var allNil = true
-        for x in r {
-            if x != nil {
-                allNil = false
-                break
-            }
-        }
-        if allNil {
-            r = nilStringArray
+        if (results.filter { $0 != nil }).count == 0 {
+            results = nilStringArray
         } else {
-            if r.count > 0 { r.append(stringLeft) }
+            if results.count > 0 { results.append(stringLeft) }
         }
-        if r.count > self.underestimateCount() { r.removeFirst() }
-        return r
+        if results.count > self.underestimateCount() { results.removeFirst() }
+        return results
     }
 }
