@@ -100,16 +100,15 @@ extension String {
     func numberInMiddle(start: String, end: String) -> NumberInDigits? {
         return stirngWithoutHeadTailWhitespaceBetween(start, end: end)?.findNumber()
     }
-    
+    // stringBetween returns the string between two strings. It returns nil if any of the end strings can not be found.
     func stringBetween(start: String, end: String) -> String? {
-        if let startRange = rangeOfString(start) {
-            if let endRange = rangeOfString(end) {
-                if startRange.endIndex <= endRange.startIndex {
-                    return self[startRange.endIndex..<endRange.startIndex]
-                }
-            }
+        guard let startRange = rangeOfString(start) else {
+            return nil
         }
-        return nil
+        guard let endRange = rangeOfString(end) else {
+            return nil
+        }
+        return startRange.endIndex <= endRange.startIndex ? self[startRange.endIndex..<endRange.startIndex] : ""
     }
     // findRange gets Range for a string and returns the Range follows. It returns nil, if no such substring found. It returns self.endIndex..<self.endIndex if there is no string left.
     func findRange(forString: String) -> Range<String.Index>? {

@@ -53,26 +53,7 @@ class StringTestTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    func testFindRange() {
-        struct Tests {
-            let testName: String
-            let input: String
-            let expectedOutput: Range<String.Index>?
-        }
-        let stringToTest = "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is."
-        let toTests = [
-            Tests(testName: "found with range does not reach end", input: "like", expectedOutput: stringToTest.startIndex.advancedBy(6)..<stringToTest.endIndex),
-            Tests(testName: "found with range reaches end", input: "assertion is.", expectedOutput: stringToTest.endIndex..<stringToTest.endIndex)
-        ]
-        let testFuncName = "findRange"
-        var i = 0
-        for t in toTests {
-            testNonCollectionEqualWithLog(stringToTest.findRange(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
-            i += 1
-        }
-        let toTestNotFound = Tests(testName: "not found", input: "assertiof", expectedOutput: nil)
-        testIsNilWithLog(stringToTest.findRange(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
-    }
+    
     func testStirngWithoutHeadTailWhitespaceBetween() {
         struct Tests {
             let testName: String
@@ -116,12 +97,47 @@ class StringTestTests: XCTestCase {
         let toTestNotFound = Tests(testName: "splitted with split string not found", input: "dds", expectedOutput: nil)
         testIsNilWithLog(stringToTest.split(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testStringBetween() {
+        struct Tests {
+            let testName: String
+            let start: String
+            let end: String
+            let expectedOutput: String?
         }
+        let stringToTest = "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is."
+        let toTests = [
+            Tests(testName: "both are in the middle", start: "like", end: "is", expectedOutput: " to name my Test Case so it "),
+            Tests(testName: "both are at the ends", start: "I", end: ".", expectedOutput: " like to name my Test Case so it is obvious to see what method is being called and what the assertion is"),
+            Tests(testName: "overlaping start and end", start: "I like to", end: "ke to n", expectedOutput: "")
+            ]
+        let testFuncName = "stringBetween"
+        var i = 0
+        for t in toTests {
+            testNonCollectionEqualWithLog(stringToTest.stringBetween(t.start, end: t.end), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
+        let toTestNotFound = Tests(testName: "stringBetween *** one not found", start: "cool", end: "like", expectedOutput: nil)
+        testIsNilWithLog(stringToTest.stringBetween(toTestNotFound.start, end: toTestNotFound.end), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
+    }
+    func testFindRange() {
+        struct Tests {
+            let testName: String
+            let input: String
+            let expectedOutput: Range<String.Index>?
+        }
+        let stringToTest = "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is."
+        let toTests = [
+            Tests(testName: "found with range does not reach end", input: "like", expectedOutput: stringToTest.startIndex.advancedBy(6)..<stringToTest.endIndex),
+            Tests(testName: "found with range reaches end", input: "assertion is.", expectedOutput: stringToTest.endIndex..<stringToTest.endIndex)
+        ]
+        let testFuncName = "findRange"
+        var i = 0
+        for t in toTests {
+            testNonCollectionEqualWithLog(stringToTest.findRange(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
+        let toTestNotFound = Tests(testName: "not found", input: "assertiof", expectedOutput: nil)
+        testIsNilWithLog(stringToTest.findRange(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
     }
     
 }

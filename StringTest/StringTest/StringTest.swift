@@ -26,6 +26,15 @@ extension String {
         }
         return nil
     }
+    func stringBetween(start: String, end: String) -> String? {
+        guard let startRange = rangeOfString(start) else {
+            return nil
+        }
+        guard let endRange = rangeOfString(end) else {
+            return nil
+        }
+        return startRange.endIndex <= endRange.startIndex ? self[startRange.endIndex..<endRange.startIndex] : ""
+    }
     func findRange(forString: String) -> Range<String.Index>? {
         if let rangeFound = rangeOfString(forString) {
             return rangeFound.endIndex..<endIndex
