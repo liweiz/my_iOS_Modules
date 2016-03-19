@@ -53,6 +53,26 @@ class StringTestTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
+    func testFindRange() {
+        struct Tests {
+            let testName: String
+            let input: String
+            let expectedOutput: Range<String.Index>?
+        }
+        let stringToTest = "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is."
+        let toTests = [
+            Tests(testName: "found with range does not reach end", input: "like", expectedOutput: stringToTest.startIndex.advancedBy(6)..<stringToTest.endIndex),
+            Tests(testName: "found with range reaches end", input: "assertion is.", expectedOutput: stringToTest.endIndex..<stringToTest.endIndex)
+        ]
+        let testFuncName = "findRange"
+        var i = 0
+        for t in toTests {
+            testNonCollectionEqualWithLog(stringToTest.findRange(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
+        let toTestNotFound = Tests(testName: "not found", input: "assertiof", expectedOutput: nil)
+        testIsNilWithLog(stringToTest.findRange(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
+    }
     func testStirngWithoutHeadTailWhitespaceBetween() {
         struct Tests {
             let testName: String

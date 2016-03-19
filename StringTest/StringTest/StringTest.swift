@@ -26,6 +26,11 @@ extension String {
         }
         return nil
     }
-    
+    func findRange(forString: String) -> Range<String.Index>? {
+        if let rangeFound = rangeOfString(forString) {
+            return rangeFound.endIndex..<endIndex
+        }
+        return nil
+    }
 
 }
