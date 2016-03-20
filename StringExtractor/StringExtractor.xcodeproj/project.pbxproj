@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		EEA3A91D1C9D9E5300F68ED0 /* RawSubstringFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A91C1C9D9E5300F68ED0 /* RawSubstringFinder.swift */; };
 		EEA3A9211C9D9F4900F68ED0 /* RawSubstringFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A9201C9D9F4900F68ED0 /* RawSubstringFinderTests.swift */; };
-		EEA3A9271C9DAC2800F68ED0 /* StringExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A9261C9DAC2800F68ED0 /* StringExtractorTests.swift */; };
 		EEA3A9291C9DACAA00F68ED0 /* UnitTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A9281C9DACAA00F68ED0 /* UnitTestHelper.swift */; };
 		EEA3A92B1C9DAF1000F68ED0 /* NumberInDigits.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A92A1C9DAF1000F68ED0 /* NumberInDigits.swift */; };
 		EEA3A92D1C9DB01A00F68ED0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A92C1C9DB01A00F68ED0 /* Item.swift */; };
@@ -22,7 +21,6 @@
 		EEF480131C8FD84B00B09EFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEF480121C8FD84B00B09EFD /* Assets.xcassets */; };
 		EEF480161C8FD84C00B09EFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEF480141C8FD84C00B09EFD /* LaunchScreen.storyboard */; };
 		EEF4802C1C8FD84C00B09EFD /* StringExtractorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4802B1C8FD84C00B09EFD /* StringExtractorUITests.swift */; };
-		EEF4803E1C8FD89600B09EFD /* FootLockerWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */; };
 		EEF4804A1C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt in Resources */ = {isa = PBXBuildFile; fileRef = EEF480481C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt */; };
 		EEF4804B1C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt in Resources */ = {isa = PBXBuildFile; fileRef = EEF480491C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt */; };
 /* End PBXBuildFile section */
@@ -47,7 +45,6 @@
 /* Begin PBXFileReference section */
 		EEA3A91C1C9D9E5300F68ED0 /* RawSubstringFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawSubstringFinder.swift; sourceTree = "<group>"; };
 		EEA3A9201C9D9F4900F68ED0 /* RawSubstringFinderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawSubstringFinderTests.swift; sourceTree = "<group>"; };
-		EEA3A9261C9DAC2800F68ED0 /* StringExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractorTests.swift; sourceTree = "<group>"; };
 		EEA3A9281C9DACAA00F68ED0 /* UnitTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestHelper.swift; sourceTree = "<group>"; };
 		EEA3A92A1C9DAF1000F68ED0 /* NumberInDigits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberInDigits.swift; sourceTree = "<group>"; };
 		EEA3A92C1C9DB01A00F68ED0 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -66,7 +63,6 @@
 		EEF480271C8FD84C00B09EFD /* StringExtractorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StringExtractorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF4802B1C8FD84C00B09EFD /* StringExtractorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtractorUITests.swift; sourceTree = "<group>"; };
 		EEF4802D1C8FD84C00B09EFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FootLockerWatcher.swift; sourceTree = "<group>"; };
 		EEF480481C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item.txt"; sourceTree = "<group>"; };
 		EEF480491C92078800B09EFD /* Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,7 +120,6 @@
 				EEA3A92C1C9DB01A00F68ED0 /* Item.swift */,
 				EEA3A92A1C9DAF1000F68ED0 /* NumberInDigits.swift */,
 				EEA3A91C1C9D9E5300F68ED0 /* RawSubstringFinder.swift */,
-				EEF4803D1C8FD89600B09EFD /* FootLockerWatcher.swift */,
 				EEF480451C91E2A300B09EFD /* HtmlInTxt */,
 				EEF4800C1C8FD84B00B09EFD /* Main.storyboard */,
 				EEF480121C8FD84B00B09EFD /* Assets.xcassets */,
@@ -139,10 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				EEF480221C8FD84C00B09EFD /* Info.plist */,
+				EEA3A9281C9DACAA00F68ED0 /* UnitTestHelper.swift */,
 				EEA3A9301C9DE1D400F68ED0 /* NumberInDigitsTests.swift */,
 				EEA3A9321C9F39F000F68ED0 /* ItemTests.swift */,
-				EEA3A9281C9DACAA00F68ED0 /* UnitTestHelper.swift */,
-				EEA3A9261C9DAC2800F68ED0 /* StringExtractorTests.swift */,
 				EEA3A9201C9D9F4900F68ED0 /* RawSubstringFinderTests.swift */,
 			);
 			path = StringExtractorTests;
@@ -299,7 +293,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEF4803E1C8FD89600B09EFD /* FootLockerWatcher.swift in Sources */,
 				EEA3A91D1C9D9E5300F68ED0 /* RawSubstringFinder.swift in Sources */,
 				EEF480111C8FD84B00B09EFD /* StringExtractor.xcdatamodeld in Sources */,
 				EEA3A92B1C9DAF1000F68ED0 /* NumberInDigits.swift in Sources */,
@@ -313,7 +306,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEA3A9271C9DAC2800F68ED0 /* StringExtractorTests.swift in Sources */,
 				EEA3A9311C9DE1D400F68ED0 /* NumberInDigitsTests.swift in Sources */,
 				EEA3A9211C9D9F4900F68ED0 /* RawSubstringFinderTests.swift in Sources */,
 				EEA3A9291C9DACAA00F68ED0 /* UnitTestHelper.swift in Sources */,

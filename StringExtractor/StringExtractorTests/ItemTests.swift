@@ -9,6 +9,19 @@
 import XCTest
 @testable import StringExtractor
 
+let footlockerNikePerformanceBasketballShoeSize95 = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Basketball-Shoes/_-_/N-1z141w4Z24ZzzZrjZseZca"
+let footlockerShoeNamePoint = "quickviewEnabled" // Look for "title" follows.
+let footlockerShoeOriginalPricePoint = "product_price"
+let footlockerShoeSalePricePoint = "<B>Now"
+
+let footlockerShoeNameStart = "title=\""
+let footlockerShoeNameEnd = "\" href="
+
+let footlockerShoeDividers = [footlockerShoeNamePoint, footlockerShoeOriginalPricePoint, footlockerShoeSalePricePoint]
+
+let Html1Item = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item"
+let Html2Items = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items"
+
 class ItemTests: XCTestCase {
     
     override func setUp() {

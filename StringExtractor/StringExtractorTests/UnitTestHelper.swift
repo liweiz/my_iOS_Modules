@@ -32,16 +32,6 @@ internal func testArrayEqualWithLog<T: Equatable>(expression1: [T?], expression2
     }
     printEnd(testFuncName, testName: testName, testIndex: testIndex)
 }
-internal func testStructEqualWithLog<T: Equatable>(expression1: [T?], expression2: [T?], testFuncName: String, testName: String, testIndex: Int) {
-    printStart(testFuncName, testName: testName, testIndex: testIndex)
-    var i = 0
-    for t in expression1 {
-        printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: i)
-        XCTAssertEqual(t, expression2[i])
-        i += 1
-    }
-    printEnd(testFuncName, testName: testName, testIndex: testIndex)
-}
 internal func testNonCollectionEqualWithLog<T: Equatable>(expression1: T?, expression2: T?, testFuncName: String, testName: String, testIndex: Int) {
     printStart(testFuncName, testName: testName, testIndex: testIndex)
     XCTAssertEqual(expression1, expression2)
@@ -65,15 +55,11 @@ internal func loadHTMLFromBundle(fileName: String) -> String {
     if let filepath = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt") {
         do {
             let contents = try NSString(contentsOfFile: filepath, usedEncoding: nil) as String
-            //                print(contents)
             return contents
-            //            return content
         } catch {
-            // contents could not be loaded
             print("contents could not be loaded")
         }
     } else {
-        // example.txt not found!
         print("html could not be loaded")
     }
     return ""
