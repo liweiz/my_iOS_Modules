@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    // stirngWithoutHeadTailWhitespaceBetween returns the Whitespace-trimmed string between two strings. It returns nil if start and end are not found.
+    /// stirngWithoutHeadTailWhitespaceBetween returns the Whitespace-trimmed string between two strings. It returns nil if start and end are not found.
     func stirngWithoutHeadTailWhitespaceBetween(start: String, end: String) -> String? {
         guard let splitByStart = split(start) else {
             return nil
@@ -19,14 +19,14 @@ extension String {
         }
         return splitByEnd.headingString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
     }
-    // split splits the string into max 3 parts: the heading part, the string that is used to split and the tailing part. It returns nil if byString is not found.
+    /// split splits the string into max 3 parts: the heading part, the string that is used to split and the tailing part. It returns nil if byString is not found.
     func split(byString: String) -> (headingString: String, tailingString: String)? {
         if let range = rangeOfString(byString) {
             return (self[startIndex..<range.startIndex], self[range.endIndex..<endIndex])
         }
         return nil
     }
-    // stringBetween returns the string between two strings. It returns nil if any of the end strings can not be found.
+    /// stringBetween returns the string between two strings. It returns nil if any of the end strings can not be found.
     func stringBetween(start: String, end: String) -> String? {
         guard let startRange = rangeOfString(start) else {
             return nil
@@ -36,7 +36,7 @@ extension String {
         }
         return startRange.endIndex <= endRange.startIndex ? self[startRange.endIndex..<endRange.startIndex] : ""
     }
-    // findRange gets Range for a string and returns the Range follows. It returns nil, if no such substring found. It returns self.endIndex..<self.endIndex if there is no string left.
+    /// findRange gets Range for a string and returns the Range follows. It returns nil, if no such substring found. It returns self.endIndex..<self.endIndex if there is no string left.
     func findRange(forString: String) -> Range<String.Index>? {
         if let rangeFound = rangeOfString(forString) {
             return rangeFound.endIndex..<endIndex
@@ -49,7 +49,7 @@ extension String {
 //Each text anchor marking the start of a component is also the end of last component.
 //An Array<String> can be used here as the structure for one layer of the tree structure.
 extension SequenceType where Generator.Element == String {
-    // allStrings uses the String SequenceType as marks to find out all strings from a string. It returns the content strings as [String?]. Nil is for content not found.
+    /// allStrings uses the String SequenceType as marks to find out all strings from a string. It returns the content strings as [String?]. Nil is for content not found.
     func allSubstrings(fromString: String) -> [String?] {
         var stringLeft = fromString
         var results = [String?]()

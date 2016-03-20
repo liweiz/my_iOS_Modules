@@ -171,32 +171,7 @@ class StirngExtractorTests: XCTestCase {
 //    
 //    
 //    
-//    func testFindNumber() {
-//        struct Tests {
-//            let testName: String
-//            let stringToTest: String
-//            let expectedOutput: String?
-//        }
-//        let toTests = [
-//            Tests(testName: "findNumber *** $139.99</B></em><BR></p>", stringToTest: " $139.99</B></em><BR></p>", expectedOutput: "139.99"),
-//            Tests(testName: "findNumber *** numerical digits only", stringToTest: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1342"),
-//            Tests(testName: "findNumber *** with decimal digits", stringToTest: "I like to name my 1342.1 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1342.1"),
-//            Tests(testName: "findNumber *** beginning with multiple 0s", stringToTest: "I like to name my 0001342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1342"),
-//            Tests(testName: "findNumber *** beginning with multiple 0s with decimal mark", stringToTest: "I like to name my 0,001,342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1342"),
-//            Tests(testName: "findNumber *** beginning with multiple 0s with continuous decimal marks", stringToTest: "I like to name my 0,,001,342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "0"),
-//            Tests(testName: "findNumber *** beginning with multiple 0s with decimal marks following decimal point", stringToTest: "I like to name my 0,001.,342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1"),
-//            Tests(testName: "findNumber *** beginning with multiple 0s with decimal marks after decimal point", stringToTest: "I like to name my 0,001.3,4,2 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1.3"),
-//            Tests(testName: "findNumber *** beginning with multiple 0s with decimal point following decimal mark", stringToTest: "I like to name my 0,001,.342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1"),
-//            Tests(testName: "findNumber *** no number", stringToTest: "I like to name my Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: nil),
-//            Tests(testName: "findNumber *** beginning with multiple 0s with continuous decimal points", stringToTest: "I like to name my 0,001..342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "1"),
-//            Tests(testName: "findNumber *** beginning with decimal point", stringToTest: "I like to name my ..342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: "342")
-//        ]
-//        for t in toTests {
-//            print("TEST_NAME: " + t.testName + " *** START")
-//            XCTAssertEqual(t.stringToTest.findNumber()?.string, t.expectedOutput)
-//            print("TEST_NAME: " + t.testName + " *** END")
-//        }
-//    }
+    
     
     
 }
