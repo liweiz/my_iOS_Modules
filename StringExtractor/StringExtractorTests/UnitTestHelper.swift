@@ -32,6 +32,16 @@ internal func testArrayEqualWithLog<T: Equatable>(expression1: [T?], expression2
     }
     printEnd(testFuncName, testName: testName, testIndex: testIndex)
 }
+internal func testStructEqualWithLog<T: Equatable>(expression1: [T?], expression2: [T?], testFuncName: String, testName: String, testIndex: Int) {
+    printStart(testFuncName, testName: testName, testIndex: testIndex)
+    var i = 0
+    for t in expression1 {
+        printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: i)
+        XCTAssertEqual(t, expression2[i])
+        i += 1
+    }
+    printEnd(testFuncName, testName: testName, testIndex: testIndex)
+}
 internal func testNonCollectionEqualWithLog<T: Equatable>(expression1: T?, expression2: T?, testFuncName: String, testName: String, testIndex: Int) {
     printStart(testFuncName, testName: testName, testIndex: testIndex)
     XCTAssertEqual(expression1, expression2)

@@ -14,6 +14,7 @@
 		EEA3A92B1C9DAF1000F68ED0 /* NumberInDigits.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A92A1C9DAF1000F68ED0 /* NumberInDigits.swift */; };
 		EEA3A92D1C9DB01A00F68ED0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A92C1C9DB01A00F68ED0 /* Item.swift */; };
 		EEA3A9311C9DE1D400F68ED0 /* NumberInDigitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A9301C9DE1D400F68ED0 /* NumberInDigitsTests.swift */; };
+		EEA3A9331C9F39F000F68ED0 /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA3A9321C9F39F000F68ED0 /* ItemTests.swift */; };
 		EEF480091C8FD84B00B09EFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF480081C8FD84B00B09EFD /* AppDelegate.swift */; };
 		EEF4800B1C8FD84B00B09EFD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF4800A1C8FD84B00B09EFD /* ViewController.swift */; };
 		EEF4800E1C8FD84B00B09EFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEF4800C1C8FD84B00B09EFD /* Main.storyboard */; };
@@ -51,6 +52,7 @@
 		EEA3A92A1C9DAF1000F68ED0 /* NumberInDigits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberInDigits.swift; sourceTree = "<group>"; };
 		EEA3A92C1C9DB01A00F68ED0 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		EEA3A9301C9DE1D400F68ED0 /* NumberInDigitsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberInDigitsTests.swift; sourceTree = "<group>"; };
+		EEA3A9321C9F39F000F68ED0 /* ItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
 		EEF480051C8FD84B00B09EFD /* StringExtractor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StringExtractor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF480081C8FD84B00B09EFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEF4800A1C8FD84B00B09EFD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				EEF480221C8FD84C00B09EFD /* Info.plist */,
 				EEA3A9301C9DE1D400F68ED0 /* NumberInDigitsTests.swift */,
+				EEA3A9321C9F39F000F68ED0 /* ItemTests.swift */,
 				EEA3A9281C9DACAA00F68ED0 /* UnitTestHelper.swift */,
 				EEA3A9261C9DAC2800F68ED0 /* StringExtractorTests.swift */,
 				EEA3A9201C9D9F4900F68ED0 /* RawSubstringFinderTests.swift */,
@@ -314,6 +317,7 @@
 				EEA3A9311C9DE1D400F68ED0 /* NumberInDigitsTests.swift in Sources */,
 				EEA3A9211C9D9F4900F68ED0 /* RawSubstringFinderTests.swift in Sources */,
 				EEA3A9291C9DACAA00F68ED0 /* UnitTestHelper.swift in Sources */,
+				EEA3A9331C9F39F000F68ED0 /* ItemTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
