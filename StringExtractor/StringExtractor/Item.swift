@@ -41,30 +41,28 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
         }
         return items
     }
-    print(existingItems)
     return existingItems
 }
 
-// item return the first item fully found in the string and the last string left for further process. If there is absolute nothing (dividersAndStringLocators return all nil or name's counterpart not found) can be found or no more string to dig ("" returned as the string), return the string part of return value as nil. If only part of the item can be found, return a nil Item and the string after the name divider.
+// item return the first item fully found in the string and the last string left for further process. If there is absolute nothing (dividersAndStringLocators return all nil or the key string to identify an item not found) can be found or no more string to dig ("" returned as the string), return the string part of return value as nil. If only part of the item can be found, return a nil for Item and the string after the name divider.
 func item(fromString: String, dividersAndStringLocators: [(String, (String, String)?)], specifications: [String: String], seller: String) -> (Item?, String?) {
-    print("called")
     if dividersAndStringLocators.count > 0 {
         var item = Item()
         var numberA: NumberInDigits? = nil
         var numberB: NumberInDigits? = nil
         let dividers = dividersAndStringLocators.map { $0.0 }
         let locators = dividersAndStringLocators.map { $0.1 }
-        let strings = dividers.allSubstrings(fromString)
+        let stringsFound = dividers.substrings(fromString)
         var stringLeft: String?
-        if strings.first! != nil {
-            stringLeft = [dividers.first!].allSubstrings(fromString).last!
+        guard let key = stringsFound.first else {
+            return (nil, nil)
         }
+        stringLeft = [dividers.first!].substrings(fromString).last!
         var i = 0
-        for aString in strings {
+        for aString in stringsFound {
             guard let s = aString else {
                 return (nil, nil)
             }
-            //            print("HTML Divided: " + s)
             if let aLocator = locators[i] {
                 guard let name = s.stirngWithoutHeadTailWhitespaceBetween(aLocator.0, end: aLocator.1) else {
                     return (nil, stringLeft)
@@ -74,7 +72,6 @@ func item(fromString: String, dividersAndStringLocators: [(String, (String, Stri
                 guard let n = s.findNumber() else {
                     return (nil, stringLeft)
                 }
-                //                print(n)
                 numberA == nil ? (numberA = n) : (numberB = n)
             }
             i += 1

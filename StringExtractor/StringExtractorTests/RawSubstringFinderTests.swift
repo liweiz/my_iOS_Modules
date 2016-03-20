@@ -107,7 +107,7 @@ class RawSubstringFinderTests: XCTestCase {
         testIsNilWithLog(stringToTest.findRange(toTestNotFound.input), testFuncName: testFuncName, testName: toTestNotFound.testName, testIndex: i)
     }
     
-    func testAllSubstrings() {
+    func testSubstrings() {
         struct Tests {
             let testName: String
             let stringArrayToTest: [String]
@@ -123,10 +123,10 @@ class RawSubstringFinderTests: XCTestCase {
             Tests(testName: "all not found except the first and last one", stringArrayToTest: [" ", "goo", "myd", "so"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: ["like to name my 1342 Test Case ", nil, nil, " it is obvious to see what method is being called and what the assertion is."]),
             Tests(testName: "all not found", stringArrayToTest: ["  ", "goo", "myd", "soe"], input: "I like to name my 1342 Test Case so it is obvious to see what method is being called and what the assertion is.", expectedOutput: [nil, nil, nil, nil]),
             ]
-        let testFuncName = "allSubstrings"
+        let testFuncName = "substrings"
         var i = 0
         for t in toTests {
-            testArrayEqualWithLog(t.stringArrayToTest.allSubstrings(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            testArrayEqualWithLog(t.stringArrayToTest.substrings(t.input), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
             i += 1
         }
     }

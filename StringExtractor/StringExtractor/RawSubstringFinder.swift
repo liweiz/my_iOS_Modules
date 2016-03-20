@@ -49,8 +49,8 @@ extension String {
 //Each text anchor marking the start of a component is also the end of last component.
 //An Array<String> can be used here as the structure for one layer of the tree structure.
 extension SequenceType where Generator.Element == String {
-    /// allStrings uses the String SequenceType as marks to find out all strings from a string. It returns the content strings as [String?]. Nil is for content not found.
-    func allSubstrings(fromString: String) -> [String?] {
+    /// substrings uses the String SequenceType as marks to find out the first occurance of a set of substrings from a string. It returns the content strings as [String?]. Nil is for content not found.
+    func substrings(fromString: String) -> [String?] {
         var stringLeft = fromString
         var results = [String?]()
         var nilStringArray = [String?]()
