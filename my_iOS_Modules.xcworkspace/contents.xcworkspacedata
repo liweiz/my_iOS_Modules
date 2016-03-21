@@ -11,9 +11,6 @@
       location = "group:StringExtractor/StringExtractor.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/liweizhang/Google Drive/my_iOS_Modules/textCtxTransitionAnimation/TextCtxTransitionAnimation.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:wordsToCtxTransitionAnimation/wordsToCtxTransitionAnimation.xcodeproj">
    </FileRef>
 </Workspace>
