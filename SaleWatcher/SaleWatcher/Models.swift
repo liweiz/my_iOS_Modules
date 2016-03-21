@@ -20,7 +20,7 @@ class ItemOnSale: Object {
     dynamic var timestamp: Double = 0
 //    dynamic var alreadyInDb: Bool = false
     dynamic var shownBefore: Bool = false
-    
+    dynamic var category: String = ""
 //    func setupAlreadyInDb(db: Realm) {
 //        alreadyInDb = sameItemFound(seller, name: name, specifications: specifications) ? true : false
 //    }
@@ -35,15 +35,15 @@ class ItemOnSale: Object {
 func itemsFromDb(db: Realm) -> [String: [ItemOnSale]] {
     var r = [String: [ItemOnSale]]()
     let items = db.objects(ItemOnSale)
-    let sellers = Set(items.map { $0.seller })
-    for s in sellers {
-        let condition = "seller = '" + s + "'"
+    let categories = Set(items.map { $0.category })
+    for c in categories {
+        let condition = "category = '" + c + "'"
         var i = [ItemOnSale]()
         items.filter(condition).forEach { i.append($0) }
-        r[s] = i
+        r[c] = i
     }
     // BUG here, should not remove all all existing items every time.
-    print("itemsFromDb: "); print(r["Foot Locker"])
+    
     
     UIApplication.sharedApplication().applicationIconBadgeNumber = items.filter { $0.shownBefore == false }.count
     return r

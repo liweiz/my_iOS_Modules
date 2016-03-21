@@ -17,6 +17,8 @@ func scanAll() {
     scanner_FootLocker_men_95_performance_basketball_shoes_Nike().scan()
     scanner_Lego().scan()
     scanner_Nike_men_95_running_shoes().scan()
+    scanner_Nike_men_95_basketball_shoes().scan()
+    scanner_FootLocker_men_95_shoes_Jordan().scan()
 }
 
 func scanner_Lego() -> Scanner {
@@ -34,25 +36,30 @@ func scanner_Lego() -> Scanner {
 
 func scanner_FootLocker_men_95_performance_running_shoes_Nike() -> Scanner {
     let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Running-Shoes/_-_/N-1z141w4Z24ZzzZrjZgrZca"
-    return scanner_FootLocker_shoe("9.5", urlToScan: url)
+    return scanner_FootLocker_shoe("9.5", urlToScan: url, category: "performance running")
 }
 
 func scanner_FootLocker_men_95_classic_basketball_shoes_Jordan() -> Scanner {
     let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Jordan/Shoes/Classic-Basketball-Shoes/_-_/N-1z141w4Z24Z11cZrjZ1ssZca"
-    return scanner_FootLocker_shoe("9.5", urlToScan: url)
+    return scanner_FootLocker_shoe("9.5", urlToScan: url, category: "classic basketball")
 }
 
 func scanner_FootLocker_men_100_performance_basketball_shoes_Nike() -> Scanner {
     let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Basketball-Shoes/_-_/N-1z141w4Z24ZzzZrjZseZ5v"
-    return scanner_FootLocker_shoe("10.0", urlToScan: url)
+    return scanner_FootLocker_shoe("10.0", urlToScan: url, category: "performance basketball")
 }
 
 func scanner_FootLocker_men_95_performance_basketball_shoes_Nike() -> Scanner {
     let url = "https://www.footlocker.ca/en-CA/Sale/Mens/Nike/Shoes/Performance-Basketball-Shoes/_-_/N-1z141w4Z24ZzzZrjZseZca"
-    return scanner_FootLocker_shoe("9.5", urlToScan: url)
+    return scanner_FootLocker_shoe("9.5", urlToScan: url, category: "performance basketball")
 }
 
-func scanner_FootLocker_shoe(sizeToScan: String, urlToScan: String) -> Scanner {
+func scanner_FootLocker_men_95_shoes_Jordan() -> Scanner {
+    let url = "http://www.footlocker.ca/en-CA/Sale/Mens/Jordan/Shoes/_-_/N-1z141w4Z24Z11cZrjZca"
+    return scanner_FootLocker_shoe("9.5", urlToScan: url, category: "Jordan")
+}
+
+func scanner_FootLocker_shoe(sizeToScan: String, urlToScan: String, category: String) -> Scanner {
     let namePoint = "quickviewEnabled" // Look for "title" follows.
     let originalPricePoint = "product_price"
     let salePricePoint = "<B>Now"
@@ -61,29 +68,29 @@ func scanner_FootLocker_shoe(sizeToScan: String, urlToScan: String) -> Scanner {
     let nameEnd = "\" href="
     
     let dividersAndStringLocators: [(String, (String, String)?)] = [(namePoint, (nameStart, nameEnd)), (originalPricePoint, nil), (salePricePoint, nil)]
-    return Scanner(url: urlToScan, seller: "Foot Locker", specifications: ["size": sizeToScan], dividersAndStringLocators: dividersAndStringLocators)
+    return Scanner(url: urlToScan, seller: "Foot Locker", specifications: ["size": sizeToScan, "category": category], dividersAndStringLocators: dividersAndStringLocators)
 }
 
 func scanner_Nike_men_95_basketball_shoes() -> Scanner {
-    let url = ""
-    return scanner_Nike_shoe("9.5", urlToScan: url)
+    let url = "http://store.nike.com/ca/en_gb/pw/mens-sale-basketball-shoes/47Z60wZ7puZ8r1Zoi3"
+    return scanner_Nike_shoe("9.5", urlToScan: url, category: "basketball")
 }
 
 func scanner_Nike_men_95_running_shoes() -> Scanner {
     let url = "http://store.nike.com/ca/en_gb/pw/mens-sale-running-shoes/47Z60wZ7puZ8yzZoi3"
-    return scanner_Nike_shoe("9.5", urlToScan: url)
+    return scanner_Nike_shoe("9.5", urlToScan: url, category: "running")
 }
 
-func scanner_Nike_shoe(sizeToScan: String, urlToScan: String) -> Scanner {
+func scanner_Nike_shoe(sizeToScan: String, urlToScan: String, category: String) -> Scanner {
     let namePoint = "grid-item-info" // Look for "title" follows.
-    let originalPricePoint = "<span class=\"overridden nsg-font-family--base\">"
-    let salePricePoint = "<span class=\"local nsg-font-family--base\">"
+    let originalPricePoint = "overridden nsg-font-family--base"
+    let salePricePoint = "local nsg-font-family--base"
     
     let nameStart = "<p class=\"product-display-name nsg-font-family--base edf-font-size--regular nsg-text--dark-grey\" >"
     let nameEnd = "</p>"
     
     let dividersAndStringLocators: [(String, (String, String)?)] = [(namePoint, (nameStart, nameEnd)), (originalPricePoint, nil), (salePricePoint, nil)]
-    return Scanner(url: urlToScan, seller: "Nike", specifications: ["size": sizeToScan], dividersAndStringLocators: dividersAndStringLocators)
+    return Scanner(url: urlToScan, seller: "Nike", specifications: ["size": sizeToScan, "category": category], dividersAndStringLocators: dividersAndStringLocators)
 }
 
 struct Scanner {
@@ -100,8 +107,9 @@ struct Scanner {
             if $0.result.isSuccess {
                 if let stringReturned = $0.result.value {
                     let items = allItems(stringReturned, dividersAndStringLocators: self.dividersAndStringLocators, specifications: self.specifications, seller: self.seller)
-                    handleItems(items, seller: self.seller, db: realm)
-                    print(items)
+                    print("url"); print(self.self.url)
+                    print("itemsFromHTML");print(items.count);print(items)
+                    handleItems(items, category: self.seller + " " + specificationsInOneString(self.specifications), db: realm)
                 } else {
                     print("Error: no string received for " + self.seller)
                 }
@@ -112,11 +120,12 @@ struct Scanner {
     }
 }
 
-func handleItems(items: [Item], seller: String, db: Realm) {
+func handleItems(items: [Item], category: String, db: Realm) {
     let itemsToSave = items.map { itemToModel($0) }
 //    itemsToSave.forEach { $0.setupAlreadyInDb(realm) }
     itemsToSave.forEach { $0.setupShownBefore(realm) }
-    clearAllItems(seller)
+    clearAllItems(category)
+    
     itemsToSave.forEach {x in
         try! db.write {
             db.add(x)

@@ -21,6 +21,7 @@ let footlockerShoeDividers = [footlockerShoeNamePoint, footlockerShoeOriginalPri
 
 let Html1Item = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_1item"
 let Html2Items = "Men's_nike_performanceBasketballShoe_9.5_FootLocker_2items"
+let Html37Items = "Nike_Men_95_running_shoe_37items"
 
 class ItemTests: XCTestCase {
     

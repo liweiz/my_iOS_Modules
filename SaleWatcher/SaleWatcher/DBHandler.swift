@@ -17,14 +17,22 @@ func itemToModel(item: Item) -> ItemOnSale {
     i.originalPrice = item.originalPrice
     i.salePrice = item.salePrice
     i.seller = item.seller
+    i.specifications = specificationsInOneString(item.specifications)
+    i.discount = item.discount ?? 0
+    i.timestamp = NSDate().timeIntervalSince1970
+    i.category = i.seller + " " + i.specifications
+    return i
+}
+
+func specificationsInOneString(specifications: [String : String]) -> String {
     var s = ""
     var n = 1
-    for k in item.specifications.keys {
-        if k != "" && item.specifications[k] != nil {
+    for k in specifications.keys {
+        if k != "" && specifications[k] != nil {
             s.appendContentsOf(k)
             s.appendContentsOf(": ")
-            s.appendContentsOf(item.specifications[k]!)
-            if n == item.specifications.keys.count {
+            s.appendContentsOf(specifications[k]!)
+            if n == specifications.keys.count {
                 s.appendContentsOf(".")
             } else {
                 s.appendContentsOf(", ")
@@ -32,22 +40,19 @@ func itemToModel(item: Item) -> ItemOnSale {
         }
         n += 1
     }
-    i.specifications = s
-    i.discount = item.discount ?? 0
-    i.timestamp = NSDate().timeIntervalSince1970
-    return i
+    return s
 }
 
-func clearAllItems(fromSeller: String) {
-    for i in findItems(fromSeller) {
+func clearAllItems(forCategory: String) {
+    for i in findItems(forCategory) {
         try! realm.write {
             realm.delete(i)
         }
     }
 }
 
-func findItems(fromSeller: String) -> Results<ItemOnSale> {
-    let condition = "seller = '" + fromSeller + "'"
+func findItems(forCategory: String) -> Results<ItemOnSale> {
+    let condition = "category = '" + forCategory + "'"
     return realm.objects(ItemOnSale).filter(condition)
 }
 

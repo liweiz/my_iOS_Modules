@@ -21,23 +21,21 @@ class TableViewController: UITableViewController {
         refreshItems(realm)
         tableView.reloadData()
     }
-    let sellers = ["Foot Locker", "Nike", "Lego"]
-    var sellersAvailable: [String] {
-        return sellers.filter { items.keys.contains($0) }
-    }
     var items = [String: [ItemOnSale]]()
+    var categories: [String] {
+        return Array(items.keys)
+    }
     func refreshItems(db: Realm) {
         items = itemsFromDb(db)
     }
-    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return items.keys.count
+        return categories.count
     }
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sellersAvailable[section]
+        return categories[section]
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (items[sellersAvailable[section]]?.count)!
+        return (items[categories[section]]?.count)!
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "aCell"
@@ -47,14 +45,14 @@ class TableViewController: UITableViewController {
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellIdentifier)
         }
-        let i = items[sellersAvailable[indexPath.section]]![indexPath.row]
+        let i = items[categories[indexPath.section]]![indexPath.row]
         cell.textLabel?.text = i.name + " " + i.specifications
         cell.detailTextLabel?.text = String(i.discount) + " " + i.salePrice + " " + i.originalPrice
         cell.backgroundColor = i.shownBefore ? UIColor.clearColor() : UIColor.greenColor()
         return cell
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let i = (items[sellersAvailable[indexPath.section]])![indexPath.row]
+        let i = (items[categories[indexPath.section]])![indexPath.row]
         markAsShown(realm, obj: i)
         tableView.cellForRowAtIndexPath(indexPath)!.backgroundColor = UIColor.clearColor()
     }
