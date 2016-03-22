@@ -4,25 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>StringExtractor.xcscheme</key>
+		<key>TextCtxTransitionAnimation.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>4</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>EEF480041C8FD84B00B09EFD</key>
+		<key>EE3F807F1CA03B4E007D09A9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEF4801B1C8FD84C00B09EFD</key>
+		<key>EE3F80931CA03B4E007D09A9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEF480261C8FD84C00B09EFD</key>
+		<key>EE3F809E1CA03B4E007D09A9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
