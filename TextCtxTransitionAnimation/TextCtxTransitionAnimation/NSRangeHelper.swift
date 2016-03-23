@@ -9,19 +9,18 @@
 import Foundation
 
 extension SequenceType where Self.Generator.Element == NSRange {
-    func rangeIntersected(range: NSRange) -> (NSRange) -> NSRange {
-        return {(r: NSRange) -> NSRange in
-            return NSIntersectionRange(r, range)
-        }
-    }
+    /// rangesIntersect returns the NSRanges in self's sequence that are intersected with a given NSRange.
     func rangesIntersect(range: NSRange) -> [NSRange] {
-        let x = rangeIntersected(range)
-        return filter { x($0).length > 0 }
+        return filter { NSIntersectionRange($0, range).length > 0 }
     }
+    /// combineContinuousRanges returns the combined continuous NSRange. It returns nil is isComposedOfContinuousRanges == false.
     func combineContinuousRanges() -> NSRange? {
         if !isComposedOfContinuousRanges { return nil }
-        return NSRange()
+        return NSRange(
+            location: (map { $0.location }).minElement()!,
+            length: (map { $0.length }).reduce(0, combine: { $0 + $1 }))
     }
+    /// isComposedOfContinuousRanges finds out if the sequence is composed of continuous NSRanges on by one. If the sequence is empty, it also indicates it's not.
     var isComposedOfContinuousRanges: Bool {
         if underestimateCount() == 0 { return false }
         let ints = (map { [$0.location, $0.length] }).flatten()
@@ -39,4 +38,13 @@ extension SequenceType where Self.Generator.Element == NSRange {
         let differences = collectors.map { $0[2] - $0[0] - $0[1] }
         return differences.reduce(0, combine: { $0 + $1 }) == 0 ? true : false
     }
+    func compareNSRange() -> Bool {
+        return NSMakeRange(3, 5) == NSMakeRange(3, 7)
+    }
+}
+
+extension NSRange: Equatable {}
+
+public func == (lhs: NSRange, rhs: NSRange) -> Bool {
+    return lhs.location == rhs.location && lhs.length == rhs.length
 }

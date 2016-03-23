@@ -9,16 +9,48 @@
 import XCTest
 @testable import TextCtxTransitionAnimation
 
+
+
 class NSRangeHelperTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testNSRangeSequenceType_rangesIntersect() {
+        struct Tests {
+            let testName: String
+            let ranges: [NSRange]
+            let expectedOutput: [NSRange]
+        }
+        let rangeToIntersect = NSMakeRange(6, 21)
+        let toTests = [
+            Tests(testName: "not intersected", ranges: [NSMakeRange(1, 3), NSMakeRange(50, 13), NSMakeRange(29, 29)], expectedOutput: [NSRange]()),
+            Tests(testName: "one intersected", ranges: [NSMakeRange(1, 3), NSMakeRange(50, 13), NSMakeRange(29, 29), NSMakeRange(7, 10)], expectedOutput: [NSMakeRange(7, 10)]),
+            Tests(testName: "two intersected", ranges: [NSMakeRange(1, 3), NSMakeRange(13, 13), NSMakeRange(29, 29), NSMakeRange(7, 10)], expectedOutput: [NSMakeRange(13, 13), NSMakeRange(7, 10)])
+        ]
+        let testFuncName = "NSRangeSequenceType.rangesIntersect"
+        var i = 0
+        for t in toTests {
+            testNonOptionalElemArrayEqualWithLog(t.ranges.rangesIntersect(rangeToIntersect), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testNSRangeSequenceType_combineContinuousRanges() {
+        struct Tests {
+            let testName: String
+            let ranges: [NSRange]
+            let expectedOutput: NSRange?
+        }
+        let toTests = [
+            Tests(testName: "normal", ranges: [NSMakeRange(4, 6), NSMakeRange(10, 13), NSMakeRange(23, 29)], expectedOutput: NSMakeRange(4, 48)),
+            Tests(testName: "not a continuous one", ranges: [NSMakeRange(4, 6), NSMakeRange(2, 3), NSMakeRange(13, 9)], expectedOutput: nil),
+            Tests(testName: "one element", ranges: [NSMakeRange(4, 6)], expectedOutput: NSMakeRange(4, 6)),
+            Tests(testName: "empty", ranges: [NSRange](), expectedOutput: nil)
+        ]
+        let testFuncName = "NSRangeSequenceType.combineContinuousRanges"
+        var i = 0
+        for t in toTests {
+            testNonCollectionEqualWithLog(t.ranges.combineContinuousRanges(), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
     }
     
     func testNSRangeSequenceType_isComposedOfContinuousRanges() {

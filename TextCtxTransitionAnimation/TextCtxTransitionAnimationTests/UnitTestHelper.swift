@@ -22,7 +22,17 @@ internal func printFuncReturn(testFuncName: String, testName: String, testIndex:
 internal func printEnd(testFuncName: String, testName: String, testIndex: Int) {
     print(testHead + "\(testIndex): " + testFuncName + " *** " + testName + testEndNotice)
 }
-internal func testArrayEqualWithLog<T: Equatable>(expression1: [T?], expression2: [T?], testFuncName: String, testName: String, testIndex: Int) {
+internal func testOptionalElemArrayEqualWithLog<T: Equatable>(expression1: [T?], expression2: [T?], testFuncName: String, testName: String, testIndex: Int) {
+    printStart(testFuncName, testName: testName, testIndex: testIndex)
+    var i = 0
+    for t in expression1 {
+        printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: i)
+        XCTAssertEqual(t, expression2[i])
+        i += 1
+    }
+    printEnd(testFuncName, testName: testName, testIndex: testIndex)
+}
+internal func testNonOptionalElemArrayEqualWithLog<T: Equatable>(expression1: [T], expression2: [T], testFuncName: String, testName: String, testIndex: Int) {
     printStart(testFuncName, testName: testName, testIndex: testIndex)
     var i = 0
     for t in expression1 {
