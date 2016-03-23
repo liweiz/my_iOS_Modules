@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */; };
+		EE1966EE1CA2E7A00078F1C3 /* ArrayHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966ED1CA2E7A00078F1C3 /* ArrayHelper.swift */; };
+		EE1966F01CA3123D0078F1C3 /* UITextViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */; };
 		EE2D85A61CA10B8A002BA9ED /* NSRangeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */; };
 		EE3F80841CA03B4E007D09A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */; };
 		EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80851CA03B4E007D09A9 /* ViewController.swift */; };
@@ -39,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
+		EE1966ED1CA2E7A00078F1C3 /* ArrayHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayHelper.swift; sourceTree = "<group>"; };
+		EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtensionTests.swift; sourceTree = "<group>"; };
 		EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRangeHelperTests.swift; sourceTree = "<group>"; };
 		EE3F80801CA03B4E007D09A9 /* TextCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -53,7 +59,7 @@
 		EE3F809F1CA03B4E007D09A9 /* TextCtxTransitionAnimationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextCtxTransitionAnimationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE3F80A31CA03B4E007D09A9 /* TextCtxTransitionAnimationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCtxTransitionAnimationUITests.swift; sourceTree = "<group>"; };
 		EE3F80A51CA03B4E007D09A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewMatcherTests.swift; sourceTree = "<group>"; };
+		EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewMatcherTests.swift; path = TextCtxTransitionAnimationTests/ViewMatcherTests.swift; sourceTree = SOURCE_ROOT; };
 		EE3F80B91CA03C60007D09A9 /* ViewMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewMatcher.swift; sourceTree = "<group>"; };
 		EE3F80BB1CA03DE3007D09A9 /* UnitTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestHelper.swift; sourceTree = "<group>"; };
 		EED67EFA1CA09F2700ED5DDA /* NSRangeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRangeHelper.swift; sourceTree = "<group>"; };
@@ -111,6 +117,8 @@
 				EED67EFA1CA09F2700ED5DDA /* NSRangeHelper.swift */,
 				EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */,
 				EE3F80851CA03B4E007D09A9 /* ViewController.swift */,
+				EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */,
+				EE1966ED1CA2E7A00078F1C3 /* ArrayHelper.swift */,
 				EE3F80871CA03B4E007D09A9 /* Main.storyboard */,
 				EE3F808A1CA03B4E007D09A9 /* Assets.xcassets */,
 				EE3F808C1CA03B4E007D09A9 /* LaunchScreen.storyboard */,
@@ -123,10 +131,11 @@
 			isa = PBXGroup;
 			children = (
 				EE3F80BB1CA03DE3007D09A9 /* UnitTestHelper.swift */,
+				EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */,
 				EE3F80981CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.swift */,
 				EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */,
-				EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */,
 				EE3F809A1CA03B4E007D09A9 /* Info.plist */,
+				EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */,
 			);
 			path = TextCtxTransitionAnimationTests;
 			sourceTree = "<group>";
@@ -273,8 +282,10 @@
 			files = (
 				EED67EFB1CA09F2700ED5DDA /* NSRangeHelper.swift in Sources */,
 				EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */,
+				EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */,
 				EE3F80841CA03B4E007D09A9 /* AppDelegate.swift in Sources */,
 				EE3F80BA1CA03C60007D09A9 /* ViewMatcher.swift in Sources */,
+				EE1966EE1CA2E7A00078F1C3 /* ArrayHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE2D85A61CA10B8A002BA9ED /* NSRangeHelperTests.swift in Sources */,
+				EE1966F01CA3123D0078F1C3 /* UITextViewExtensionTests.swift in Sources */,
 				EE3F80991CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.swift in Sources */,
 				EE3F80B81CA03C56007D09A9 /* ViewMatcherTests.swift in Sources */,
 				EE3F80BC1CA03DE3007D09A9 /* UnitTestHelper.swift in Sources */,
