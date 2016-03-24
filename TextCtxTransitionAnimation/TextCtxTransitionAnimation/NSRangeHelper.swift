@@ -38,13 +38,5 @@ extension SequenceType where Self.Generator.Element == NSRange {
         let differences = collectors.map { $0[2] - $0[0] - $0[1] }
         return differences.reduce(0, combine: { $0 + $1 }) == 0 ? true : false
     }
-    func compareNSRange() -> Bool {
-        return NSMakeRange(3, 5) == NSMakeRange(3, 7)
-    }
 }
 
-extension NSRange: Equatable {}
-
-public func == (lhs: NSRange, rhs: NSRange) -> Bool {
-    return lhs.location == rhs.location && lhs.length == rhs.length
-}

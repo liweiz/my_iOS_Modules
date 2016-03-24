@@ -45,16 +45,18 @@ extension UITextView {
         if hasNonEmptyTextContent {
             var rects = [CGRect]()
             var currentIndex = 0
-            while currentIndex < layoutManager.numberOfGlyphs {
+            while currentIndex < text.characters.count {
+                let rect = lineFragmentRect(currentIndex)!
+                if !rects.contains(rect) { rects.append(rect) }
                 currentIndex += 1
-                rects.append(lineFragmentRect(currentIndex)!)
             }
             return rects
         }
         return nil
     }
-    func lineFragmentRect(forGlyphIndex: Int) -> CGRect? {
-        return layoutManager.isValidGlyphIndex(forGlyphIndex) ? layoutManager.lineFragmentRectForGlyphAtIndex(forGlyphIndex, effectiveRange: nil) : nil
+    func lineFragmentRect(forCharacterIndex: Int) -> CGRect? {
+        let glyphIndex = layoutManager.glyphIndexForCharacterAtIndex(forCharacterIndex)
+        return layoutManager.isValidGlyphIndex(glyphIndex) ? layoutManager.lineFragmentRectForGlyphAtIndex(glyphIndex, effectiveRange: nil) : nil
     }
     var hasNonEmptyTextContent: Bool {
         guard let content = text else {
@@ -63,3 +65,4 @@ extension UITextView {
         return content == "" ? false : true
     }
 }
+

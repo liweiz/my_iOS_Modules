@@ -15,21 +15,23 @@ class UITextViewExtensionTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         viewToMock.text = text
+//        viewToMock.layoutManager
     }
     
     func testUITextViewExtension_lineFragmentRectForEachLine() {
         struct Tests {
             let testName: String
             let textView: UITextView
-            let expectedOutput: [CGRect]?
+            let expectedOutput: [String]?
         }
         let toTests = [
-            Tests(testName: "normal", textView: viewToMock, expectedOutput: [line0Rect, line1Rect, line2Rect, line3Rect, line4Rect, line5Rect, line6Rect, line7Rect, line8Rect])
+            Tests(testName: "normal", textView: viewToMock, expectedOutput: [line0Rect, line1Rect, line2Rect, line3Rect, line4Rect, line5Rect, line6Rect, line7Rect, line8Rect].map { $0.string })
         ]
         let testFuncName = "UITextViewExtension.lineFragmentRectForEachLine"
         var i = 0
         for t in toTests {
-            testNonOptionalElemArrayEqualWithLog(t.textView.lineFragmentRectForEachLine!, expression2: t.expectedOutput!, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            testNonOptionalElemArrayEqualWithLog(t.textView.lineFragmentRectForEachLine!.map { $0.string }, expression2: t.expectedOutput!, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+//            testNonOptionalElemArrayEqualWithLog(t.textView.lineFragmentRectForEachLine!.map { convertCGRectToDic($0) }, expression2: t.expectedOutput!.map { convertCGRectToDic($0) }, testFuncName: testFuncName, testName: t.testName, testIndex: i)
             i += 1
         }
         let nilTest = Tests(testName: "empty", textView: emptyTextView, expectedOutput: nil)
@@ -40,17 +42,17 @@ class UITextViewExtensionTests: XCTestCase {
         struct Tests {
             let testName: String
             let textView: UITextView
-            let index: Int
+            let characterIndex: Int
             let expectedOutput: CGRect?
         }
         let toTests = [
-            Tests(testName: "glyph index from 2nd line", textView: viewToMock, index: viewToMock.layoutManager.glyphIndexForCharacterAtIndex(45), expectedOutput: line1Rect),
-            Tests(testName: "invalid index", textView: emptyTextView, index: viewToMock.layoutManager.glyphIndexForCharacterAtIndex(1), expectedOutput: nil)
+            Tests(testName: "glyph index from 2nd line", textView: viewToMock, characterIndex: 45, expectedOutput: line1Rect),
+            Tests(testName: "invalid index", textView: emptyTextView, characterIndex: 1, expectedOutput: nil)
         ]
         let testFuncName = "UITextViewExtension.lineFragmentRect"
         var i = 0
         for t in toTests {
-            testNonCollectionEqualWithLog(t.textView.lineFragmentRect(t.index), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            testNonCollectionEqualWithLog(t.textView.lineFragmentRect(t.characterIndex), expression2: t.expectedOutput, testFuncName: testFuncName, testName: t.testName, testIndex: i)
             i += 1
         }
     }

@@ -60,6 +60,12 @@ internal func testTwoElemTupleEqualWithLog<T: Equatable, U: Equatable>(expressio
     XCTAssertEqual(expression1.1, expression2.1)
     printEnd(testFuncName, testName: testName, testIndex: testIndex)
 }
+internal func testDicEqualWithLog<T: Equatable, U: Equatable>(expression1: [T: U], expression2: [T: U], testFuncName: String, testName: String, testIndex: Int) {
+    printStart(testFuncName, testName: testName, testIndex: testIndex)
+    printFuncReturn(testFuncName, testName: testName, testIndex: testIndex, returnIndex: 0)
+    XCTAssertEqual(expression1, expression2)
+    printEnd(testFuncName, testName: testName, testIndex: testIndex)
+}
 // From https://www.hackingwithswift.com/example-code/strings/how-to-load-a-string-from-a-file-in-your-bundle
 internal func loadHTMLFromBundle(fileName: String) -> String {
     if let filepath = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt") {
@@ -73,4 +79,13 @@ internal func loadHTMLFromBundle(fileName: String) -> String {
         print("html could not be loaded")
     }
     return ""
+}
+extension CGRect {
+    var string: String {
+        return "\(origin.x), \(origin.y), \(size.width), \(size.height)"
+    }
+}
+extension NSRange: Equatable {}
+public func == (lhs: NSRange, rhs: NSRange) -> Bool {
+    return lhs.location == rhs.location && lhs.length == rhs.length
 }
