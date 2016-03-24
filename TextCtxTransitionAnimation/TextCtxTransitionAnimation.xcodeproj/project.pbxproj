@@ -13,9 +13,7 @@
 		EE2D85A61CA10B8A002BA9ED /* NSRangeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */; };
 		EE3F80841CA03B4E007D09A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */; };
 		EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80851CA03B4E007D09A9 /* ViewController.swift */; };
-		EE3F80891CA03B4E007D09A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE3F80871CA03B4E007D09A9 /* Main.storyboard */; };
 		EE3F808B1CA03B4E007D09A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE3F808A1CA03B4E007D09A9 /* Assets.xcassets */; };
-		EE3F808E1CA03B4E007D09A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE3F808C1CA03B4E007D09A9 /* LaunchScreen.storyboard */; };
 		EE3F80991CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80981CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.swift */; };
 		EE3F80A41CA03B4E007D09A9 /* TextCtxTransitionAnimationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80A31CA03B4E007D09A9 /* TextCtxTransitionAnimationUITests.swift */; };
 		EE3F80B81CA03C56007D09A9 /* ViewMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */; };
@@ -49,9 +47,7 @@
 		EE3F80801CA03B4E007D09A9 /* TextCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EE3F80851CA03B4E007D09A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		EE3F80881CA03B4E007D09A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EE3F808A1CA03B4E007D09A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EE3F808D1CA03B4E007D09A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE3F808F1CA03B4E007D09A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE3F80941CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextCtxTransitionAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE3F80981CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCtxTransitionAnimationTests.swift; sourceTree = "<group>"; };
@@ -119,9 +115,7 @@
 				EE3F80851CA03B4E007D09A9 /* ViewController.swift */,
 				EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */,
 				EE1966ED1CA2E7A00078F1C3 /* ArrayHelper.swift */,
-				EE3F80871CA03B4E007D09A9 /* Main.storyboard */,
 				EE3F808A1CA03B4E007D09A9 /* Assets.xcassets */,
-				EE3F808C1CA03B4E007D09A9 /* LaunchScreen.storyboard */,
 				EE3F808F1CA03B4E007D09A9 /* Info.plist */,
 			);
 			path = TextCtxTransitionAnimation;
@@ -253,9 +247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE3F808E1CA03B4E007D09A9 /* LaunchScreen.storyboard in Resources */,
 				EE3F808B1CA03B4E007D09A9 /* Assets.xcassets in Resources */,
-				EE3F80891CA03B4E007D09A9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,25 +315,6 @@
 			targetProxy = EE3F80A01CA03B4E007D09A9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		EE3F80871CA03B4E007D09A9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EE3F80881CA03B4E007D09A9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		EE3F808C1CA03B4E007D09A9 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EE3F808D1CA03B4E007D09A9 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		EE3F80A61CA03B4E007D09A9 /* Debug */ = {
