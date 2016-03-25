@@ -10,14 +10,14 @@ import Foundation
 import UIKit
 
 extension UITextView {
-    /// rectOriginForCharacterRangeInTextContainerCoordinates returns the origin of boundingRectForGlyphRange based on its character range in the textContainer's coordinates.
-    func rectOriginForCharacterRangeInTextContainerCoordinates(characterRange: NSRange) -> CGPoint {
-        return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(characterRange, actualCharacterRange: nil), inTextContainer: textContainer).origin
+    /// rectOriginForCharRangeInTextContainerCoordinates returns the origin of boundingRectForGlyphRange based on its character range in the textContainer's coordinates.
+    func rectOriginForCharRangeInTextContainerCoordinates(charRange: NSRange) -> CGPoint {
+        return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil), inTextContainer: textContainer).origin
     }
-    /// firstGlyphOrigin returns origin in the textView's coordinates.
-    var firstGlyphRectOrigin: CGPoint {
+    /// firstCharOrigin returns origin in the textView's coordinates.
+    var firstCharRectOrigin: CGPoint {
         let b = bounds.origin
-        let g = layoutManager.lineFragmentRectForGlyphAtIndex(0, effectiveRange: nil).origin
+        let g = layoutManager.lineFragmentRectForGlyphAtIndex(layoutManager.glyphIndexForCharacterAtIndex(0), effectiveRange: nil).origin
         let i = textContainerInset
         return CGPointMake(b.x + g.x + i.left, b.y + g.y + i.top)
     }
@@ -35,7 +35,7 @@ extension UITextView {
     }
     /// textViewLinesInfo returns the visiableGlyphRanges for lines and corresponding rect in one textView's coordinates.
     // view's line break leaves no glyph outside of the visiable area, which means no need to worry about the glyph that is partly or not visiable here.
-    var characterRangesForEachLine: [NSRange]? {
+    var charRangesForEachLine: [NSRange]? {
         return glyphRangesForEachLine?.map { layoutManager.characterRangeForGlyphRange($0, actualGlyphRange: nil) }
     }
     var glyphRangesForEachLine: [NSRange]? {
@@ -54,8 +54,8 @@ extension UITextView {
         }
         return nil
     }
-    func lineFragmentRect(forCharacterIndex: Int) -> CGRect? {
-        let glyphIndex = layoutManager.glyphIndexForCharacterAtIndex(forCharacterIndex)
+    func lineFragmentRect(forCharIndex: Int) -> CGRect? {
+        let glyphIndex = layoutManager.glyphIndexForCharacterAtIndex(forCharIndex)
         return layoutManager.isValidGlyphIndex(glyphIndex) ? layoutManager.lineFragmentRectForGlyphAtIndex(glyphIndex, effectiveRange: nil) : nil
     }
     var hasNonEmptyTextContent: Bool {

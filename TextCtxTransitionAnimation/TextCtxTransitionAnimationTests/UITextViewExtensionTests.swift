@@ -15,14 +15,52 @@ class UITextViewExtensionTests: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         viewToMock.text = text
-//        viewToMock.layoutManager
+    }
+    
+    func testUITextViewExtension_glyphRangeForText() {
+        struct Tests {
+            let testName: String
+            let textView: UITextView
+            let input: String
+            let expectedOutput: NSRange?
+        }
+        let toTests = [
+            Tests(testName: "normal", textView: viewToMock, input: "preservation and restoration works, ", expectedOutput: viewToMock.layoutManager.glyphRangeForCharacterRange(line7charRange, actualCharacterRange: nil))
+        ]
+        let testFuncName = "UITextViewExtension.glyphRangeForText"
+        var i = 0
+        for t in toTests {
+            testNonCollectionEqualWithLog(t.textView.glyphRangeForText(t.input)!, expression2: t.expectedOutput!, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
+        let nilTest = Tests(testName: "not found", textView: viewToMock, input: "abscdas", expectedOutput: nil)
+        testIsNilWithLog(nilTest.textView.glyphRangeForText(nilTest.input), testFuncName: testFuncName, testName: nilTest.testName, testIndex: 0)
+    }
+    
+    func testUITextViewExtension_charRangesForEachLine() {
+        struct Tests {
+            let testName: String
+            let textView: UITextView
+            let expectedOutput: [NSRange]?
+        }
+        let toTests = [
+            Tests(testName: "normal", textView: viewToMock, expectedOutput: [line0charRange, line1charRange, line2charRange, line3charRange, line4charRange, line5charRange, line6charRange, line7charRange, line8charRange])
+        ]
+        let testFuncName = "UITextViewExtension.charRangesForEachLine"
+        var i = 0
+        for t in toTests {
+            testNonOptionalElemArrayEqualWithLog(t.textView.charRangesForEachLine!, expression2: t.expectedOutput!, testFuncName: testFuncName, testName: t.testName, testIndex: i)
+            i += 1
+        }
+        let nilTest = Tests(testName: "empty", textView: emptyTextView, expectedOutput: nil)
+        testIsNilWithLog(nilTest.textView.charRangesForEachLine, testFuncName: testFuncName, testName: nilTest.testName, testIndex: 0)
     }
     
     func testUITextViewExtension_lineFragmentRectForEachLine() {
         struct Tests {
             let testName: String
             let textView: UITextView
-            let expectedOutput: [String]?
+            let expectedOutput: [String]? // CGRect equatable has float issue.
         }
         let toTests = [
             Tests(testName: "normal", textView: viewToMock, expectedOutput: [line0Rect, line1Rect, line2Rect, line3Rect, line4Rect, line5Rect, line6Rect, line7Rect, line8Rect].map { $0.string })
@@ -31,7 +69,6 @@ class UITextViewExtensionTests: XCTestCase {
         var i = 0
         for t in toTests {
             testNonOptionalElemArrayEqualWithLog(t.textView.lineFragmentRectForEachLine!.map { $0.string }, expression2: t.expectedOutput!, testFuncName: testFuncName, testName: t.testName, testIndex: i)
-//            testNonOptionalElemArrayEqualWithLog(t.textView.lineFragmentRectForEachLine!.map { convertCGRectToDic($0) }, expression2: t.expectedOutput!.map { convertCGRectToDic($0) }, testFuncName: testFuncName, testName: t.testName, testIndex: i)
             i += 1
         }
         let nilTest = Tests(testName: "empty", textView: emptyTextView, expectedOutput: nil)
@@ -100,6 +137,16 @@ let line5Rect = CGRectMake(0.0, 69.0, 200.0, 13.8)
 let line6Rect = CGRectMake(0.0, 82.8, 200.0, 13.8)
 let line7Rect = CGRectMake(0.0, 96.6, 200.0, 13.8)
 let line8Rect = CGRectMake(0.0, 110.4, 200.0, 13.8)
+
+let line0charRange = NSMakeRange(0, 34)
+let line1charRange = NSMakeRange(34, 65 - 34)
+let line2charRange = NSMakeRange(65, 102 - 65)
+let line3charRange = NSMakeRange(102, 132 - 102)
+let line4charRange = NSMakeRange(132, 168 - 132)
+let line5charRange = NSMakeRange(168, 204 - 168)
+let line6charRange = NSMakeRange(204, 232 - 204)
+let line7charRange = NSMakeRange(232, 268 - 232)
+let line8charRange = NSMakeRange(268, 298 - 268)
 
 let emptyTextView = UITextView()
 
