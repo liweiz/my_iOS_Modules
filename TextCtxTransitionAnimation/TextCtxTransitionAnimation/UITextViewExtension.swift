@@ -10,6 +10,28 @@ import Foundation
 import UIKit
 
 extension UITextView {
+    func singleLineTextViews() -> [SingleLineTextView] {
+        var singleLineTextViews = [SingleLineTextView]()
+        if let rects = lineFragmentRectForEachLine {
+            let lineRectsNoPadding = rects.map { CGRectMake(bounds.origin.x + textContainerInset.left + $0.origin.x + textContainer.lineFragmentPadding, bounds.origin.y + textContainerInset.top + $0.origin.y, $0.size.width - textContainer.lineFragmentPadding * 2, $0.size.height) }
+            var i = 0
+            for rect in lineRectsNoPadding {
+                let lineView = SingleLineTextView(attriText: attributedText!, lineHeight: rect.height)
+                let lineViewImitatedTextRectOriginRaw = lineView.rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
+                let lineViewImitatedTextRectOrigin = convertFromTextContainerCoordinatesToSelf(lineViewImitatedTextRectOriginRaw)
+                let lineCharOriginRaw = rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
+                let lineCharOrigin = convertFromTextContainerCoordinatesToSelf(lineCharOriginRaw)
+                addSubview(lineView)
+                lineView.frame.origin = lineView.originToMatch(lineCharOrigin, anotherView: self, pointHere: lineViewImitatedTextRectOrigin)
+                singleLineTextViews.append(lineView)
+                i += 1
+            }
+            print("i: \(i)")
+        }
+        return singleLineTextViews
+    }
+    
+    
     /// rectOriginForCharRangeInTextContainerCoordinates returns the origin of boundingRectForGlyphRange based on its character range in the textContainer's coordinates.
     func rectOriginForCharRangeInTextContainerCoordinates(charRange: NSRange) -> CGPoint {
         return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil), inTextContainer: textContainer).origin
@@ -20,6 +42,10 @@ extension UITextView {
         let g = layoutManager.lineFragmentRectForGlyphAtIndex(layoutManager.glyphIndexForCharacterAtIndex(0), effectiveRange: nil).origin
         let i = textContainerInset
         return CGPointMake(b.x + g.x + i.left, b.y + g.y + i.top)
+    }
+    /// convertFromTextContainerCoordinatesToSelf converts point in TextContainerCoordinates to self's coordinates
+    func convertFromTextContainerCoordinatesToSelf(pointInTextContainerCoordinates: CGPoint) -> CGPoint {
+        return CGPointMake(bounds.origin.x + textContainerInset.left + pointInTextContainerCoordinates.x, bounds.origin.y + textContainerInset.top + pointInTextContainerCoordinates.y)
     }
     /// deltaToTextRectOriginFromOrigin
     var deltaToTextRectOriginFromOrigin: CGPoint {
