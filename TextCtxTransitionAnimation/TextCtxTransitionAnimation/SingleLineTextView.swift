@@ -17,12 +17,17 @@ class SingleLineTextView: UITextView, Matchable {
         textContainer.maximumNumberOfLines = 1
         textContainer.lineFragmentPadding = 0
         textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        attributedText = attriText
+        let t = NSMutableAttributedString(attributedString: attriText)
+        let fullRange = NSMakeRange(0, attriText.length)
+        t.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: fullRange)
+        t.addAttribute(NSBackgroundColorAttributeName, value: UIColor.clearColor(), range: fullRange)
+        attributedText = t
+        backgroundColor = UIColor.clearColor()
         sizeToFit()
     }
     
     func originToMatch(pointOnAnotherView: CGPoint, anotherView: UIView, pointHere: CGPoint) -> CGPoint {
-        return originOfAnotherViewToOverlapTwoPoints(pointHere, pointInAnotherView: pointOnAnotherView, anotherView: anotherView)
+        return anotherView.originOfAnotherViewToOverlapTwoPoints(pointOnAnotherView, pointInAnotherView: pointHere, anotherView: self)
     }
     
     required init?(coder aDecoder: NSCoder) {

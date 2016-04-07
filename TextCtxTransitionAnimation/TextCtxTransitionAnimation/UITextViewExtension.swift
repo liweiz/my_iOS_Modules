@@ -18,12 +18,13 @@ extension UITextView {
             for rect in lineRectsNoPadding {
                 let lineView = SingleLineTextView(attriText: attributedText!, lineHeight: rect.height)
                 let lineViewImitatedTextRectOriginRaw = lineView.rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
-                let lineViewImitatedTextRectOrigin = convertFromTextContainerCoordinatesToSelf(lineViewImitatedTextRectOriginRaw)
+                let lineViewImitatedTextRectOrigin = lineView.convertFromTextContainerCoordinatesToSelf(lineViewImitatedTextRectOriginRaw)
                 let lineCharOriginRaw = rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
                 let lineCharOrigin = convertFromTextContainerCoordinatesToSelf(lineCharOriginRaw)
                 addSubview(lineView)
                 lineView.frame.origin = lineView.originToMatch(lineCharOrigin, anotherView: self, pointHere: lineViewImitatedTextRectOrigin)
                 singleLineTextViews.append(lineView)
+                print("i: \(i)\n lineViewImitatedTextRectOriginRaw: \(lineViewImitatedTextRectOriginRaw)\n lineViewImitatedTextRectOrigin: \(lineViewImitatedTextRectOrigin)\n lineCharOriginRaw: \(lineCharOriginRaw)\n lineCharOrigin: \(lineCharOrigin)\n lineView.frame.origin: \(lineView.frame.origin)")
                 i += 1
             }
             print("i: \(i)")
