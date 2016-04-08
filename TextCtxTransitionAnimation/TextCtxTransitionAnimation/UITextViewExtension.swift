@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 extension UITextView {
+    /// singleLineTextViews return SingleLineTextViews that overlap with each line.
     func singleLineTextViews() -> [SingleLineTextView] {
         var singleLineTextViews = [SingleLineTextView]()
-        if let rects = lineFragmentRectForEachLine {
-            let lineRectsNoPadding = rects.map { CGRectMake(bounds.origin.x + textContainerInset.left + $0.origin.x + textContainer.lineFragmentPadding, bounds.origin.y + textContainerInset.top + $0.origin.y, $0.size.width - textContainer.lineFragmentPadding * 2, $0.size.height) }
+        if let rects = lineFragmentRectForEachLineNoPadding {
             var i = 0
-            for rect in lineRectsNoPadding {
+            for rect in rects {
                 let lineView = SingleLineTextView(attriText: attributedText!, lineHeight: rect.height)
                 let lineViewImitatedTextRectOriginRaw = lineView.rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
                 let lineViewImitatedTextRectOrigin = lineView.convertFromTextContainerCoordinatesToSelf(lineViewImitatedTextRectOriginRaw)
@@ -24,15 +24,19 @@ extension UITextView {
                 addSubview(lineView)
                 lineView.frame.origin = lineView.originToMatch(lineCharOrigin, anotherView: self, pointHere: lineViewImitatedTextRectOrigin)
                 singleLineTextViews.append(lineView)
-                print("i: \(i)\n lineViewImitatedTextRectOriginRaw: \(lineViewImitatedTextRectOriginRaw)\n lineViewImitatedTextRectOrigin: \(lineViewImitatedTextRectOrigin)\n lineCharOriginRaw: \(lineCharOriginRaw)\n lineCharOrigin: \(lineCharOrigin)\n lineView.frame.origin: \(lineView.frame.origin)")
                 i += 1
             }
-            print("i: \(i)")
         }
         return singleLineTextViews
     }
-    
-    
+    /// deltaOfOriginXs returns the distance between two origins.
+    func deltaOfOrigins(fromCharRange: NSRange, toCharRange: NSRange) -> CGPoint? {
+        let length = (text as NSString).length
+        if fromCharRange.location + fromCharRange.length > length || toCharRange.location + toCharRange.length > length || fromCharRange.length * toCharRange.length == 0 { return nil }
+        let fromOrigin = rectOriginForCharRangeInTextContainerCoordinates(fromCharRange)
+        let toOrigin = rectOriginForCharRangeInTextContainerCoordinates(toCharRange)
+        return fromOrigin.deltaTo(toOrigin)
+    }
     /// rectOriginForCharRangeInTextContainerCoordinates returns the origin of boundingRectForGlyphRange based on its character range in the textContainer's coordinates.
     func rectOriginForCharRangeInTextContainerCoordinates(charRange: NSRange) -> CGPoint {
         return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil), inTextContainer: textContainer).origin
@@ -67,6 +71,9 @@ extension UITextView {
     }
     var glyphRangesForEachLine: [NSRange]? {
         return lineFragmentRectForEachLine?.map {layoutManager.glyphRangeForBoundingRect($0, inTextContainer: textContainer)}
+    }
+    var lineFragmentRectForEachLineNoPadding: [CGRect]? {
+        return lineFragmentRectForEachLine?.map { CGRectMake(bounds.origin.x + textContainerInset.left + $0.origin.x + textContainer.lineFragmentPadding, bounds.origin.y + textContainerInset.top + $0.origin.y, $0.size.width - textContainer.lineFragmentPadding * 2, $0.size.height) }
     }
     var lineFragmentRectForEachLine: [CGRect]? {
         if hasNonEmptyTextContent {
