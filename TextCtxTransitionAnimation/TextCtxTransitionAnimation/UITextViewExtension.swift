@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 extension UITextView {
+    func makeContentClear(ofCharRange: NSRange) {
+        let new = NSMutableAttributedString(attributedString: attributedText!)
+        new.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: ofCharRange)
+    }
     /// singleLineTextViews return SingleLineTextViews that overlap with each line.
     func singleLineTextViews() -> [SingleLineTextView] {
         var singleLineTextViews = [SingleLineTextView]()
@@ -36,6 +40,9 @@ extension UITextView {
         let fromOrigin = rectOriginForCharRangeInTextContainerCoordinates(fromCharRange)
         let toOrigin = rectOriginForCharRangeInTextContainerCoordinates(toCharRange)
         return fromOrigin.deltaTo(toOrigin)
+    }
+    func rectForCharRangeInTextContainerCoordinates(charRange: NSRange) -> CGRect {
+        return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil), inTextContainer: textContainer)
     }
     /// rectOriginForCharRangeInTextContainerCoordinates returns the origin of boundingRectForGlyphRange based on its character range in the textContainer's coordinates.
     func rectOriginForCharRangeInTextContainerCoordinates(charRange: NSRange) -> CGPoint {
