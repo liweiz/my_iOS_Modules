@@ -33,7 +33,8 @@ class TransitionController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        linesForText = textLines(textView!)
+        view.clipsToBounds = true
+        linesForText = textLines(textView!, fullTextView: ctxView)
         let filteredLinesAndCharRangesForCtx = filteredCtxLinesAndCharRange(ctxView!, textInCtx: textView!.text)
         filteredLinesForCtx = filteredLinesAndCharRangesForCtx.lines
         filteredCharRangesForLinesInCtx = filteredLinesAndCharRangesForCtx.charRanges
@@ -64,7 +65,7 @@ class TransitionController: UIViewController {
             linesForText!.makeContentsClear(clearCharRanges.main)
             linesForTextExtra!.makeContentsClear(clearCharRanges.extra)
             setTextToCtxFollowers(linesForText!, extra: linesForTextExtra!)
-            
+            filteredLinesForCtx!.forEach { $0.hidden = true }
         }
     }
     func setTextToCtxFollowers(main: [SingleLineTextView], extra: [SingleLineTextView]) {
@@ -225,6 +226,7 @@ func extraLineForText(lastLineForText: SingleLineTextView, textRange: NSRange, v
         x = lastLineForText.frame.origin.x - lastLineForText.frame.size.width
     } else {
         var xSet = false
+        print("a:\(textRange.location + textRange.length), b: \((lastLineForText.text as NSString).length - 1)")
         for nextLocation in (textRange.location + textRange.length)...((lastLineForText.text as NSString).length - 1) {
             if (lastLineForText.text as NSString).substringWithRange(NSMakeRange(nextLocation, 1)) != " " {
                 let internalOrigin = lastLineForText.convertFromTextContainerCoordinatesToSelf(lastLineForText.rectOriginForCharRangeInTextContainerCoordinates(NSMakeRange(nextLocation, 1)))
@@ -242,8 +244,8 @@ func extraLineForText(lastLineForText: SingleLineTextView, textRange: NSRange, v
     return extraLine
 }
 
-func textLines(textView: UITextView) -> [SingleLineTextView] {
-    return textView.singleLineTextViews()
+func textLines(textView: UITextView, fullTextView: UITextView? = nil) -> [SingleLineTextView] {
+    return textView.singleLineTextViews(fullTextView)
 }
 
 func filteredCtxLinesAndCharRange(ctxView: UITextView, textInCtx: String) -> (lines: [SingleLineTextView], charRanges: [NSRange]) {

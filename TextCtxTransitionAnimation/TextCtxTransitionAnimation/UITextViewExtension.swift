@@ -14,14 +14,19 @@ extension UITextView {
         let new = NSMutableAttributedString(attributedString: attributedText!)
         new.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: ofCharRange)
     }
+
     /// singleLineTextViews return SingleLineTextViews that overlap with each line.
-    func singleLineTextViews() -> [SingleLineTextView] {
+    func singleLineTextViews(ctxView: UITextView? = nil) -> [SingleLineTextView] {
         var singleLineTextViews = [SingleLineTextView]()
         if let rects = lineFragmentRectForEachLineNoPadding {
+            let fullTextView = (ctxView == nil ? self : ctxView!)
             var i = 0
             for rect in rects {
-                let lineView = SingleLineTextView(attriText: attributedText!, lineHeight: rect.height)
-                let lineViewImitatedTextRectOriginRaw = lineView.rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
+                let chars = (text as NSString).substringWithRange(charRangesForEachLine![i])
+                print("chars: \(chars)")
+                let rangeInFullTextView = (fullTextView.text as NSString).rangeOfString(chars)
+                let lineView = SingleLineTextView(attriText: fullTextView.attributedText, lineHeight: rect.height)
+                let lineViewImitatedTextRectOriginRaw = lineView.rectOriginForCharRangeInTextContainerCoordinates(rangeInFullTextView)
                 let lineViewImitatedTextRectOrigin = lineView.convertFromTextContainerCoordinatesToSelf(lineViewImitatedTextRectOriginRaw)
                 let lineCharOriginRaw = rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
                 let lineCharOrigin = convertFromTextContainerCoordinatesToSelf(lineCharOriginRaw)

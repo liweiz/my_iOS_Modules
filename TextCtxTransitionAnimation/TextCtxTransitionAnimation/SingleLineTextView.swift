@@ -53,9 +53,12 @@ class SingleLineTextView: UITextView, MoveFollowable, Animatable {
     
     override var frame: CGRect {
         didSet {
-            let deltaToNewX = frame.origin.x - previousOriginX!
-            previousOriginX = frame.origin.x
-            updateFollowerOrigin(deltaToNewX)
+            if let x = previousOriginX {
+                let deltaToNewX = frame.origin.x - x
+                previousOriginX = frame.origin.x
+                updateFollowerOrigin(deltaToNewX)
+            }
+            
 //            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "SingleLineTextView rect updated", object: self, userInfo: nil))
         }
     }
