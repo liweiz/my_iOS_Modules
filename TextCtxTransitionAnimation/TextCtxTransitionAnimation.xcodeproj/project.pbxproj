@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */; };
 		EE1966F01CA3123D0078F1C3 /* UITextViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */; };
-		EE1966F41CA631630078F1C3 /* DataForTextCtxTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966F31CA631630078F1C3 /* DataForTextCtxTransition.swift */; };
 		EE1966F61CA78EC70078F1C3 /* Matchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966F51CA78EC70078F1C3 /* Matchable.swift */; };
 		EE2A097F1CB8C67E005E1E28 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2A097E1CB8C67E005E1E28 /* Animatable.swift */; };
 		EE2D85A61CA10B8A002BA9ED /* NSRangeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */; };
@@ -46,7 +45,6 @@
 /* Begin PBXFileReference section */
 		EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
 		EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtensionTests.swift; sourceTree = "<group>"; };
-		EE1966F31CA631630078F1C3 /* DataForTextCtxTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataForTextCtxTransition.swift; sourceTree = "<group>"; };
 		EE1966F51CA78EC70078F1C3 /* Matchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matchable.swift; sourceTree = "<group>"; };
 		EE2A097E1CB8C67E005E1E28 /* Animatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
 		EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRangeHelperTests.swift; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 			children = (
 				EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */,
 				EE3F80851CA03B4E007D09A9 /* ViewController.swift */,
-				EE1966F31CA631630078F1C3 /* DataForTextCtxTransition.swift */,
 				EE3F80B91CA03C60007D09A9 /* ViewMatcher.swift */,
 				EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */,
 				EE1966F51CA78EC70078F1C3 /* Matchable.swift */,
@@ -285,7 +282,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE88FBEC1CB6DE7F00AF4CF0 /* TransitionController.swift in Sources */,
-				EE1966F41CA631630078F1C3 /* DataForTextCtxTransition.swift in Sources */,
 				EED67EFB1CA09F2700ED5DDA /* NSRangeHelper.swift in Sources */,
 				EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */,
 				EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */,

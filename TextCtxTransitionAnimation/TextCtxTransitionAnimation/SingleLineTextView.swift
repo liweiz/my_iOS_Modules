@@ -51,19 +51,7 @@ class SingleLineTextView: UITextView, MoveFollowable, Animatable {
         super.init(coder: aDecoder)
     }
     
-    override var frame: CGRect {
-        didSet {
-            if let x = previousOriginX {
-                let deltaToNewX = frame.origin.x - x
-                previousOriginX = frame.origin.x
-                updateFollowerOrigin(deltaToNewX)
-            }
-            
-//            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "SingleLineTextView rect updated", object: self, userInfo: nil))
-        }
-    }
-    
-    var horizontalAnimationDuration: NSTimeInterval = 0
+    var horizontalAnimationDuration: NSTimeInterval = 2
     var horizontalAnimationDelay: NSTimeInterval = 0
     
     var animateHorizontally: (fromPosition: CGFloat, toPosition: CGFloat, completion: ((Bool) -> Void)?) {
@@ -71,8 +59,31 @@ class SingleLineTextView: UITextView, MoveFollowable, Animatable {
     }
     var animateOnSingleAxis: ((duration: NSTimeInterval, delay: NSTimeInterval) -> (fromPosition: CGFloat, toPosition: CGFloat, completion: ((Bool) -> Void)?))?
     // Animatable
-    func startHorizontalAnimation(fromPosition: CGFloat, toPosition: CGFloat) {
-        
+    func startHorizontalAnimation(byDelta: CGFloat, delegate: AnyObject?, isFollowed: Bool) {
+        let animation = CABasicAnimation(keyPath: "position.x")
+        animation.fromValue = layer.position.x
+        animation.byValue = byDelta
+        animation.duration = horizontalAnimationDuration
+        if let f = follower {
+            if isFollowed { (f as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: delegate, isFollowed: isFollowed) }
+        }
+        layer.addAnimation(animation, forKey: "")
+        frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
+    }
+    func analyze(deltasToSyncedPositions: [CGFloat?]) -> [CGFloat]? {
+        let d = (deltasToSyncedPositions.filter { $0 != nil }).map { $0! }
+        if d.count > 0 {
+            let deltaNeeded = d.first!
+            var deltaRemained = d.dropFirst().reduce(0, combine: { $0 + $1 })
+            var i = 0
+            for n in d.dropFirst() {
+                deltaRemained = deltaRemained - n
+                if deltaRemained <= 0 {
+                    break
+                }
+                i += 1
+            }
+        }
     }
     func startVerticalAnimation(fromPosition: CGFloat, toPosition: CGFloat) {
         
@@ -84,7 +95,8 @@ class SingleLineTextView: UITextView, MoveFollowable, Animatable {
     var follower: UIView?
     func updateFollowerOrigin(deltaToNew: CGFloat) {
         if let f = follower {
-            f.frame.origin = CGPointMake(f.frame.origin.x + deltaToNew, f.frame.origin.y)
+            startHorizontalAnimation(deltaToNew)
+//            f.frame.origin = CGPointMake(f.frame.origin.x + deltaToNew, f.frame.origin.y)
         }
     }
 }

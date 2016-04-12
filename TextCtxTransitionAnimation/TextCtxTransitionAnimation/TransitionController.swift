@@ -31,6 +31,10 @@ class TransitionController: UIViewController {
         let size = UIApplication.sharedApplication().keyWindow?.rootViewController?.view.frame.size
         view = UIView(frame: CGRectMake((size!.width - width!) / 2, 0, width!, size!.height))
     }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.clipsToBounds = true
@@ -60,7 +64,13 @@ class TransitionController: UIViewController {
                 linesForText!.append(extraTextLine)
                 deltasFromTextToCtxEachLine.append(extraTextLine.frame.origin.deltaTo(filteredLinesForCtx!.last!.frame.origin))
             }
-            linesForTextExtra = linesForText
+            linesForTextExtra = [SingleLineTextView]()
+            for l in linesForText! {
+                let lExtra = SingleLineTextView(attriText: l.attributedText, lineHeight: l.frame.size.height)
+                lExtra.frame = l.frame
+                view.addSubview(lExtra)
+                linesForTextExtra?.append(lExtra)
+            }
             let clearCharRanges = charRangesOfClearContent(filteredCharRangesForLinesInCtx!, textCharLength: (ctxView!.text! as NSString).length)
             linesForText!.makeContentsClear(clearCharRanges.main)
             linesForTextExtra!.makeContentsClear(clearCharRanges.extra)
@@ -73,7 +83,9 @@ class TransitionController: UIViewController {
         if c == extra.count {
             for i in 0..<c {
                 main[i].follower = extra[i]
-                if i != c - 1 { extra[i].follower = main[i + 1] }
+                if i != c - 1 {
+                    extra[i].follower = main[i + 1]
+                }
             }
         }
     }
@@ -88,7 +100,7 @@ class TransitionController: UIViewController {
     }
     func nextLine(currentLine: SingleLineTextView) -> SingleLineTextView? {
         if let index = linesForText?.indexOf(currentLine) {
-            return index == linesForText!.count - 1 ? nil : linesForText![index]
+            return index == linesForText!.count - 1 ? nil : linesForText![index + 1]
         } else if linesForTextExtra!.contains(currentLine) {
             return currentLine.follower as? SingleLineTextView
         }
@@ -119,6 +131,10 @@ class TransitionController: UIViewController {
         }
         return nil
     }
+    func startHorizontalAnimation() {
+        animateHorizontally((linesForText?.first!)!)
+        
+    }
     func animateHorizontally(line: SingleLineTextView) {
         if let targetPosition = targetPoint(line)?.point.x {
             if line.frame.origin.x == targetPosition {
@@ -132,16 +148,22 @@ class TransitionController: UIViewController {
                     if let delta = deltaToSyncedPosition(next, currentLine: line) {
                         switch delta {
                         case 0:
-                            line.startHorizontalAnimation(line.frame.origin.x, toPosition: targetPosition)
+                            print("animation: to current line target.")
+                            line.startHorizontalAnimation(targetPosition - line.frame.origin.x, delegate: self, isFollowed: true)
                         case abs(delta):
-                            next.startHorizontalAnimation(next.frame.origin.x, toPosition: next.frame.origin.x + delta)
+                            print("animation: to follow current line.")
+//                            next.startHorizontalAnimation(delta, delegate: self, isFollowed: )
                         default:
-                            line.startHorizontalAnimation(line.frame.origin.x, toPosition: line.frame.origin.x + abs(delta))
+                            print("animation: to current line non target.")
+                            line.startHorizontalAnimation(abs(delta), delegate: self, isFollowed: false)
                         }
                     }
                 }
             }
         }
+    }
+    func deltasToSyncedPositions() -> [CGFloat?] {
+        return linesForText!.map { deltaToSyncedPosition(nextLine($0), currentLine: $0) }
     }
     func afterHorizontalAnimation(forLine: SingleLineTextView) {
         if let i = index(forLine) {

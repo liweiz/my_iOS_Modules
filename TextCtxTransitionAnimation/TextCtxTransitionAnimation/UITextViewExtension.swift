@@ -13,6 +13,7 @@ extension UITextView {
     func makeContentClear(ofCharRange: NSRange) {
         let new = NSMutableAttributedString(attributedString: attributedText!)
         new.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: ofCharRange)
+        attributedText = new
     }
 
     /// singleLineTextViews return SingleLineTextViews that overlap with each line.
