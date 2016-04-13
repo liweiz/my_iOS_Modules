@@ -76,6 +76,12 @@ class TransitionController: UIViewController {
             linesForTextExtra!.makeContentsClear(clearCharRanges.extra)
             setTextToCtxFollowers(linesForText!, extra: linesForTextExtra!)
             filteredLinesForCtx!.forEach { $0.hidden = true }
+            linesForTextExtra!.dropLast().forEach {
+                if targetPoint($0)!.point.x == $0.frame.origin.x {
+                    $0.makeContentClear(NSMakeRange(0, ($0.text! as NSString).length))
+                }
+            }
+            linesForTextExtra!.last!.makeContentClear(NSMakeRange(0, (linesForTextExtra!.last!.text! as NSString).length))
         }
     }
     func setTextToCtxFollowers(main: [SingleLineTextView], extra: [SingleLineTextView]) {
@@ -117,7 +123,7 @@ class TransitionController: UIViewController {
         }
         return nil
     }
-    func targetPoint(forLine: SingleLineTextView) -> (isForExtra: Bool, point: CGPoint)? {
+    func targetPointRaw(forLine: SingleLineTextView) -> (isForExtra: Bool, point: CGPoint)? {
         if let i = index(forLine) {
             let correspondingLineOrigin = (filteredLinesForCtx!.map { $0.frame.origin })[i.index]
             if i.isForExtra {
@@ -131,12 +137,30 @@ class TransitionController: UIViewController {
         }
         return nil
     }
+    func targetPoint(forLine: SingleLineTextView) -> (isForExtra: Bool, point: CGPoint)? {
+        let t = targetPointRaw(forLine)
+        print("targetPointRaw: \(t)")
+        if let targetRaw = t {
+            if targetRaw.isForExtra {
+                if let nextline = forLine.follower as? SingleLineTextView {
+                    if let nextLineTargetRaw = targetPointRaw(nextline) {
+                        if nextLineTargetRaw.point.x == nextline.frame.origin.x {
+                            return (targetRaw.isForExtra, forLine.frame.origin)
+                        }
+                    }
+                }
+            }
+        }
+        return t
+    }
     func startHorizontalAnimation() {
         animateHorizontally((linesForText?.first!)!)
         
     }
+    
     func animateHorizontally(line: SingleLineTextView) {
-        if let targetPosition = targetPoint(line)?.point.x {
+        if let target = targetPoint(line) {
+            let targetPosition = target.point.x
             let deltaMax = targetPosition - line.frame.origin.x
             if deltaMax == 0 {
                 // Animation for SingleLineTextView all done, pass to next one.
@@ -207,14 +231,7 @@ class TransitionController: UIViewController {
             (linesForText! + linesForTextExtra!).forEach {
                 $0.layer.removeAnimationForKey("horizontal move")
             }
-            startHorizontalAnimation()
-//            for line in linesForText! + linesForTextExtra! {
-//                if anim.valueForKey("animID") as! String == "horizontal move \(line.targetLineCharRange!) \(line.followerIsShadow)" {
-//                    line.layer.removeAnimationForKey("horizontal move")
-//                    
-//                }
-//            }
-            
+            startHorizontalAnimation()            
         }
     }
     func deltasToSyncedPositions() -> [CGFloat?] {
@@ -265,6 +282,11 @@ extension SingleLineTextView {
             if f.isEqual(self) {
                 startHorizontalAnimation(byDelta, delegate: delegate)
                 if f.isEqual(toLine!) {
+                    if let extra = follower {
+                        if f.frame.origin.y == extra.frame.origin.y {
+                            (extra as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: delegate)
+                        }
+                    }
                     return
                 }
             } else {
