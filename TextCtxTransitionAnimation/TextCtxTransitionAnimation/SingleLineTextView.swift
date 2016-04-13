@@ -51,7 +51,7 @@ class SingleLineTextView: UITextView, MoveFollowable, Animatable {
         super.init(coder: aDecoder)
     }
     
-    var horizontalAnimationDuration: NSTimeInterval = 2
+    var horizontalAnimationDuration: NSTimeInterval = 5
     var horizontalAnimationDelay: NSTimeInterval = 0
     
     var animateHorizontally: (fromPosition: CGFloat, toPosition: CGFloat, completion: ((Bool) -> Void)?) {

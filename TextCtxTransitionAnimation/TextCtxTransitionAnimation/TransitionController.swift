@@ -39,6 +39,7 @@ class TransitionController: UIViewController {
         super.viewDidLoad()
         view.clipsToBounds = true
         linesForText = textLines(textView!, fullTextView: ctxView)
+        
         let filteredLinesAndCharRangesForCtx = filteredCtxLinesAndCharRange(ctxView!, textInCtx: textView!.text)
         filteredLinesForCtx = filteredLinesAndCharRangesForCtx.lines
         filteredCharRangesForLinesInCtx = filteredLinesAndCharRangesForCtx.charRanges
@@ -71,9 +72,13 @@ class TransitionController: UIViewController {
                 view.addSubview(lExtra)
                 linesForTextExtra?.append(lExtra)
             }
-            let clearCharRanges = charRangesOfClearContent(filteredCharRangesForLinesInCtx!, textCharLength: (ctxView!.text! as NSString).length)
-            linesForText!.makeContentsClear(clearCharRanges.main)
-            linesForTextExtra!.makeContentsClear(clearCharRanges.extra)
+            let clearCharRangesInCtx = charRangesOfClearContent(filteredCharRangesForLinesInCtx!, textCharLength: (ctxView!.text! as NSString).length)
+            
+            let charRangeTextViewEachLineInCtx = (textView!.charRangesForEachLine!.map { (textView!.text as NSString).substringWithRange($0) }).map { (ctxView!.text as NSString).rangeOfString($0) }
+            let clearCharRangesInText = charRangesOfClearContent(charRangeTextViewEachLineInCtx, textCharLength: (ctxView!.text! as NSString).length)
+            linesForText!.makeContentsClear(clearCharRangesInCtx.tailing)
+            linesForTextExtra!.makeContentsClear(clearCharRangesInCtx.heading)
+            linesForTextExtra!.makeContentsClear(clearCharRangesInText.tailing)
             setTextToCtxFollowers(linesForText!, extra: linesForTextExtra!)
             filteredLinesForCtx!.forEach { $0.hidden = true }
             linesForTextExtra!.dropLast().forEach {
@@ -95,8 +100,10 @@ class TransitionController: UIViewController {
             }
         }
     }
-    func charRangesOfClearContent(lineCharRangesForText: [NSRange], textCharLength: Int) -> (main: [NSRange], extra: [NSRange]) {
-        return (lineCharRangesForText.map { NSMakeRange($0.location + $0.length, textCharLength - ($0.location + $0.length)) }, lineCharRangesForText.map { NSMakeRange(0, $0.location + $0.length) })
+    func charRangesOfClearContent(lineCharRangesForText: [NSRange], textCharLength: Int) -> (heading: [NSRange], tailing: [NSRange]) {
+        var raw = (lineCharRangesForText.map { NSMakeRange(0, $0.location + $0.length) }, lineCharRangesForText.map { NSMakeRange($0.location + $0.length, textCharLength - ($0.location + $0.length)) })
+        raw.0[raw.0.count - 1] = NSMakeRange(textCharLength - 1, 0)
+        return raw
     }
     func deltaToSyncedPosition(ofNextLine: SingleLineTextView?, currentLine: SingleLineTextView) -> CGFloat? {
         if let next = ofNextLine {
