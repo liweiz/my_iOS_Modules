@@ -137,29 +137,84 @@ class TransitionController: UIViewController {
     }
     func animateHorizontally(line: SingleLineTextView) {
         if let targetPosition = targetPoint(line)?.point.x {
-            if line.frame.origin.x == targetPosition {
+            let deltaMax = targetPosition - line.frame.origin.x
+            if deltaMax == 0 {
                 // Animation for SingleLineTextView all done, pass to next one.
                 if let follower = line.follower {
                     animateHorizontally(follower as! SingleLineTextView)
                 }
             } else {
+                var delta: CGFloat = 0
+                var lineToMove: SingleLineTextView
                 if let next = nextLine(line) {
                     // Make sure following lines are synced before animation.
-                    if let delta = deltaToSyncedPosition(next, currentLine: line) {
-                        switch delta {
-                        case 0:
-                            print("animation: to current line target.")
-                            line.startHorizontalAnimation(targetPosition - line.frame.origin.x, delegate: self, isFollowed: true)
-                        case abs(delta):
-                            print("animation: to follow current line.")
-//                            next.startHorizontalAnimation(delta, delegate: self, isFollowed: )
-                        default:
-                            print("animation: to current line non target.")
-                            line.startHorizontalAnimation(abs(delta), delegate: self, isFollowed: false)
+                    if let deepDeltaToSync = deepDeltaToSyncedPosition(next, currentLine: line) {
+                        if deepDeltaToSync.delta > 0 {
+                            // Sync with min distance.
+                            delta = min(deltaMax, deepDeltaToSync.delta)
+                            lineToMove = line
+                        } else if deepDeltaToSync.delta == 0 {
+                            // All lines below are synced.
+                            delta = deltaMax
+                            lineToMove = line
+                        } else {
+                            // Sync next line to match current line.
+                            delta = deepDeltaToSync.delta
+                            lineToMove = next
                         }
+                        print("total line no: \(linesForText?.count); lineToMove index: main: \(linesForText?.indexOf(lineToMove)), extra: \(linesForTextExtra?.indexOf(lineToMove)); toLine index: main: \(linesForText?.indexOf(deepDeltaToSync.deepLine)), extra: \(linesForTextExtra?.indexOf(deepDeltaToSync.deepLine))")
+                        lineToMove.animateHorizontally(lineToMove, toLine: deepDeltaToSync.deepLine, byDelta: delta, delegate: self)
+                        return
+                    } else {
+                        delta = deltaMax
+                        lineToMove = line
+                        lineToMove.animateHorizontally(lineToMove, toLine: linesForText!.last!, byDelta: delta, delegate: self)
+                        return
                     }
                 }
+                animateOneLineHorizontally(line, byDelta: deltaMax)
             }
+        }
+    }
+    func animateOneLineHorizontally(line: SingleLineTextView, byDelta: CGFloat) {
+        line.startHorizontalAnimation(byDelta, delegate: self)
+        if line.follower!.frame.origin.y == line.frame.origin.y {
+            (line.follower! as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: self)
+        }
+    }
+    /// deepDeltaToSyncedPosition returns the delta to sync for closet line below. Nil is returned, if there is no more line below.
+    func deepDeltaToSyncedPosition(withNextLine: SingleLineTextView?, currentLine: SingleLineTextView) -> (delta: CGFloat, deepLine: SingleLineTextView)? {
+        if let next = withNextLine {
+            // Make sure following lines are synced before animation.
+            if let delta = deltaToSyncedPosition(next, currentLine: currentLine) {
+                switch delta {
+                case 0:
+                    print("animation: synced, ready to move freely.")
+                    return deepDeltaToSyncedPosition(nextLine(next), currentLine: next)
+                case -abs(delta):
+                    print("animation: not synced, sync with next line.")
+                    return (abs(delta), currentLine)
+                default:
+                    print("animation: over synced, move next line to sync with current line.")
+                    return (-delta, currentLine)
+                }
+            }
+        }
+        return nil
+    }
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        if flag {
+            (linesForText! + linesForTextExtra!).forEach {
+                $0.layer.removeAnimationForKey("horizontal move")
+            }
+            startHorizontalAnimation()
+//            for line in linesForText! + linesForTextExtra! {
+//                if anim.valueForKey("animID") as! String == "horizontal move \(line.targetLineCharRange!) \(line.followerIsShadow)" {
+//                    line.layer.removeAnimationForKey("horizontal move")
+//                    
+//                }
+//            }
+            
         }
     }
     func deltasToSyncedPositions() -> [CGFloat?] {
@@ -203,7 +258,36 @@ class TransitionController: UIViewController {
     
 }
 
-
+extension SingleLineTextView {
+    func animateHorizontally(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, delegate: AnyObject?){
+        var from: SingleLineTextView?
+        if let f = fromLine {
+            if f.isEqual(self) {
+                startHorizontalAnimation(byDelta, delegate: delegate)
+                if f.isEqual(toLine!) {
+                    return
+                }
+            } else {
+                from = fromLine
+            }
+        } else {
+            if let t = toLine {
+                startHorizontalAnimation(byDelta, delegate: delegate)
+                if t.isEqual(self) {
+                    if let f = follower {
+                        (f as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: delegate)
+                    }
+                    return
+                }
+            } else {
+                return
+            }
+        }
+        if let f = follower {
+            (f as! SingleLineTextView).animateHorizontally(from, toLine: toLine, byDelta: byDelta, delegate: delegate)
+        }
+    }
+}
 
 
 enum HorizontalPositionToRange {

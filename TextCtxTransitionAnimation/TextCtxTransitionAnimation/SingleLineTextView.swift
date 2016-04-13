@@ -58,33 +58,44 @@ class SingleLineTextView: UITextView, MoveFollowable, Animatable {
         return animateOnSingleAxis!(duration: horizontalAnimationDuration, delay: horizontalAnimationDelay)
     }
     var animateOnSingleAxis: ((duration: NSTimeInterval, delay: NSTimeInterval) -> (fromPosition: CGFloat, toPosition: CGFloat, completion: ((Bool) -> Void)?))?
+    var followerIsShadow: Bool? {
+        if let f = follower {
+            return f.frame == frame ? true : false
+        }
+        return nil
+    }
     // Animatable
-    func startHorizontalAnimation(byDelta: CGFloat, delegate: AnyObject?, isFollowed: Bool) {
+    func startHorizontalAnimation(byDelta: CGFloat, delegate: AnyObject?) {
         let animation = CABasicAnimation(keyPath: "position.x")
         animation.fromValue = layer.position.x
         animation.byValue = byDelta
         animation.duration = horizontalAnimationDuration
-        if let f = follower {
-            if isFollowed { (f as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: delegate, isFollowed: isFollowed) }
-        }
-        layer.addAnimation(animation, forKey: "")
+        animation.removedOnCompletion = false
+        
+//        follower?.frame.origin.y == frame.
+//        animation.setValue("horizontal move \(targetLineCharRange!) \(followerIsShadow)", forKey: "animID")
+//        if let f = follower {
+//            if isFollowed { (f as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: delegate, isFollowed: isFollowed) }
+//        }
+        layer.addAnimation(animation, forKey: "horizontal move")
         frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
     }
-    func analyze(deltasToSyncedPositions: [CGFloat?]) -> [CGFloat]? {
-        let d = (deltasToSyncedPositions.filter { $0 != nil }).map { $0! }
-        if d.count > 0 {
-            let deltaNeeded = d.first!
-            var deltaRemained = d.dropFirst().reduce(0, combine: { $0 + $1 })
-            var i = 0
-            for n in d.dropFirst() {
-                deltaRemained = deltaRemained - n
-                if deltaRemained <= 0 {
-                    break
-                }
-                i += 1
-            }
-        }
-    }
+    // remaining delta for a line can make it sync with above line without the follower to sync.
+//    func analyze(deltasToSyncedPositions: [CGFloat?]) -> [CGFloat]? {
+//        let d = (deltasToSyncedPositions.filter { $0 != nil }).map { $0! }
+//        if d.count > 0 {
+//            let deltaNeeded = d.first!
+//            var deltaRemained = d.dropFirst().reduce(0, combine: { $0 + $1 })
+//            var i = 1
+//            for n in d.dropFirst() {
+//                deltaRemained = deltaRemained - n
+//                if deltaRemained <= 0 {
+//                    break
+//                }
+//                i += 1
+//            }
+//        }
+//    }
     func startVerticalAnimation(fromPosition: CGFloat, toPosition: CGFloat) {
         
     }
@@ -94,10 +105,10 @@ class SingleLineTextView: UITextView, MoveFollowable, Animatable {
     // MoveFollowable
     var follower: UIView?
     func updateFollowerOrigin(deltaToNew: CGFloat) {
-        if let f = follower {
-            startHorizontalAnimation(deltaToNew)
+//        if let f = follower {
+//            startHorizontalAnimation(deltaToNew)
 //            f.frame.origin = CGPointMake(f.frame.origin.x + deltaToNew, f.frame.origin.y)
-        }
+//        }
     }
 }
 
