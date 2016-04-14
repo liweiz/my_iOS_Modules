@@ -25,14 +25,13 @@ class SingleLineTextView: UITextView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
 }
 
 protocol CanBeLean {
     func becomeLean()
 }
 
-extension SingleLineTextView: CanBeLean {
+extension CanBeLean where Self: UITextView {
     func becomeLean() {
         textContainer.maximumNumberOfLines = 1
         textContainer.lineFragmentPadding = 0
@@ -41,33 +40,42 @@ extension SingleLineTextView: CanBeLean {
     }
 }
 
+extension SingleLineTextView: CanBeLean{}
+
 protocol Matchable {
     func originToMatch(pointOnAnotherView: CGPoint, anotherView: UIView, pointHere: CGPoint) -> CGPoint
 }
 
-extension SingleLineTextView: Matchable {
+extension Matchable where Self: UIView {
     func originToMatch(pointOnAnotherView: CGPoint, anotherView: UIView, pointHere: CGPoint) -> CGPoint {
         return anotherView.originOfAnotherViewToOverlapTwoPoints(pointOnAnotherView, pointInAnotherView: pointHere, anotherView: self)
     }
 }
 
+extension SingleLineTextView: Matchable {}
+
 protocol Animatable {
-    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?)
+    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?, idValue: String?)
 }
 
-extension SingleLineTextView: Animatable {
-    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?) {
+extension Animatable where Self: UIView {
+    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, idValue: String? = nil) {
         let animation = CABasicAnimation(keyPath: "position.x")
         animation.fromValue = layer.position.x
         animation.byValue = byDelta
         animation.duration = duration
 //        animation.removedOnCompletion = false
         animation.delegate = delegate
-        animation.setValue("\(frame.origin) \(followerIsShadow)", forKey: "ID")
+        // "\(frame.origin) \(followerIsShadow)"
+        if let id = idValue {
+            animation.setValue(id, forKey: "ID")
+        }
         layer.addAnimation(animation, forKey: "horizontal move")
         frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
     }
 }
+
+extension SingleLineTextView: Animatable {}
 
 extension Array where Element: SingleLineTextView {
     func makeContentsClear(charRangesForEachLine: [NSRange]) {

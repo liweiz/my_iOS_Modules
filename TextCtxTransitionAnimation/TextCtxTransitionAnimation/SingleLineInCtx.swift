@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol FollowableAsLine {
+protocol FollowableAsLine: CanImitateLineInCtx {
     var follower: UIView? { get set }
     func lineTailingBlankSpaceRect() -> CGRect?
 }
@@ -18,11 +18,7 @@ protocol CanImitateLineInCtx {
     var charRangeOfLineImitated: NSRange? { get set }
 }
 
-class SingleLineInCtx: SingleLineTextView, CanImitateLineInCtx, FollowableAsLine {
-    //    var targetLineCharRange: NSRange? =>
-    var charRangeOfLineImitated: NSRange?
-    
-    var follower: UIView?
+extension FollowableAsLine where Self: UITextView {
     // In SingleLineTextView's coordinates
     func lineTailingBlankSpaceRect() -> CGRect? {
         if let range = charRangeOfLineImitated {
@@ -31,6 +27,7 @@ class SingleLineInCtx: SingleLineTextView, CanImitateLineInCtx, FollowableAsLine
                 return CGRectMake(origin.x, origin.y, rect.size.width, rect.size.height)
             }
         }
+        
         return nil
     }
     func lineTailingBlankSpaceRectInTextContainerCoordinates(inRange: NSRange) -> CGRect? {
@@ -53,5 +50,12 @@ class SingleLineInCtx: SingleLineTextView, CanImitateLineInCtx, FollowableAsLine
         }
         return inRange
     }
+}
+
+class SingleLineInCtx: SingleLineTextView, FollowableAsLine {
+    //    var targetLineCharRange: NSRange? =>
+    var charRangeOfLineImitated: NSRange?
+    var follower: UIView?
+    
 }
 
