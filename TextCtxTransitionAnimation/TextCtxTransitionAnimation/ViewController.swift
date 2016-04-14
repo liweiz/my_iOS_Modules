@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let text = "the next launch cycle, the view attempts to restore these properties to their saved values. If the selection range  cannot be applied to the text in the restored view, no text is selected. For more information about how state preservation and restoration"
+        let text = " cycle, the view attempts to restore these properties to their saved values. If the selection range  cannot be applied to the text in the restored view, no text is selected. For more information about how state preservation and restoration"
         let ctx = "During the next launch cycle, the view attempts to restore these properties to their saved values. If the selection range  cannot be applied to the text in the restored view, no text is selected. For more information about how state preservation and restoration works, see iOS App Programming Guide."
         
         let textView = UITextView(frame: CGRectMake(20, 30, view.bounds.width - 20 * 2, view.bounds.height - 30 * 2))

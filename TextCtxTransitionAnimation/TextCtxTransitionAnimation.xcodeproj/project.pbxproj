@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */; };
 		EE1966F01CA3123D0078F1C3 /* UITextViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */; };
-		EE1966F61CA78EC70078F1C3 /* Matchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966F51CA78EC70078F1C3 /* Matchable.swift */; };
-		EE2A097F1CB8C67E005E1E28 /* Animatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2A097E1CB8C67E005E1E28 /* Animatable.swift */; };
+		EE1E8C191CBFEE450050E1D2 /* SingleLineInCtx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */; };
 		EE2D85A61CA10B8A002BA9ED /* NSRangeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */; };
 		EE3F80841CA03B4E007D09A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */; };
 		EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80851CA03B4E007D09A9 /* ViewController.swift */; };
@@ -45,8 +44,7 @@
 /* Begin PBXFileReference section */
 		EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
 		EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtensionTests.swift; sourceTree = "<group>"; };
-		EE1966F51CA78EC70078F1C3 /* Matchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matchable.swift; sourceTree = "<group>"; };
-		EE2A097E1CB8C67E005E1E28 /* Animatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animatable.swift; sourceTree = "<group>"; };
+		EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineInCtx.swift; sourceTree = "<group>"; };
 		EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRangeHelperTests.swift; sourceTree = "<group>"; };
 		EE3F80801CA03B4E007D09A9 /* TextCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,11 +117,10 @@
 				EE3F80851CA03B4E007D09A9 /* ViewController.swift */,
 				EE3F80B91CA03C60007D09A9 /* ViewMatcher.swift */,
 				EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */,
-				EE1966F51CA78EC70078F1C3 /* Matchable.swift */,
+				EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */,
 				EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */,
 				EED67EFA1CA09F2700ED5DDA /* NSRangeHelper.swift */,
 				EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */,
-				EE2A097E1CB8C67E005E1E28 /* Animatable.swift */,
 				EE3F808A1CA03B4E007D09A9 /* Assets.xcassets */,
 				EE3F808F1CA03B4E007D09A9 /* Info.plist */,
 			);
@@ -285,10 +282,9 @@
 				EED67EFB1CA09F2700ED5DDA /* NSRangeHelper.swift in Sources */,
 				EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */,
 				EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */,
-				EE1966F61CA78EC70078F1C3 /* Matchable.swift in Sources */,
 				EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */,
 				EE3F80841CA03B4E007D09A9 /* AppDelegate.swift in Sources */,
-				EE2A097F1CB8C67E005E1E28 /* Animatable.swift in Sources */,
+				EE1E8C191CBFEE450050E1D2 /* SingleLineInCtx.swift in Sources */,
 				EE3F80BA1CA03C60007D09A9 /* ViewMatcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
