@@ -9,15 +9,166 @@
 import Foundation
 import UIKit
 
+extension UITextView {
+    
+}
+
+protocol ConversionBetweenCharRangeAndGeometry {
+    func deltaOfOrigins(fromCharRange: NSRange, toCharRange: NSRange) -> CGPoint?
+    func rectOrigin(forCharRange: NSRange) -> CGPoint
+    func rectInTextContainerCoordinates(forCharRange: NSRange) -> CGRect
+}
+
+extension ConversionBetweenCharRangeAndGeometry where Self: UITextView {
+    /// deltaOfOriginXs returns the distance between two origins.
+    func deltaOfOrigins(fromCharRange: NSRange, toCharRange: NSRange) -> CGPoint? {
+        let length = (text as NSString).length
+        if fromCharRange.location + fromCharRange.length > length || toCharRange.location + toCharRange.length > length || fromCharRange.length * toCharRange.length == 0 { return nil }
+        let fromOrigin = rectInTextContainerCoordinates(fromCharRange).origin
+        let toOrigin = rectInTextContainerCoordinates(toCharRange).origin
+        return fromOrigin.deltaTo(toOrigin)
+    }
+    func rectOrigin(forCharRange: NSRange) -> CGPoint {
+        let charOriginRaw = rectInTextContainerCoordinates(forCharRange).origin
+        return convertFromTextContainerCoordinatesToSelf(charOriginRaw)
+    }
+    func rectInTextContainerCoordinates(forCharRange: NSRange) -> CGRect {
+        return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(forCharRange, actualCharacterRange: nil), inTextContainer: textContainer)
+    }
+}
+
+extension UITextView: ConversionBetweenCharRangeAndGeometry {}
+
+protocol LinesGeneratable {
+    func oneLiners(textTargeted: String) -> (lines: [SingleLineInCtx], charRanges: [NSRange])?
+    func oneLiners(inCtxView: UITextView?) -> [SingleLineInCtx]
+    
+}
+
+extension LinesGeneratable where Self: UITextView {
+    func oneLiners(textTargeted: String) -> (lines: [SingleLineInCtx], charRanges: [NSRange])? {
+        var lines = [SingleLineInCtx]()
+        var ranges = [NSRange]()
+        let range = (text as NSString).rangeOfString(textTargeted)
+        if range.location == NSNotFound { return nil }
+        var lineIndices = [Int]()
+        var i = 0
+        for charRange in charRangesForEachLine! {
+            if NSIntersectionRange(charRange, range).length > 0 {
+                lineIndices.append(i)
+                ranges.append(charRange)
+            }
+            i += 1
+        }
+        let views = oneLiners()
+        for index in lineIndices {
+            lines.append(views[index])
+        }
+        return (lines, ranges)
+    }
+    /// SingleLinesInCtx return SingleLineInCtxs that overlap with each line.
+    func oneLiners(inCtxView: UITextView? = nil) -> [SingleLineInCtx] {
+        var singleLineTextViews = [SingleLineInCtx]()
+        if let rects = lineFragmentRectForEachLineNoPadding {
+            let fullTextView = (inCtxView == nil ? self : inCtxView!)
+            var i = 0
+            for rect in rects {
+                let chars = (text as NSString).substringWithRange(charRangesForEachLine![i])
+                print("chars: \(chars)")
+                let rangeInFullTextView = (fullTextView.text as NSString).rangeOfString(chars)
+                let lineView = SingleLineInCtx(attriText: fullTextView.attributedText, lineHeight: rect.height)
+                let lineViewImitatedTextRectOrigin = lineView.rectOrigin(rangeInFullTextView)
+                let lineCharOrigin = (self as UITextView).rectOrigin(charRangesForEachLine![i])
+                addSubview(lineView)
+                lineView.frame.origin = lineView.originToMatch(lineCharOrigin, anotherView: self, pointHere: lineViewImitatedTextRectOrigin)
+                singleLineTextViews.append(lineView)
+                i += 1
+            }
+        }
+        return singleLineTextViews
+    }
+    
+}
+
+extension UITextView: LinesGeneratable {}
+
+protocol TextCtxTransitionReady {
+    func line()
+    func visiableEachLineCharRanges(eachLineContentInText: [String], filteredCtxLineCharRanges: [NSRange], ctx: String) -> (mainCharRanges: [NSRange], extraCharRanges: [NSRange])
+}
+
+extension TextCtxTransitionReady {
+    func matchNoOfLines(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx]) -> (matchedTextLines: [SingleLineInCtx], updatedDeltasFromTextToCtxEachLine: [CGFloat]) {
+        if filteredCtxLines.count > textLines.count && filteredCtxLines.count > 1 {
+            let gap = filteredCtxLines[1].frame.origin.y - filteredCtxLines[0].frame.maxY
+            let extraTextLine = extraLineForText(textLines.last!, verticalLineFragmentGap: gap)
+            return (textLines + [extraTextLine], deltasFromTextToCtxEachLine + [extraTextLine.frame.origin.deltaTo(filteredLinesForCtx!.last!.frame.origin)])
+        }
+    }
+    func extraLineForText(lastLineForText: SingleLineInCtx, verticalLineFragmentGap: CGFloat) -> SingleLineInCtx {
+        let y = lastLineForText.frame.maxY + verticalLineFragmentGap
+        var x: CGFloat = 0
+        x = lastLineForText.frame.origin.x - lastLineForText.frame.size.width
+        let extraLine = SingleLineInCtx(attriText: lastLineForText.attributedText, lineHeight: lastLineForText.frame.size.height)
+        extraLine.frame.origin = CGPointMake(x, y)
+        lastLineForText.superview!.addSubview(extraLine)
+        return extraLine
+    }
+    /// visiableEachLineCharRanges returns the charRange visiable in each line. NSNotFound indicates the whole line should be invisiable.
+    func visiableEachLineCharRanges(eachLineContentInText: [String], filteredCtxLineCharRanges: [NSRange], ctx: String) -> (mainCharRanges: [NSRange], extraCharRanges: [NSRange]) {
+        func endLocation(ofRange: NSRange) -> Int {
+            return ofRange.location + ofRange.length - 1
+        }
+        if eachLineContentInText.count == filteredCtxLineCharRanges.count {
+            let eachLineContentInTextCharRangesInCtx = eachLineContentInText.map { (ctx as NSString).rangeOfString($0) }
+            var mainRanges = [NSRange]()
+            for i in 0..<filteredCtxLineCharRanges.count {
+                let textStartLocation = eachLineContentInTextCharRangesInCtx[i].location
+                if textStartLocation == NSNotFound {
+                    mainRanges.append(filteredCtxLineCharRanges[i])
+                } else {
+                    let textEndLocation = endLocation(eachLineContentInTextCharRangesInCtx[i])
+                    let ctxStartLocation = filteredCtxLineCharRanges[i].location
+                    let ctxEndLocation = endLocation(filteredCtxLineCharRanges[i])
+                    let start = min(textStartLocation, ctxStartLocation)
+                    let end = max(textEndLocation, ctxEndLocation)
+                    mainRanges.append(NSMakeRange(start, end - start + 1))
+                }
+            }
+            var extraRanges = [NSRange]()
+            for i in 0..<filteredCtxLineCharRanges.count {
+                if i < filteredCtxLineCharRanges.count - 1 {
+                    let start = mainRanges[i].location + mainRanges[i].length
+                    let nextTextStartLocation = eachLineContentInTextCharRangesInCtx[i + 1].location
+                    if nextTextStartLocation == NSNotFound {
+                        extraRanges.append(NSMakeRange(NSNotFound, 0))
+                    } else {
+                        let end = nextTextStartLocation - 1
+                        if start > end {
+                            extraRanges.append(NSMakeRange(NSNotFound, 0))
+                        } else {
+                            extraRanges.append(NSMakeRange(start, end - start + 1))
+                        }
+                    }
+                } else {
+                    extraRanges.append(NSMakeRange(NSNotFound, 0))
+                }
+            }
+            return (mainRanges, extraRanges)
+        }
+        return visiableEachLineCharRanges(eachLineContentInText + [""], filteredCtxLineCharRanges: filteredCtxLineCharRanges, ctx: ctx)
+    }
+}
+
 class TransitionController: UIViewController {
     var textView: UITextView?
     var ctxView: UITextView?
     var width: CGFloat?
-    var linesForText: [SingleLineTextView]?
-    var linesForTextExtra: [SingleLineTextView]?
+    var linesForText: [SingleLineInCtx]?
+    var linesForTextExtra: [SingleLineInCtx]?
     var filteredCharRangesForLinesInCtx: [NSRange]?
     var deltasFromTextToCtxEachLine = [CGPoint]()
-    var filteredLinesForCtx: [SingleLineTextView]?
+    var filteredLinesForCtx: [SingleLineInCtx]?
     init(textView: UITextView, ctxView: UITextView, width: CGFloat) {
         super.init(nibName: nil, bundle: nil)
         self.textView = textView
@@ -38,22 +189,29 @@ class TransitionController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.clipsToBounds = true
-        linesForText = textLines(textView!, fullTextView: ctxView)
+        setupLines()
         
-        let filteredLinesAndCharRangesForCtx = filteredCtxLinesAndCharRange(ctxView!, textInCtx: textView!.text)
-        filteredLinesForCtx = filteredLinesAndCharRangesForCtx.lines
-        filteredCharRangesForLinesInCtx = filteredLinesAndCharRangesForCtx.charRanges
+    }
+    func moveToSelfView(views: [UIView], fromView: UIView) {
+        views.forEach {
+            $0.frame.origin = view.convertPoint($0.frame.origin, fromView: fromView)
+            $0.removeFromSuperview()
+            view.addSubview($0)
+        }
+    }
+    func setupLines() {
+        linesForText = textView!.OneLiners(ctxView)
+        if let filteredLinesAndCharRangesForCtx = ctxView!.OneLiners(textView!.text) {
+            filteredLinesForCtx = filteredLinesAndCharRangesForCtx.lines
+            filteredCharRangesForLinesInCtx = filteredLinesAndCharRangesForCtx.charRanges
+        }
+        
+        if linesForText!.count < filteredLinesForCtx!.count {
+//            let line =
+        }
         if linesForText!.count * filteredLinesForCtx!.count > 0 {
-            linesForText!.forEach {
-                $0.frame.origin = view.convertPoint($0.frame.origin, fromView: textView!)
-                $0.removeFromSuperview()
-                view.addSubview($0)
-            }
-            filteredLinesForCtx!.forEach {
-                $0.frame.origin = view.convertPoint($0.frame.origin, fromView: ctxView!)
-                $0.removeFromSuperview()
-                view.addSubview($0)
-            }
+            moveToSelfView(linesForText!, fromView: textView!)
+            moveToSelfView(filteredLinesForCtx!, fromView: ctxView!)
             var i = 0
             for textLine in linesForText! {
                 deltasFromTextToCtxEachLine.append(textLine.frame.origin.deltaTo(filteredLinesForCtx![i].frame.origin))
@@ -72,31 +230,11 @@ class TransitionController: UIViewController {
                 view.addSubview(lExtra)
                 linesForTextExtra?.append(lExtra)
             }
-            let clearCharRangesInCtx = charRangesOfClearContent(filteredCharRangesForLinesInCtx!, textCharLength: (ctxView!.text! as NSString).length)
             
-            let charRangeTextViewEachLineInCtx = (textView!.charRangesForEachLine!.map { (textView!.text as NSString).substringWithRange($0) }).map { (ctxView!.text as NSString).rangeOfString($0) }
-            let clearCharRangesInText = charRangesOfClearContent(charRangeTextViewEachLineInCtx, textCharLength: (ctxView!.text! as NSString).length)
-            linesForText!.makeContentsClear(clearCharRangesInCtx.tailing)
-            linesForTextExtra!.makeContentsClear(clearCharRangesInCtx.heading)
-            linesForTextExtra!.makeContentsClear(clearCharRangesInText.tailing)
             setTextToCtxFollowers(linesForText!, extra: linesForTextExtra!)
             filteredLinesForCtx!.forEach { $0.hidden = true }
-            if linesForTextExtra!.count > 1 {
-                let lastIndex: Int = linesForTextExtra!.count - charRangeTextViewEachLineInCtx.count < linesForText!.count ? 3 : 2
-                for i in 0...lastIndex {
-                    let l = linesForTextExtra![i]
-                    l.makeContentClear(NSMakeRange(charRangeTextViewEachLineInCtx[i + 1].location, (l.text! as NSString).length - 1 - charRangeTextViewEachLineInCtx[i + 1].location))
-                    if targetPoint(l)!.point.x == l.frame.origin.x {
-                        l.makeContentClear(NSMakeRange(0, (l.text! as NSString).length))
-                    }
-                }
-                if charRangeTextViewEachLineInCtx.count < linesForText!.count {
-                    linesForTextExtra![linesForTextExtra!.count - 2].makeContentClear(NSMakeRange(0, (linesForTextExtra!.last!.text! as NSString).length))
-                }
-            }
-            linesForTextExtra!.last!.makeContentClear(NSMakeRange(0, (linesForTextExtra!.last!.text! as NSString).length))
-        }
     }
+    
     func setTextToCtxFollowers(main: [SingleLineTextView], extra: [SingleLineTextView]) {
         let c = main.count
         if c == extra.count {
@@ -107,11 +245,6 @@ class TransitionController: UIViewController {
                 }
             }
         }
-    }
-    func charRangesOfClearContent(lineCharRangesForText: [NSRange], textCharLength: Int) -> (heading: [NSRange], tailing: [NSRange]) {
-        var raw = (lineCharRangesForText.map { NSMakeRange(0, $0.location + $0.length) }, lineCharRangesForText.map { NSMakeRange($0.location + $0.length, textCharLength - ($0.location + $0.length)) })
-        raw.0[raw.0.count - 1] = NSMakeRange(textCharLength - 1, 0)
-        return raw
     }
     func deltaToSyncedPosition(ofNextLine: SingleLineTextView?, currentLine: SingleLineTextView) -> CGFloat? {
         if let next = ofNextLine {
@@ -296,41 +429,24 @@ class TransitionController: UIViewController {
 
 
 
-extension SingleLineTextView {
-    var followerIsShadow: Bool? {
-        if let f = follower {
-            return f.frame == frame ? true : false
-        }
-        return nil
-    }
-    func animateHorizontallyBetween(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, delegate: AnyObject?){
+extension SingleLineInCtx {
+    func animateHorizontallyBetween(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?){
         var from: SingleLineTextView?
-        
-        if let f = fromLine {
-            let verticalPosition = f.frame.origin.y
-            if f.isEqual(self) {
-                startHorizontalAnimation(byDelta, delegate: delegate)
-                if f.isEqual(toLine!) {
-                    if let extra = follower {
-                        if verticalPosition == extra.frame.origin.y {
-                            (extra as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: delegate)
-                        }
-                    }
+        if let startLine = fromLine {
+            if startLine.isEqual(self) {
+                startHorizontalAnimation(byDelta, duration: duration, delegate: delegate)
+                if startLine.isEqual(toLine!) {
+                    animateLineExtraHorizontally(byDelta, duration: duration, delegate: delegate)
                     return
                 }
             } else {
                 from = fromLine
             }
         } else {
-            if let t = toLine {
-                let verticalPosition = t.frame.origin.y
-                startHorizontalAnimation(byDelta, delegate: delegate)
-                if t.isEqual(self) {
-                    if let extra = follower {
-                        if verticalPosition == extra.frame.origin.y {
-                            (extra as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: delegate)
-                        }
-                    }
+            if let endLine = toLine {
+                startHorizontalAnimation(byDelta, duration: duration, delegate: delegate)
+                if endLine.isEqual(self) {
+                    animateLineExtraHorizontally(byDelta, duration: duration, delegate: delegate)
                     return
                 }
             } else {
@@ -338,80 +454,37 @@ extension SingleLineTextView {
             }
         }
         if let f = follower {
-            (f as! SingleLineTextView).animateHorizontallyBetween(from, toLine: toLine, byDelta: byDelta, delegate: delegate)
+            (f as! SingleLineInCtx).animateHorizontallyBetween(from, toLine: toLine, byDelta: byDelta, duration: duration, delegate: delegate)
         }
     }
 }
 
-
-enum HorizontalPositionToRange {
-    case Left
-    case LeftEdge
-    case Inside
-    case RightEdge
-    case Right
+protocol LineExtra {
+    var followerIsLineExtra: Bool? { get }
+    func animateLineExtraHorizontally(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?)
 }
 
-func horizontalPositionToRange(positionToFind: CGFloat, positionLeft: CGFloat, positionRight: CGFloat) -> HorizontalPositionToRange {
-    let deltaToRight = positionRight - positionToFind
-    let deltaToLeft = positionToFind - positionLeft
-    if deltaToLeft < 0 { return .Left }
-    if deltaToLeft == 0 { return .LeftEdge }
-    if deltaToRight > 0 { return .Right }
-    if deltaToRight == 0 { return .RightEdge }
-    return .Inside
-}
-
-
-
-
-func extraLineForText(lastLineForText: SingleLineTextView, textRange: NSRange, verticalLineFragmentGap: CGFloat) -> SingleLineTextView {
-    let y = lastLineForText.frame.maxY + verticalLineFragmentGap
-    var x: CGFloat = 0
-    if textRange.location + textRange.length == (lastLineForText.text as NSString).length {
-        x = lastLineForText.frame.origin.x - lastLineForText.frame.size.width
-    } else {
-        var xSet = false
-        print("a:\(textRange.location + textRange.length), b: \((lastLineForText.text as NSString).length - 1)")
-        for nextLocation in (textRange.location + textRange.length)...((lastLineForText.text as NSString).length - 1) {
-            if (lastLineForText.text as NSString).substringWithRange(NSMakeRange(nextLocation, 1)) != " " {
-                let internalOrigin = lastLineForText.convertFromTextContainerCoordinatesToSelf(lastLineForText.rectOriginForCharRangeInTextContainerCoordinates(NSMakeRange(nextLocation, 1)))
-                x = lastLineForText.frame.origin.x - internalOrigin.x
-                xSet = true
+extension LineExtra where Self: SingleLineInCtx {
+    var followerIsLineExtra: Bool? {
+        if let f = follower {
+            return f.frame == frame
+        }
+        return nil
+    }
+    func animateLineExtraHorizontally(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?) {
+        if let f = followerIsLineExtra {
+            if f {
+                (follower as! SingleLineTextView).startHorizontalAnimation(byDelta, duration: duration, delegate: delegate)
             }
         }
-        if !xSet {
-            x = lastLineForText.frame.origin.x - lastLineForText.frame.size.width
-        }
     }
-    let extraLine = SingleLineTextView(attriText: lastLineForText.attributedText, lineHeight: lastLineForText.frame.size.height)
-    extraLine.frame.origin = CGPointMake(x, y)
-    lastLineForText.superview!.addSubview(extraLine)
-    return extraLine
 }
 
-func textLines(textView: UITextView, fullTextView: UITextView? = nil) -> [SingleLineTextView] {
-    return textView.singleLineTextViews(fullTextView)
-}
+extension SingleLineInCtx: LineExtra {}
 
-func filteredCtxLinesAndCharRange(ctxView: UITextView, textInCtx: String) -> (lines: [SingleLineTextView], charRanges: [NSRange]) {
-    var lines = [SingleLineTextView]()
-    var ranges = [NSRange]()
-    let range = (ctxView.text as NSString).rangeOfString(textInCtx)
-    if range.location == NSNotFound { return (lines, ranges) }
-    var lineIndices = [Int]()
-    var i = 0
-    for charRange in ctxView.charRangesForEachLine! {
-        if NSIntersectionRange(charRange, range).length > 0 {
-            lineIndices.append(i)
-            ranges.append(charRange)
-        }
-        i += 1
-    }
-    let views = ctxView.singleLineTextViews()
-    for index in lineIndices {
-        lines.append(views[index])
-    }
-    return (lines, ranges)
-}
+
+
+
+
+
 

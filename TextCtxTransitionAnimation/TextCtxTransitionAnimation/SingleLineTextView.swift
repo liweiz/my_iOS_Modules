@@ -55,21 +55,21 @@ extension Matchable where Self: UIView {
 extension SingleLineTextView: Matchable {}
 
 protocol Animatable {
-    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?, idValue: String?)
+    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?)
 }
 
 extension Animatable where Self: UIView {
-    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, idValue: String? = nil) {
-        let animation = CABasicAnimation(keyPath: "position.x")
-        animation.fromValue = layer.position.x
+    func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
+        startAnimationOnOneAxis(byDelta, duration: duration, onKeyPath: "position.x", fromValue: layer.position.x)
+    }
+    func startAnimationOnOneAxis(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, onKeyPath: String, fromValue: CGFloat) {
+        let animation = CABasicAnimation(keyPath: onKeyPath)
+        animation.fromValue = fromValue
         animation.byValue = byDelta
         animation.duration = duration
-//        animation.removedOnCompletion = false
+        //        animation.removedOnCompletion = false
         animation.delegate = delegate
-        // "\(frame.origin) \(followerIsShadow)"
-        if let id = idValue {
-            animation.setValue(id, forKey: "ID")
-        }
+        animation.setValue(tag, forKey: "view tag")
         layer.addAnimation(animation, forKey: "horizontal move")
         frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
     }

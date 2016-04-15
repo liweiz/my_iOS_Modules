@@ -15,52 +15,6 @@ extension UITextView {
         new.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: ofCharRange)
         attributedText = new
     }
-
-    /// singleLineTextViews return SingleLineTextViews that overlap with each line.
-    func singleLineTextViews(ctxView: UITextView? = nil) -> [SingleLineTextView] {
-        var singleLineTextViews = [SingleLineTextView]()
-        if let rects = lineFragmentRectForEachLineNoPadding {
-            let fullTextView = (ctxView == nil ? self : ctxView!)
-            var i = 0
-            for rect in rects {
-                let chars = (text as NSString).substringWithRange(charRangesForEachLine![i])
-                print("chars: \(chars)")
-                let rangeInFullTextView = (fullTextView.text as NSString).rangeOfString(chars)
-                let lineView = SingleLineTextView(attriText: fullTextView.attributedText, lineHeight: rect.height)
-                let lineViewImitatedTextRectOriginRaw = lineView.rectOriginForCharRangeInTextContainerCoordinates(rangeInFullTextView)
-                let lineViewImitatedTextRectOrigin = lineView.convertFromTextContainerCoordinatesToSelf(lineViewImitatedTextRectOriginRaw)
-                let lineCharOriginRaw = rectOriginForCharRangeInTextContainerCoordinates(charRangesForEachLine![i])
-                let lineCharOrigin = convertFromTextContainerCoordinatesToSelf(lineCharOriginRaw)
-                addSubview(lineView)
-                lineView.frame.origin = lineView.originToMatch(lineCharOrigin, anotherView: self, pointHere: lineViewImitatedTextRectOrigin)
-                singleLineTextViews.append(lineView)
-                i += 1
-            }
-        }
-        return singleLineTextViews
-    }
-    /// deltaOfOriginXs returns the distance between two origins.
-    func deltaOfOrigins(fromCharRange: NSRange, toCharRange: NSRange) -> CGPoint? {
-        let length = (text as NSString).length
-        if fromCharRange.location + fromCharRange.length > length || toCharRange.location + toCharRange.length > length || fromCharRange.length * toCharRange.length == 0 { return nil }
-        let fromOrigin = rectOriginForCharRangeInTextContainerCoordinates(fromCharRange)
-        let toOrigin = rectOriginForCharRangeInTextContainerCoordinates(toCharRange)
-        return fromOrigin.deltaTo(toOrigin)
-    }
-    func rectForCharRangeInTextContainerCoordinates(charRange: NSRange) -> CGRect {
-        return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil), inTextContainer: textContainer)
-    }
-    /// rectOriginForCharRangeInTextContainerCoordinates returns the origin of boundingRectForGlyphRange based on its character range in the textContainer's coordinates.
-    func rectOriginForCharRangeInTextContainerCoordinates(charRange: NSRange) -> CGPoint {
-        return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(charRange, actualCharacterRange: nil), inTextContainer: textContainer).origin
-    }
-    /// firstCharOrigin returns origin in the textView's coordinates.
-    var firstCharRectOrigin: CGPoint {
-        let b = bounds.origin
-        let g = layoutManager.lineFragmentRectForGlyphAtIndex(layoutManager.glyphIndexForCharacterAtIndex(0), effectiveRange: nil).origin
-        let i = textContainerInset
-        return CGPointMake(b.x + g.x + i.left, b.y + g.y + i.top)
-    }
     /// convertFromTextContainerCoordinatesToSelf converts point in TextContainerCoordinates to self's coordinates
     func convertFromTextContainerCoordinatesToSelf(pointInTextContainerCoordinates: CGPoint) -> CGPoint {
         return CGPointMake(bounds.origin.x + textContainerInset.left + pointInTextContainerCoordinates.x, bounds.origin.y + textContainerInset.top + pointInTextContainerCoordinates.y)
@@ -77,7 +31,6 @@ extension UITextView {
         let range = (attributedText.string as NSString).rangeOfString(text as String)
         return range.location == NSNotFound ? nil : layoutManager.glyphRangeForBoundingRect(layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(range, actualCharacterRange: nil), inTextContainer: textContainer), inTextContainer: textContainer)
     }
-    /// textViewLinesInfo returns the visiableGlyphRanges for lines and corresponding rect in one textView's coordinates.
     // view's line break leaves no glyph outside of the visiable area, which means no need to worry about the glyph that is partly or not visiable here.
     var charRangesForEachLine: [NSRange]? {
         return glyphRangesForEachLine?.map { layoutManager.characterRangeForGlyphRange($0, actualGlyphRange: nil) }
