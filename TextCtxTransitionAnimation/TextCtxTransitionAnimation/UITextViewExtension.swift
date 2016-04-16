@@ -10,11 +10,6 @@ import Foundation
 import UIKit
 
 extension UITextView {
-    func makeContentClear(ofCharRange: NSRange) {
-        let new = NSMutableAttributedString(attributedString: attributedText!)
-        new.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: ofCharRange)
-        attributedText = new
-    }
     /// convertFromTextContainerCoordinatesToSelf converts point in TextContainerCoordinates to self's coordinates
     func convertFromTextContainerCoordinatesToSelf(pointInTextContainerCoordinates: CGPoint) -> CGPoint {
         return CGPointMake(bounds.origin.x + textContainerInset.left + pointInTextContainerCoordinates.x, bounds.origin.y + textContainerInset.top + pointInTextContainerCoordinates.y)

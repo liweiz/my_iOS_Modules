@@ -340,19 +340,19 @@ class TransitionController: UIViewController {
         return textView!.attributedText.attribute(NSForegroundColorAttributeName, atIndex: 0, effectiveRange: nil) as! UIColor
     }
     func setVisiablePartForEachLine(color: UIColor? = nil) {
-//        let ranges = visiableEachLineCharRanges(textView!.charRangesForEachLine!.map { (textView!.text as NSString).substringWithRange($0) }, filteredCtxLineCharRanges: filteredCharRangesForLinesInCtx!, ctx: ctxView!.text)
-//        let visiableFontColor = UIColor.lightGrayColor() //(color == nil ? fontColor : color!)
-//        for i in 0..<ranges.mainCharRanges.count {
-//            var mainAttriText = NSMutableAttributedString(attributedString: linesForText![i].attributedText)
-//            let mainFullCharRange = NSMakeRange(0, linesForText![i].text.length)
-//            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: mainFullCharRange)
-//            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.mainCharRanges[i])
-//            linesForText![i].attributedText = mainAttriText
-//            var extraAttriText = NSMutableAttributedString(attributedString: linesForTextExtra![i].attributedText)
-//            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: NSMakeRange(0, linesForTextExtra![i].text.length))
-//            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.extraCharRanges[i])
-//            linesForTextExtra![i].attributedText = extraAttriText
-//        }
+        let ranges = visiableEachLineCharRanges(textView!.charRangesForEachLine!.map { (textView!.text as NSString).substringWithRange($0) }, filteredCtxLineCharRanges: filteredCharRangesForLinesInCtx!, ctx: ctxView!.text)
+        let visiableFontColor = UIColor.lightGrayColor() //(color == nil ? fontColor : color!)
+        for i in 0..<ranges.mainCharRanges.count {
+            let mainAttriText = NSMutableAttributedString(attributedString: linesForText![i].attributedText)
+            let fullCharRange = NSMakeRange(0, (ctxView!.text as NSString).length)
+            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: fullCharRange)
+            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.mainCharRanges[i])
+            linesForText![i].attributedText = mainAttriText
+            let extraAttriText = NSMutableAttributedString(attributedString: linesForTextExtra![i].attributedText)
+            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: fullCharRange)
+            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.extraCharRanges[i])
+            linesForTextExtra![i].attributedText = extraAttriText
+        }
     }
     
     func startHorizontalAnimation() {
