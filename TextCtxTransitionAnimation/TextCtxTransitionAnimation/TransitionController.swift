@@ -93,17 +93,48 @@ extension LinesGeneratable where Self: UITextView {
 extension UITextView: LinesGeneratable {}
 
 protocol TextCtxTransitionReady {
-    func line()
+    var main: [SingleLineInCtx] { get }
+    var extra: [SingleLineInCtx] { get }
+    func index(forLine: SingleLineInCtx) -> (isForExtra: Bool, index: Int)?
+    func nextLine(currentLine: SingleLineInCtx) -> SingleLineInCtx?
+    func setTextToCtxFollowers()
+    func matchNoOfLinesBetween(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx]) -> [SingleLineInCtx]
     func visiableEachLineCharRanges(eachLineContentInText: [String], filteredCtxLineCharRanges: [NSRange], ctx: String) -> (mainCharRanges: [NSRange], extraCharRanges: [NSRange])
 }
 
 extension TextCtxTransitionReady {
-    func matchNoOfLines(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx]) -> (matchedTextLines: [SingleLineInCtx], updatedDeltasFromTextToCtxEachLine: [CGFloat]) {
+    func index(forLine: SingleLineInCtx) -> (isForExtra: Bool, index: Int)? {
+        if let i = main.indexOf(forLine) { return (false, i) }
+        if let i = extra.indexOf(forLine) { return (true , i) }
+        return nil
+    }
+    func nextLine(currentLine: SingleLineInCtx) -> SingleLineInCtx? {
+        if let index = main.indexOf(currentLine) {
+            return index == main.count - 1 ? nil : main[index + 1]
+        } else if extra.contains(currentLine) {
+            return currentLine.follower as? SingleLineInCtx
+        }
+        return nil
+    }
+    func setTextToCtxFollowers() {
+        let c = main.count
+        if c == extra.count {
+            for i in 0..<c {
+                main[i].follower = extra[i]
+                if i != c - 1 {
+                    extra[i].follower = main[i + 1]
+                }
+            }
+        }
+    }
+    func matchNoOfLinesBetween(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx]) -> [SingleLineInCtx] {
         if filteredCtxLines.count > textLines.count && filteredCtxLines.count > 1 {
             let gap = filteredCtxLines[1].frame.origin.y - filteredCtxLines[0].frame.maxY
             let extraTextLine = extraLineForText(textLines.last!, verticalLineFragmentGap: gap)
-            return (textLines + [extraTextLine], deltasFromTextToCtxEachLine + [extraTextLine.frame.origin.deltaTo(filteredLinesForCtx!.last!.frame.origin)])
+            textLines.first?.superview?.addSubview(extraTextLine)
+            return textLines + [extraTextLine]
         }
+        return textLines
     }
     func extraLineForText(lastLineForText: SingleLineInCtx, verticalLineFragmentGap: CGFloat) -> SingleLineInCtx {
         let y = lastLineForText.frame.maxY + verticalLineFragmentGap
@@ -160,14 +191,91 @@ extension TextCtxTransitionReady {
     }
 }
 
+protocol DynamicsInTransition: TextCtxTransitionReady {
+    func deepDeltaToSyncedPosition(withNextLine: SingleLineInCtx?, currentLine: SingleLineInCtx, lineWidth: CGFloat) -> (delta: CGFloat, deepLine: SingleLineInCtx)?
+    func deltaToSyncedPosition(ofNextLine: SingleLineInCtx?, currentLine: SingleLineInCtx, lineWidth: CGFloat) -> CGFloat?
+    func targetPoint(forLine: SingleLineInCtx, filteredCtx: [SingleLineInCtx], lineWidth: CGFloat) -> (isForExtra: Bool, point: CGPoint)?
+}
+
+extension DynamicsInTransition {
+    /// deepDeltaToSyncedPosition returns the delta to sync for closet line below. Nil is returned, if all lines below are synced.
+    func deepDeltaToSyncedPosition(withNextLine: SingleLineInCtx?, currentLine: SingleLineInCtx, lineWidth: CGFloat) -> (delta: CGFloat, deepLine: SingleLineInCtx)? {
+        if let next = withNextLine {
+            // Make sure following lines are synced before animation.
+            if let delta = deltaToSyncedPosition(next, currentLine: currentLine, lineWidth: lineWidth) {
+                switch delta {
+                case 0:
+                    print("animation: synced, ready to move freely.")
+                    return deepDeltaToSyncedPosition(nextLine(next), currentLine: next, lineWidth: lineWidth)
+                case -abs(delta):
+                    print("animation: not synced, sync with next line.")
+                    return (abs(delta), currentLine)
+                default:
+                    print("animation: over synced, move next line to sync with current line.")
+                    return (-delta, currentLine)
+                }
+            }
+        }
+        return nil
+    }
+    func deltaToSyncedPosition(ofNextLine: SingleLineInCtx?, currentLine: SingleLineInCtx, lineWidth: CGFloat) -> CGFloat? {
+        if let next = ofNextLine {
+            return currentLine.frame.origin.x - (next.frame.origin.x + lineWidth)
+        }
+        return nil
+    }
+    func targetPoint(forLine: SingleLineInCtx, filteredCtx: [SingleLineInCtx], lineWidth: CGFloat) -> (isForExtra: Bool, point: CGPoint)? {
+        let t = targetPointRaw(forLine, filteredCtx: filteredCtx, lineWidth: lineWidth)
+        if let targetRaw = t {
+            if targetRaw.isForExtra {
+                if let nextline = forLine.follower as? SingleLineInCtx {
+                    if let nextLineTargetRaw = targetPointRaw(nextline, filteredCtx: filteredCtx, lineWidth: lineWidth) {
+                        if nextLineTargetRaw.point.x == nextline.frame.origin.x {
+                            return (targetRaw.isForExtra, forLine.frame.origin)
+                        }
+                    }
+                }
+            }
+        }
+        return t
+    }
+    func targetPointRaw(forLine: SingleLineInCtx, filteredCtx: [SingleLineInCtx], lineWidth: CGFloat) -> (isForExtra: Bool, point: CGPoint)? {
+        if let i = index(forLine) {
+            let correspondingLineOrigin = (filteredCtx.map { $0.frame.origin })[i.index]
+            if i.isForExtra {
+                if i.index + 1 < extra.count {
+                    let x = (filteredCtx.map { $0.frame.origin })[i.index + 1].x + lineWidth
+                    return (i.isForExtra, CGPointMake(x, correspondingLineOrigin.y))
+                }
+            } else {
+                return (i.isForExtra, correspondingLineOrigin)
+            }
+        }
+        return nil
+    }
+}
+
+extension TransitionController: DynamicsInTransition {}
+
 class TransitionController: UIViewController {
     var textView: UITextView?
     var ctxView: UITextView?
     var width: CGFloat?
     var linesForText: [SingleLineInCtx]?
     var linesForTextExtra: [SingleLineInCtx]?
+    var main: [SingleLineInCtx] {
+        if let m = linesForText {
+            return m
+        }
+        return [SingleLineInCtx]()
+    }
+    var extra: [SingleLineInCtx] {
+        if let e = linesForTextExtra {
+            return e
+        }
+        return [SingleLineInCtx]()
+    }
     var filteredCharRangesForLinesInCtx: [NSRange]?
-    var deltasFromTextToCtxEachLine = [CGPoint]()
     var filteredLinesForCtx: [SingleLineInCtx]?
     init(textView: UITextView, ctxView: UITextView, width: CGFloat) {
         super.init(nibName: nil, bundle: nil)
@@ -190,7 +298,6 @@ class TransitionController: UIViewController {
         super.viewDidLoad()
         view.clipsToBounds = true
         setupLines()
-        
     }
     func moveToSelfView(views: [UIView], fromView: UIView) {
         views.forEach {
@@ -200,128 +307,76 @@ class TransitionController: UIViewController {
         }
     }
     func setupLines() {
-        linesForText = textView!.OneLiners(ctxView)
-        if let filteredLinesAndCharRangesForCtx = ctxView!.OneLiners(textView!.text) {
+        linesForText = textView!.oneLiners(ctxView)
+        if let filteredLinesAndCharRangesForCtx = ctxView!.oneLiners(textView!.text) {
             filteredLinesForCtx = filteredLinesAndCharRangesForCtx.lines
             filteredCharRangesForLinesInCtx = filteredLinesAndCharRangesForCtx.charRanges
-        }
-        
-        if linesForText!.count < filteredLinesForCtx!.count {
-//            let line =
+        } else {
+            return
         }
         if linesForText!.count * filteredLinesForCtx!.count > 0 {
             moveToSelfView(linesForText!, fromView: textView!)
             moveToSelfView(filteredLinesForCtx!, fromView: ctxView!)
-            var i = 0
-            for textLine in linesForText! {
-                deltasFromTextToCtxEachLine.append(textLine.frame.origin.deltaTo(filteredLinesForCtx![i].frame.origin))
-                i += 1
-            }
-            if filteredLinesForCtx!.count > linesForText!.count && filteredLinesForCtx!.count > 1 {
-                let gap = filteredLinesForCtx![1].frame.origin.y - filteredLinesForCtx![0].frame.maxY
-                let extraTextLine = extraLineForText(linesForText!.last!, textRange: (ctxView!.text as NSString).rangeOfString(textView!.text), verticalLineFragmentGap: gap)
-                linesForText!.append(extraTextLine)
-                deltasFromTextToCtxEachLine.append(extraTextLine.frame.origin.deltaTo(filteredLinesForCtx!.last!.frame.origin))
-            }
-            linesForTextExtra = [SingleLineTextView]()
+            linesForText = matchNoOfLinesBetween(linesForText!, filteredCtxLines: filteredLinesForCtx!)
+            linesForTextExtra = [SingleLineInCtx]()
             for l in linesForText! {
-                let lExtra = SingleLineTextView(attriText: l.attributedText, lineHeight: l.frame.size.height)
+                let lExtra = SingleLineInCtx(attriText: l.attributedText, lineHeight: l.frame.size.height)
                 lExtra.frame = l.frame
                 view.addSubview(lExtra)
                 linesForTextExtra?.append(lExtra)
             }
-            
-            setTextToCtxFollowers(linesForText!, extra: linesForTextExtra!)
+            setTextToCtxFollowers()
             filteredLinesForCtx!.forEach { $0.hidden = true }
+            linesForText!.forEach {
+                $0.tag = 100 + linesForText!.indexOf($0)!
+            }
+            linesForTextExtra!.forEach {
+                $0.tag = 1000 + linesForTextExtra!.indexOf($0)!
+            }
+        }
+        setVisiablePartForEachLine()
+    }
+    var fontColor: UIColor {
+        return textView!.attributedText.attribute(NSForegroundColorAttributeName, atIndex: 0, effectiveRange: nil) as! UIColor
+    }
+    func setVisiablePartForEachLine(color: UIColor? = nil) {
+//        let ranges = visiableEachLineCharRanges(textView!.charRangesForEachLine!.map { (textView!.text as NSString).substringWithRange($0) }, filteredCtxLineCharRanges: filteredCharRangesForLinesInCtx!, ctx: ctxView!.text)
+//        let visiableFontColor = UIColor.lightGrayColor() //(color == nil ? fontColor : color!)
+//        for i in 0..<ranges.mainCharRanges.count {
+//            var mainAttriText = NSMutableAttributedString(attributedString: linesForText![i].attributedText)
+//            let mainFullCharRange = NSMakeRange(0, linesForText![i].text.length)
+//            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: mainFullCharRange)
+//            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.mainCharRanges[i])
+//            linesForText![i].attributedText = mainAttriText
+//            var extraAttriText = NSMutableAttributedString(attributedString: linesForTextExtra![i].attributedText)
+//            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: NSMakeRange(0, linesForTextExtra![i].text.length))
+//            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.extraCharRanges[i])
+//            linesForTextExtra![i].attributedText = extraAttriText
+//        }
     }
     
-    func setTextToCtxFollowers(main: [SingleLineTextView], extra: [SingleLineTextView]) {
-        let c = main.count
-        if c == extra.count {
-            for i in 0..<c {
-                main[i].follower = extra[i]
-                if i != c - 1 {
-                    extra[i].follower = main[i + 1]
-                }
-            }
-        }
-    }
-    func deltaToSyncedPosition(ofNextLine: SingleLineTextView?, currentLine: SingleLineTextView) -> CGFloat? {
-        if let next = ofNextLine {
-            return currentLine.frame.origin.x - (next.frame.origin.x + view.frame.width)
-        }
-        return nil
-    }
-    func nextLine(currentLine: SingleLineTextView) -> SingleLineTextView? {
-        if let index = linesForText?.indexOf(currentLine) {
-            return index == linesForText!.count - 1 ? nil : linesForText![index + 1]
-        } else if linesForTextExtra!.contains(currentLine) {
-            return currentLine.follower as? SingleLineTextView
-        }
-        return nil
-    }
-    func index(forLine: SingleLineTextView) -> (isForExtra: Bool, index: Int)? {
-        if let lines = linesForText {
-            if let i = lines.indexOf(forLine) {
-                return (false, i)
-            }
-            if let i = linesForTextExtra!.indexOf(forLine) {
-                return (true , i)
-            }
-        }
-        return nil
-    }
-    func targetPointRaw(forLine: SingleLineTextView) -> (isForExtra: Bool, point: CGPoint)? {
-        if let i = index(forLine) {
-            let correspondingLineOrigin = (filteredLinesForCtx!.map { $0.frame.origin })[i.index]
-            if i.isForExtra {
-                if i.index + 1 < linesForTextExtra?.count {
-                    let x = (filteredLinesForCtx!.map { $0.frame.origin })[i.index + 1].x + view.bounds.width
-                    return (i.isForExtra, CGPointMake(x, correspondingLineOrigin.y))
-                }
-            } else {
-                return (i.isForExtra, correspondingLineOrigin)
-            }
-        }
-        return nil
-    }
-    func targetPoint(forLine: SingleLineTextView) -> (isForExtra: Bool, point: CGPoint)? {
-        let t = targetPointRaw(forLine)
-        print("targetPointRaw: \(t)")
-        if let targetRaw = t {
-            if targetRaw.isForExtra {
-                if let nextline = forLine.follower as? SingleLineTextView {
-                    if let nextLineTargetRaw = targetPointRaw(nextline) {
-                        if nextLineTargetRaw.point.x == nextline.frame.origin.x {
-                            return (targetRaw.isForExtra, forLine.frame.origin)
-                        }
-                    }
-                }
-            }
-        }
-        return t
-    }
     func startHorizontalAnimation() {
         animateHorizontally((linesForText?.first!)!)
-        
     }
-    
-    func animateHorizontally(line: SingleLineTextView) {
-        idOfLineStartedHorizontalAnimation = "\(line.frame.origin) \(line.followerIsShadow)"
-        if let target = targetPoint(line) {
+    var totalAnimationDuration: NSTimeInterval = 5
+    var horizontalAnimationDuration: NSTimeInterval {
+        return totalAnimationDuration / Double(main.count == 0 ? 1 : main.count)
+    }
+    func animateHorizontally(line: SingleLineInCtx) {
+        if let target = targetPoint(line, filteredCtx: filteredLinesForCtx!, lineWidth: view.bounds.width) {
             let targetPosition = target.point.x
             let deltaMax = targetPosition - line.frame.origin.x
             if deltaMax == 0 {
                 // Animation for SingleLineTextView all done, pass to next one.
                 if let follower = line.follower {
-                    animateHorizontally(follower as! SingleLineTextView)
+                    animateHorizontally(follower as! SingleLineInCtx)
                 }
             } else {
                 var delta: CGFloat = 0
-                var firstLineToMove: SingleLineTextView
+                var firstLineToMove: SingleLineInCtx
                 if let next = nextLine(line) {
                     // Make sure following lines are synced before animation.
-                    if let deepDeltaToSync = deepDeltaToSyncedPosition(next, currentLine: line) {
+                    if let deepDeltaToSync = deepDeltaToSyncedPosition(next, currentLine: line, lineWidth: view.bounds.width) {
                         if deepDeltaToSync.delta > 0 {
                             // Sync with min distance.
                             delta = min(deltaMax, deepDeltaToSync.delta)
@@ -336,11 +391,11 @@ class TransitionController: UIViewController {
                             firstLineToMove = next
                         }
                         print("total line no: \(linesForText?.count); lineToMove index: main: \(linesForText?.indexOf(firstLineToMove)), extra: \(linesForTextExtra?.indexOf(firstLineToMove)); toLine index: main: \(linesForText?.indexOf(deepDeltaToSync.deepLine)), extra: \(linesForTextExtra?.indexOf(deepDeltaToSync.deepLine))")
-                        firstLineToMove.animateHorizontallyBetween(firstLineToMove, toLine: deepDeltaToSync.deepLine, byDelta: delta, delegate: self)
+                        firstLineToMove.animateHorizontallyBetween(firstLineToMove, toLine: deepDeltaToSync.deepLine, byDelta: delta, duration: horizontalAnimationDuration, delegate: self)
                     } else {
                         delta = deltaMax
                         firstLineToMove = line
-                        firstLineToMove.animateHorizontallyBetween(firstLineToMove, toLine: linesForText!.last!, byDelta: delta, delegate: self)
+                        firstLineToMove.animateHorizontallyBetween(firstLineToMove, toLine: linesForText!.last!, byDelta: delta, duration: horizontalAnimationDuration, delegate: self)
                     }
                     return
                 }
@@ -348,36 +403,17 @@ class TransitionController: UIViewController {
             }
         }
     }
-    func animateOneLineHorizontally(line: SingleLineTextView, byDelta: CGFloat) {
-        line.startHorizontalAnimation(byDelta, delegate: self)
+    func animateOneLineHorizontally(line: SingleLineInCtx, byDelta: CGFloat) {
+        line.startHorizontalAnimation(byDelta, duration: horizontalAnimationDuration, delegate: self)
         if line.follower!.frame.origin.y == line.frame.origin.y {
-            (line.follower! as! SingleLineTextView).startHorizontalAnimation(byDelta, delegate: self)
+            (line.follower! as! SingleLineInCtx).startHorizontalAnimation(byDelta, duration: horizontalAnimationDuration, delegate: self)
         }
     }
-    /// deepDeltaToSyncedPosition returns the delta to sync for closet line below. Nil is returned, if all lines below are synced.
-    func deepDeltaToSyncedPosition(withNextLine: SingleLineTextView?, currentLine: SingleLineTextView) -> (delta: CGFloat, deepLine: SingleLineTextView)? {
-        if let next = withNextLine {
-            // Make sure following lines are synced before animation.
-            if let delta = deltaToSyncedPosition(next, currentLine: currentLine) {
-                switch delta {
-                case 0:
-                    print("animation: synced, ready to move freely.")
-                    return deepDeltaToSyncedPosition(nextLine(next), currentLine: next)
-                case -abs(delta):
-                    print("animation: not synced, sync with next line.")
-                    return (abs(delta), currentLine)
-                default:
-                    print("animation: over synced, move next line to sync with current line.")
-                    return (-delta, currentLine)
-                }
-            }
-        }
-        return nil
-    }
-    var idOfLineStartedHorizontalAnimation = ""
+    
+    var idOfLineStartedHorizontalAnimation = 0
     override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         if flag {
-            if anim.valueForKey("ID")!.isEqualToString(idOfLineStartedHorizontalAnimation) {
+            if anim.valueForKey("view tag") as! Int == idOfLineStartedHorizontalAnimation {
                 (linesForText! + linesForTextExtra!).forEach {
                     $0.layer.removeAnimationForKey("horizontal move")
                 }
@@ -385,45 +421,6 @@ class TransitionController: UIViewController {
             }
         }
     }
-    func deltasToSyncedPositions() -> [CGFloat?] {
-        return linesForText!.map { deltaToSyncedPosition(nextLine($0), currentLine: $0) }
-    }
-    func afterHorizontalAnimation(forLine: SingleLineTextView) {
-        if let i = index(forLine) {
-            var allLinesForText = [SingleLineTextView]()
-            for k in 0..<linesForText!.count {
-                allLinesForText.append(linesForText![k])
-                allLinesForText.append(linesForTextExtra![k])
-            }
-            let j = i.index * 2 + (i.isForExtra ? 1 : 0)
-            for x in 0..<j {
-                let line = allLinesForText[x]
-                if let targetPosition = targetPoint(line)?.point.x {
-                    if line.frame.origin.x != targetPosition {
-                        animateHorizontally(line)
-                        break
-                    }
-                }
-            }
-        }
-    }
-
-    func visiableRightEdgePosition(toLineWithRange: SingleLineTextView) -> HorizontalPositionToRange? {
-        if let rect = toLineWithRange.lineTailingBlankSpaceRectInSelf {
-            visiableRightEdgePositionToRange(rect.minX, positionRight: rect.maxX)
-        }
-        return nil
-    }
-    func visiableRightEdgePositionToRange(positionLeft: CGFloat, positionRight: CGFloat) -> HorizontalPositionToRange {
-        return horizontalPositionToRange(view.bounds.maxX, positionLeft: positionLeft, positionRight: positionRight)
-    }
-    
-    func deltaToVisiableRightEdge(fromPoint: CGPoint, lineWithPoint: SingleLineTextView) -> CGFloat? {
-        let pointFromLine = view.convertPoint(fromPoint, fromView: lineWithPoint)
-        return view.bounds.maxX - pointFromLine.x
-    }
-    
-    
 }
 
 
@@ -481,10 +478,3 @@ extension LineExtra where Self: SingleLineInCtx {
 }
 
 extension SingleLineInCtx: LineExtra {}
-
-
-
-
-
-
-

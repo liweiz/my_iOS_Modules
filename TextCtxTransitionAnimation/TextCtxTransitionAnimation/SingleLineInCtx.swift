@@ -33,7 +33,7 @@ extension FollowableAsLine where Self: UITextView {
     func lineTailingBlankSpaceRectInTextContainerCoordinates(inRange: NSRange) -> CGRect? {
         if let range = tailingBlankSpaceCharRange(text, inRange: inRange) {
             if range.length == 0 { return nil }
-            return rectForCharRangeInTextContainerCoordinates(range)
+            return layoutManager.boundingRectForGlyphRange(layoutManager.glyphRangeForCharacterRange(range, actualCharacterRange: nil), inTextContainer: textContainer)
         }
         return nil
     }
