@@ -20,6 +20,7 @@ class SingleLineTextView: UITextView {
         t.addAttribute(NSBackgroundColorAttributeName, value: UIColor.clearColor(), range: fullRange)
         attributedText = t
         backgroundColor = UIColor.clearColor()
+        sizeToFit()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,15 +78,15 @@ extension Animatable where Self: UIView {
 
 extension SingleLineTextView: Animatable {}
 
-extension Array where Element: SingleLineTextView {
-    func makeContentsClear(charRangesForEachLine: [NSRange]) {
-        if count == charRangesForEachLine.count {
-            var i = 0
-            for element in self {
-                let line = element as SingleLineTextView
-                line.makeContentClear(charRangesForEachLine[i])
-                i += 1
-            }
-        }
-    }
-}
+//extension Array where Element: SingleLineTextView {
+//    func makeContentsClear(charRangesForEachLine: [NSRange]) {
+//        if count == charRangesForEachLine.count {
+//            var i = 0
+//            for element in self {
+//                let line = element as SingleLineTextView
+//                line.makeContentClear(charRangesForEachLine[i])
+//                i += 1
+//            }
+//        }
+//    }
+//}

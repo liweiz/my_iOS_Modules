@@ -27,7 +27,6 @@ class ViewController: UIViewController {
 //        ctxView.hidden = true
         textView.text = text
         ctxView.text = ctx
-        print("text: \(textView.layoutManager.lineFragmentRectForGlyphAtIndex(10, effectiveRange: nil)); ctx: \(ctxView.layoutManager.lineFragmentRectForGlyphAtIndex(10, effectiveRange: nil))")
         let controller = TransitionController(textView: textView, ctxView: ctxView, width: textView.frame.width)
         addChildViewController(controller)
         view.addSubview(controller.view)
