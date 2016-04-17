@@ -98,7 +98,7 @@ protocol TextCtxTransitionReady {
     func index(forLine: SingleLineInCtx) -> (isForExtra: Bool, index: Int)?
     func nextLine(currentLine: SingleLineInCtx) -> SingleLineInCtx?
     func setTextToCtxFollowers()
-    func matchNoOfLinesBetween(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx]) -> [SingleLineInCtx]
+    func matchNoOfLinesBetween(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx], lineWidth: CGFloat) -> [SingleLineInCtx]
     func visiableEachLineCharRanges(eachLineContentInText: [String], filteredCtxLineCharRanges: [NSRange], ctx: String) -> (mainCharRanges: [NSRange], extraCharRanges: [NSRange])
 }
 
@@ -127,19 +127,19 @@ extension TextCtxTransitionReady {
             }
         }
     }
-    func matchNoOfLinesBetween(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx]) -> [SingleLineInCtx] {
+    func matchNoOfLinesBetween(textLines: [SingleLineInCtx], filteredCtxLines: [SingleLineInCtx], lineWidth: CGFloat) -> [SingleLineInCtx] {
         if filteredCtxLines.count > textLines.count && filteredCtxLines.count > 1 {
             let gap = filteredCtxLines[1].frame.origin.y - filteredCtxLines[0].frame.maxY
-            let extraTextLine = extraLineForText(textLines.last!, verticalLineFragmentGap: gap)
+            let extraTextLine = extraLineForText(textLines.last!, verticalLineFragmentGap: gap, lineWidth: lineWidth)
             textLines.first?.superview?.addSubview(extraTextLine)
             return textLines + [extraTextLine]
         }
         return textLines
     }
-    func extraLineForText(lastLineForText: SingleLineInCtx, verticalLineFragmentGap: CGFloat) -> SingleLineInCtx {
+    func extraLineForText(lastLineForText: SingleLineInCtx, verticalLineFragmentGap: CGFloat, lineWidth: CGFloat) -> SingleLineInCtx {
         let y = lastLineForText.frame.maxY + verticalLineFragmentGap
         var x: CGFloat = 0
-        x = lastLineForText.frame.origin.x - lastLineForText.frame.size.width
+        x = lastLineForText.frame.origin.x - lineWidth
         let extraLine = SingleLineInCtx(attriText: lastLineForText.attributedText, lineHeight: lastLineForText.frame.size.height)
         extraLine.frame.origin = CGPointMake(x, y)
         lastLineForText.superview!.addSubview(extraLine)
@@ -156,15 +156,16 @@ extension TextCtxTransitionReady {
             for i in 0..<filteredCtxLineCharRanges.count {
                 let textStartLocation = eachLineContentInTextCharRangesInCtx[i].location
                 if textStartLocation == NSNotFound {
-                    mainRanges.append(filteredCtxLineCharRanges[i])
+                    mainRanges.append(NSMakeRange(eachLineContentInTextCharRangesInCtx[0].location, (eachLineContentInTextCharRangesInCtx.map { $0.length }).reduce(0, combine: { $0 + $1 })))
                 } else {
                     let textEndLocation = endLocation(eachLineContentInTextCharRangesInCtx[i])
                     let ctxStartLocation = filteredCtxLineCharRanges[i].location
                     let ctxEndLocation = endLocation(filteredCtxLineCharRanges[i])
-                    let start = min(textStartLocation, ctxStartLocation)
-                    let end = max(textEndLocation, ctxEndLocation)
+                    let start = i == 0 ? textStartLocation : min(textStartLocation, ctxStartLocation)
+                    let end = min(textEndLocation, ctxEndLocation)
                     mainRanges.append(NSMakeRange(start, end - start + 1))
                 }
+                print("mainString for line index \(i): \((ctx as NSString).substringWithRange(mainRanges.last!))")
             }
             var extraRanges = [NSRange]()
             for i in 0..<filteredCtxLineCharRanges.count {
@@ -172,7 +173,7 @@ extension TextCtxTransitionReady {
                     let start = mainRanges[i].location + mainRanges[i].length
                     let nextTextStartLocation = eachLineContentInTextCharRangesInCtx[i + 1].location
                     if nextTextStartLocation == NSNotFound {
-                        extraRanges.append(NSMakeRange(NSNotFound, 0))
+                        extraRanges.append(NSMakeRange(start, eachLineContentInTextCharRangesInCtx[0].location + (eachLineContentInTextCharRangesInCtx.map { $0.length }).reduce(0, combine: { $0 + $1 }) - start))
                     } else {
                         let end = nextTextStartLocation - 1
                         if start > end {
@@ -184,6 +185,7 @@ extension TextCtxTransitionReady {
                 } else {
                     extraRanges.append(NSMakeRange(NSNotFound, 0))
                 }
+                extraRanges.last!.location == NSNotFound ? print("line is hidden") : print("extraString for line index \(i): \((ctx as NSString).substringWithRange(extraRanges.last!))")
             }
             return (mainRanges, extraRanges)
         }
@@ -317,7 +319,7 @@ class TransitionController: UIViewController {
         if linesForText!.count * filteredLinesForCtx!.count > 0 {
             moveToSelfView(linesForText!, fromView: textView!)
             moveToSelfView(filteredLinesForCtx!, fromView: ctxView!)
-            linesForText = matchNoOfLinesBetween(linesForText!, filteredCtxLines: filteredLinesForCtx!)
+            linesForText = matchNoOfLinesBetween(linesForText!, filteredCtxLines: filteredLinesForCtx!, lineWidth: view.bounds.width)
             linesForTextExtra = [SingleLineInCtx]()
             for l in linesForText! {
                 let lExtra = SingleLineInCtx(attriText: l.attributedText, lineHeight: l.frame.size.height)
@@ -381,10 +383,6 @@ class TransitionController: UIViewController {
                             // Sync with min distance.
                             delta = min(deltaMax, deepDeltaToSync.delta)
                             firstLineToMove = line
-//                        } else if deepDeltaToSync.delta == 0 {
-//                            // All lines below are synced. But 0 will never be returned.
-////                            delta = deltaMax
-//                            firstLineToMove = line
                         } else {
                             // Sync next line to match current line.
                             delta = abs(deepDeltaToSync.delta)
@@ -397,8 +395,10 @@ class TransitionController: UIViewController {
                         firstLineToMove = line
                         firstLineToMove.animateHorizontallyBetween(firstLineToMove, toLine: linesForText!.last!, byDelta: delta, duration: horizontalAnimationDuration, delegate: self)
                     }
+                    idOfLineStartedHorizontalAnimation = firstLineToMove.tag
                     return
                 }
+                idOfLineStartedHorizontalAnimation = line.tag
                 animateOneLineHorizontally(line, byDelta: deltaMax)
             }
         }
@@ -422,9 +422,6 @@ class TransitionController: UIViewController {
         }
     }
 }
-
-
-
 
 extension SingleLineInCtx {
     func animateHorizontallyBetween(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?){
@@ -464,7 +461,8 @@ protocol LineExtra {
 extension LineExtra where Self: SingleLineInCtx {
     var followerIsLineExtra: Bool? {
         if let f = follower {
-            return f.frame == frame
+            print("f.frame: \(f.frame), frame: \(frame)")
+            return f.frame.origin.y == frame.origin.y
         }
         return nil
     }
