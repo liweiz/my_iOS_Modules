@@ -62,9 +62,11 @@ protocol Animatable {
 extension Animatable where Self: UIView {
     func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
         startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.x", fromValue: layer.position.x, animationKey: "horizontal move")
+        frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
     }
     func startVerticalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
         startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.y", fromValue: layer.position.y, animationKey: "vertical move")
+        frame.origin = CGPointMake(frame.origin.x, frame.origin.y + byDelta)
     }
     func startAnimationOnOneAxis(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, onKeyPath: String, fromValue: CGFloat, animationKey: String) {
         let animation = CABasicAnimation(keyPath: onKeyPath)
@@ -74,7 +76,6 @@ extension Animatable where Self: UIView {
         animation.delegate = delegate
         animation.setValue(tag, forKey: "view tag")
         layer.addAnimation(animation, forKey: animationKey)
-        frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
     }
 }
 

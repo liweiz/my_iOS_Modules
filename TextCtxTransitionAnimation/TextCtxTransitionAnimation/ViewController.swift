@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         let button = UIView(frame: CGRectMake(50, 400, 40, 40))
         button.backgroundColor = UIColor.blackColor()
         view.addSubview(button)
-        let tap = UITapGestureRecognizer(target: controller, action: #selector(controller.startHorizontalAnimation))
+        let tap = UITapGestureRecognizer(target: controller, action: #selector(controller.startAnimation))
         button.addGestureRecognizer(tap)
     }
 

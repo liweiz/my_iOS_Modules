@@ -356,7 +356,15 @@ class TransitionController: UIViewController {
             linesForTextExtra![i].attributedText = extraAttriText
         }
     }
-    
+    func startAnimation() {
+        if let targetY = targetPointRaw(main.first!, filteredCtx: filteredLinesForCtx!, lineWidth: view.bounds.width)?.point.y {
+            let deltaY = targetY - main.first!.frame.origin.y
+            (main + extra).forEach {
+                $0.startVerticalAnimation(deltaY, duration: totalAnimationDuration)
+            }
+        }
+        startHorizontalAnimation()
+    }
     func startHorizontalAnimation() {
         animateHorizontally((linesForText?.first!)!)
     }
