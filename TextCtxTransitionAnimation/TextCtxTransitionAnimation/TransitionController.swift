@@ -424,11 +424,11 @@ class TransitionController: UIViewController {
 }
 
 extension SingleLineInCtx {
-    func animateHorizontallyBetween(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?){
+    func animateHorizontallyBetween(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, duration: NSTimeInterval, delegate: TextCtxTransitionReady){
         var from: SingleLineTextView?
         if let startLine = fromLine {
             if startLine.isEqual(self) {
-                startHorizontalAnimation(byDelta, duration: duration, delegate: delegate)
+                startHorizontalAnimation(byDelta, duration: duration, delegate: (delegate as? AnyObject))
                 if startLine.isEqual(toLine!) {
                     animateLineExtraHorizontally(byDelta, duration: duration, delegate: delegate)
                     return
@@ -438,7 +438,7 @@ extension SingleLineInCtx {
             }
         } else {
             if let endLine = toLine {
-                startHorizontalAnimation(byDelta, duration: duration, delegate: delegate)
+                startHorizontalAnimation(byDelta, duration: duration, delegate: (delegate as? AnyObject))
                 if endLine.isEqual(self) {
                     animateLineExtraHorizontally(byDelta, duration: duration, delegate: delegate)
                     return
@@ -454,22 +454,16 @@ extension SingleLineInCtx {
 }
 
 protocol LineExtra {
-    var followerIsLineExtra: Bool? { get }
-    func animateLineExtraHorizontally(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?)
+    func animateLineExtraHorizontally(byDelta: CGFloat, duration: NSTimeInterval, delegate: TextCtxTransitionReady)
 }
 
 extension LineExtra where Self: SingleLineInCtx {
-    var followerIsLineExtra: Bool? {
-        if let f = follower {
-            print("f.frame: \(f.frame), frame: \(frame)")
-            return f.frame.origin.y == frame.origin.y
-        }
-        return nil
-    }
-    func animateLineExtraHorizontally(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject?) {
-        if let f = followerIsLineExtra {
-            if f {
-                (follower as! SingleLineTextView).startHorizontalAnimation(byDelta, duration: duration, delegate: delegate)
+    func animateLineExtraHorizontally(byDelta: CGFloat, duration: NSTimeInterval, delegate: TextCtxTransitionReady) {
+        if let index = delegate.main.indexOf(self) {
+            if let f = follower {
+                if delegate.extra[index].isEqual(f) {
+                    (f as! SingleLineTextView).startHorizontalAnimation(byDelta, duration: duration, delegate: (delegate as? AnyObject))
+                }
             }
         }
     }
