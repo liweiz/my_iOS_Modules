@@ -10,6 +10,19 @@ import Foundation
 import UIKit
 
 extension UITextView {
+    func onlyShowText(isInRange: Bool, charRange: NSRange) {
+        let attriText = NSMutableAttributedString(attributedString: attributedText)
+        var firstColor: UIColor
+        var secondColor: UIColor
+        print("textColor: \(textColor)")
+        let color = textColor == nil ? UIColor.blackColor() : textColor!
+        firstColor = isInRange ? UIColor.clearColor() : color
+        secondColor = isInRange ? color : UIColor.clearColor()
+        let fullCharRange = NSMakeRange(0, (text as NSString).length)
+        attriText.addAttribute(NSForegroundColorAttributeName, value: firstColor, range: fullCharRange)
+        attriText.addAttribute(NSForegroundColorAttributeName, value: secondColor, range: charRange)
+        attributedText = attriText
+    }
     /// convertFromTextContainerCoordinatesToSelf converts point in TextContainerCoordinates to self's coordinates
     func convertFromTextContainerCoordinatesToSelf(pointInTextContainerCoordinates: CGPoint) -> CGPoint {
         return CGPointMake(bounds.origin.x + textContainerInset.left + pointInTextContainerCoordinates.x, bounds.origin.y + textContainerInset.top + pointInTextContainerCoordinates.y)

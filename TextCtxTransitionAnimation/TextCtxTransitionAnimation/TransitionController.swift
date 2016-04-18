@@ -301,11 +301,7 @@ class TransitionController: UIViewController {
         view.clipsToBounds = true
         setupLines()
         let charRange = (ctxView!.text as NSString).rangeOfString(textView!.text)
-        let attriText = NSMutableAttributedString(attributedString: ctxView!.attributedText)
-        let fullCharRange = NSMakeRange(0, (ctxView!.text as NSString).length)
-        attriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: fullCharRange)
-        attriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: charRange)
-        ctxView!.attributedText = attriText
+        ctxView!.onlyShowText(false, charRange: charRange)
         ctxView!.layer.opacity = 0
     }
     func showCtx() {
@@ -314,8 +310,6 @@ class TransitionController: UIViewController {
         animation.byValue = 1
         animation.duration = 0.3
         animation.removedOnCompletion = false
-//        animation.delegate = delegate
-//        animation.setValue(tag, forKey: "view tag")
         ctxView!.layer.addAnimation(animation, forKey: "show Ctx")
         ctxView!.layer.opacity = 1
     }
@@ -361,17 +355,9 @@ class TransitionController: UIViewController {
     }
     func setVisiablePartForEachLine(color: UIColor? = nil) {
         let ranges = visiableEachLineCharRanges(textView!.charRangesForEachLine!.map { (textView!.text as NSString).substringWithRange($0) }, filteredCtxLineCharRanges: filteredCharRangesForLinesInCtx!, ctx: ctxView!.text)
-        let visiableFontColor = UIColor.lightGrayColor() //(color == nil ? fontColor : color!)
         for i in 0..<ranges.mainCharRanges.count {
-            let mainAttriText = NSMutableAttributedString(attributedString: linesForText![i].attributedText)
-            let fullCharRange = NSMakeRange(0, (ctxView!.text as NSString).length)
-            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: fullCharRange)
-            mainAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.mainCharRanges[i])
-            linesForText![i].attributedText = mainAttriText
-            let extraAttriText = NSMutableAttributedString(attributedString: linesForTextExtra![i].attributedText)
-            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: fullCharRange)
-            extraAttriText.addAttribute(NSForegroundColorAttributeName, value: visiableFontColor, range: ranges.extraCharRanges[i])
-            linesForTextExtra![i].attributedText = extraAttriText
+            linesForText![i].onlyShowText(true, charRange: ranges.mainCharRanges[i])
+            linesForTextExtra![i].onlyShowText(true, charRange: ranges.extraCharRanges[i])
         }
     }
     var targetPositionOfLastLineInMain: CGPoint? {
