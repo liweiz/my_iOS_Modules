@@ -21,7 +21,6 @@
 		EE3F80BC1CA03DE3007D09A9 /* UnitTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80BB1CA03DE3007D09A9 /* UnitTestHelper.swift */; };
 		EE88FBEC1CB6DE7F00AF4CF0 /* TransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */; };
 		EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */; };
-		EED67EFB1CA09F2700ED5DDA /* NSRangeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED67EFA1CA09F2700ED5DDA /* NSRangeHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +61,6 @@
 		EE3F80BB1CA03DE3007D09A9 /* UnitTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestHelper.swift; sourceTree = "<group>"; };
 		EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionController.swift; sourceTree = "<group>"; };
 		EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineTextView.swift; sourceTree = "<group>"; };
-		EED67EFA1CA09F2700ED5DDA /* NSRangeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRangeHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +117,6 @@
 				EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */,
 				EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */,
 				EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */,
-				EED67EFA1CA09F2700ED5DDA /* NSRangeHelper.swift */,
 				EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */,
 				EE3F808A1CA03B4E007D09A9 /* Assets.xcassets */,
 				EE3F808F1CA03B4E007D09A9 /* Info.plist */,
@@ -279,7 +276,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE88FBEC1CB6DE7F00AF4CF0 /* TransitionController.swift in Sources */,
-				EED67EFB1CA09F2700ED5DDA /* NSRangeHelper.swift in Sources */,
 				EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */,
 				EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */,
 				EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */,

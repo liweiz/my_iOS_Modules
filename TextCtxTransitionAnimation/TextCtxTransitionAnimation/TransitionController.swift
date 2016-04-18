@@ -300,6 +300,24 @@ class TransitionController: UIViewController {
         super.viewDidLoad()
         view.clipsToBounds = true
         setupLines()
+        let charRange = (ctxView!.text as NSString).rangeOfString(textView!.text)
+        let attriText = NSMutableAttributedString(attributedString: ctxView!.attributedText)
+        let fullCharRange = NSMakeRange(0, (ctxView!.text as NSString).length)
+        attriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: fullCharRange)
+        attriText.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: charRange)
+        ctxView!.attributedText = attriText
+        ctxView!.layer.opacity = 0
+    }
+    func showCtx() {
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = 0
+        animation.byValue = 1
+        animation.duration = 0.3
+        animation.removedOnCompletion = false
+//        animation.delegate = delegate
+//        animation.setValue(tag, forKey: "view tag")
+        ctxView!.layer.addAnimation(animation, forKey: "show Ctx")
+        ctxView!.layer.opacity = 1
     }
     func moveToSelfView(views: [UIView], fromView: UIView) {
         views.forEach {
@@ -356,11 +374,14 @@ class TransitionController: UIViewController {
             linesForTextExtra![i].attributedText = extraAttriText
         }
     }
+    var targetPositionOfLastLineInMain: CGPoint? {
+        return filteredLinesForCtx?.last?.frame.origin
+    }
     func startAnimation() {
         if let targetY = targetPointRaw(main.first!, filteredCtx: filteredLinesForCtx!, lineWidth: view.bounds.width)?.point.y {
             let deltaY = targetY - main.first!.frame.origin.y
             (main + extra).forEach {
-                $0.startVerticalAnimation(deltaY, duration: totalAnimationDuration)
+                $0.startVerticalAnimation(deltaY, duration: totalAnimationDuration, delegate: self)
             }
         }
         startHorizontalAnimation()
@@ -368,7 +389,7 @@ class TransitionController: UIViewController {
     func startHorizontalAnimation() {
         animateHorizontally((linesForText?.first!)!)
     }
-    var totalAnimationDuration: NSTimeInterval = 5
+    var totalAnimationDuration: NSTimeInterval = 3
     var horizontalAnimationDuration: NSTimeInterval {
         return totalAnimationDuration / Double(main.count == 0 ? 1 : main.count)
     }
@@ -417,15 +438,41 @@ class TransitionController: UIViewController {
             (line.follower! as! SingleLineInCtx).startHorizontalAnimation(byDelta, duration: horizontalAnimationDuration, delegate: self)
         }
     }
-    
+    var horizontalAnimationDone = false
+    var verticalAnimationDone = false
     var idOfLineStartedHorizontalAnimation = 0
     override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         if flag {
-            if anim.valueForKey("view tag") as! Int == idOfLineStartedHorizontalAnimation {
-                (linesForText! + linesForTextExtra!).forEach {
-                    $0.layer.removeAnimationForKey("horizontal move")
+            if let targetPoint = targetPositionOfLastLineInMain {
+                let viewTag = anim.valueForKey("view tag") as! Int
+                let axis = anim.valueForKey("on axis") as! String
+                if let animatedView = ((main + extra).filter { $0.tag == viewTag }).first {
+                    if axis == "x" {
+                        if viewTag == idOfLineStartedHorizontalAnimation {
+                            (linesForText! + linesForTextExtra!).forEach {
+                                $0.layer.removeAnimationForKey("horizontal move")
+                            }
+                            startHorizontalAnimation()
+                        }
+                        if animatedView.layer.presentationLayer()!.frame.origin.x == targetPoint.x {
+                            horizontalAnimationDone = true
+                            if verticalAnimationDone {
+                                if ctxView!.layer.animationForKey("show Ctx") == nil {
+                                    showCtx()
+                                }
+                            }
+                        }
+                    } else if axis == "y" {
+                        if animatedView.layer.presentationLayer()!.frame.origin.y == targetPoint.y {
+                            verticalAnimationDone = true
+                            if horizontalAnimationDone {
+                                if ctxView!.layer.animationForKey("show Ctx") == nil {
+                                    showCtx()
+                                }
+                            }
+                        }
+                    }
                 }
-                startHorizontalAnimation()
             }
         }
     }

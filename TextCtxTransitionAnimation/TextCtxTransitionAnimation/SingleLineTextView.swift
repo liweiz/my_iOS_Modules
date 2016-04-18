@@ -61,20 +61,21 @@ protocol Animatable {
 
 extension Animatable where Self: UIView {
     func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
-        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.x", fromValue: layer.position.x, animationKey: "horizontal move")
+        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.x", fromValue: layer.position.x, animationKey: "horizontal move", axisName: "x")
         frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
     }
     func startVerticalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
-        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.y", fromValue: layer.position.y, animationKey: "vertical move")
+        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.y", fromValue: layer.position.y, animationKey: "vertical move", axisName: "y")
         frame.origin = CGPointMake(frame.origin.x, frame.origin.y + byDelta)
     }
-    func startAnimationOnOneAxis(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, onKeyPath: String, fromValue: CGFloat, animationKey: String) {
+    func startAnimationOnOneAxis(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, onKeyPath: String, fromValue: CGFloat, animationKey: String, axisName: String) {
         let animation = CABasicAnimation(keyPath: onKeyPath)
         animation.fromValue = fromValue
         animation.byValue = byDelta
         animation.duration = duration
         animation.delegate = delegate
         animation.setValue(tag, forKey: "view tag")
+        animation.setValue(axisName, forKey: "on axis")
         layer.addAnimation(animation, forKey: animationKey)
     }
 }
