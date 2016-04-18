@@ -61,7 +61,7 @@ protocol Animatable {
 
 extension Animatable where Self: UIView {
     func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
-        startAnimationOnOneAxis(byDelta, duration: duration, onKeyPath: "position.x", fromValue: layer.position.x)
+        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.x", fromValue: layer.position.x)
     }
     func startAnimationOnOneAxis(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, onKeyPath: String, fromValue: CGFloat) {
         let animation = CABasicAnimation(keyPath: onKeyPath)
