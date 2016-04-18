@@ -61,32 +61,21 @@ protocol Animatable {
 
 extension Animatable where Self: UIView {
     func startHorizontalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
-        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.x", fromValue: layer.position.x)
+        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.x", fromValue: layer.position.x, animationKey: "horizontal move")
     }
-    func startAnimationOnOneAxis(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, onKeyPath: String, fromValue: CGFloat) {
+    func startVerticalAnimation(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil) {
+        startAnimationOnOneAxis(byDelta, duration: duration, delegate: delegate, onKeyPath: "position.y", fromValue: layer.position.y, animationKey: "vertical move")
+    }
+    func startAnimationOnOneAxis(byDelta: CGFloat, duration: NSTimeInterval, delegate: AnyObject? = nil, onKeyPath: String, fromValue: CGFloat, animationKey: String) {
         let animation = CABasicAnimation(keyPath: onKeyPath)
         animation.fromValue = fromValue
         animation.byValue = byDelta
         animation.duration = duration
-        //        animation.removedOnCompletion = false
         animation.delegate = delegate
         animation.setValue(tag, forKey: "view tag")
-        layer.addAnimation(animation, forKey: "horizontal move")
+        layer.addAnimation(animation, forKey: animationKey)
         frame.origin = CGPointMake(frame.origin.x + byDelta, frame.origin.y)
     }
 }
 
 extension SingleLineTextView: Animatable {}
-
-//extension Array where Element: SingleLineTextView {
-//    func makeContentsClear(charRangesForEachLine: [NSRange]) {
-//        if count == charRangesForEachLine.count {
-//            var i = 0
-//            for element in self {
-//                let line = element as SingleLineTextView
-//                line.makeContentClear(charRangesForEachLine[i])
-//                i += 1
-//            }
-//        }
-//    }
-//}
