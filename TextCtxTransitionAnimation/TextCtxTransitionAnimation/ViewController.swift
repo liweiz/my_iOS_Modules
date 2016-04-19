@@ -27,15 +27,15 @@ class ViewController: UIViewController {
 //        ctxView.hidden = true
         textView.text = text
         ctxView.text = ctx
-        let controller = TransitionController(textView: textView, ctxView: ctxView, width: textView.frame.width)
+        let controller = TransitionController(textView: textView, ctxView: ctxView, width: textView.frame.width, deltaXInTransition: nil)
         addChildViewController(controller)
         view.addSubview(controller.view)
         controller.didMoveToParentViewController(self)
-        let button = UIView(frame: CGRectMake(50, 400, 40, 40))
-        button.backgroundColor = UIColor.blackColor()
-        view.addSubview(button)
-        let tap = UITapGestureRecognizer(target: controller, action: #selector(controller.startAnimation))
-        button.addGestureRecognizer(tap)
+//        let button = UIView(frame: CGRectMake(50, 400, 40, 40))
+//        button.backgroundColor = UIColor.blackColor()
+//        view.addSubview(button)
+//        let tap = UITapGestureRecognizer(target: controller, action: #selector(controller.startAnimation))
+//        button.addGestureRecognizer(tap)
     }
 
     

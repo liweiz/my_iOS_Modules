@@ -279,6 +279,14 @@ class TransitionController: UIViewController {
     }
     var filteredCharRangesForLinesInCtx: [NSRange]?
     var filteredLinesForCtx: [SingleLineInCtx]?
+    convenience init(textView: UITextView, ctxView: UITextView, width: CGFloat, deltaXInTransition: CGFloat?) {
+        self.init(textView: textView, ctxView: ctxView, width: width)
+        if let deltaX = deltaXInTransition {
+            deltaXFromTotalDeltaX = deltaX
+            isAnimated = true
+        }
+    }
+    var isAnimated = false
     init(textView: UITextView, ctxView: UITextView, width: CGFloat) {
         super.init(nibName: nil, bundle: nil)
         self.textView = textView
@@ -303,8 +311,8 @@ class TransitionController: UIViewController {
         let charRange = (ctxView!.text as NSString).rangeOfString(textView!.text)
         ctxView!.onlyShowText(false, charRange: charRange)
         ctxView!.layer.opacity = 0
-        testdriveAnimation()
-        
+        startTextToCtxTransition(isAnimated)
+        if !isAnimated { view.hidden = true }
     }
     
     func moveToSelfView(views: [UIView], fromView: UIView) {
@@ -384,9 +392,17 @@ class TransitionController: UIViewController {
         transitFromTextToCtxHorizontally((linesForText?.first!)!, animated: animated)
     }
     var horizontalVelocity: NSTimeInterval {
-        return NSTimeInterval(totalDeltaX) / totalAnimationDuration
+        return NSTimeInterval(deltaXFromTotalDeltaX) / totalAnimationDuration
     }
     var totalDeltaX: CGFloat = 0
+    var deltaXFromTotalDeltaX: CGFloat = 0 {
+        didSet {
+            let controller = TransitionController(textView: textView!, ctxView: ctxView!, width: view.bounds.width, deltaXInTransition: deltaXFromTotalDeltaX)
+            parentViewController?.addChildViewController(controller)
+            view.superview?.addSubview(controller.view)
+            controller.didMoveToParentViewController(parentViewController)
+        }
+    }
     func currentHorizontalAnimationDuration(delta: CGFloat) -> NSTimeInterval {
         return NSTimeInterval(delta) / horizontalVelocity
     }
@@ -402,6 +418,7 @@ class TransitionController: UIViewController {
             } else {
                 var delta: CGFloat = 0
                 var firstLineToMove: SingleLineInCtx
+                var toLine: SingleLineInCtx
                 if let next = nextLine(line) {
                     // Make sure following lines are synced before animation.
                     if let deepDeltaToSync = deepDeltaToSyncedPosition(next, currentLine: line, lineWidth: view.bounds.width) {
@@ -414,26 +431,30 @@ class TransitionController: UIViewController {
                             delta = abs(deepDeltaToSync.delta)
                             firstLineToMove = next
                         }
-                        firstLineToMove.transitFromTextToCtxHorizontallyBetween(firstLineToMove, toLine: deepDeltaToSync.deepLine, byDelta: delta, animated: animated, duration: currentHorizontalAnimationDuration(delta), delegate: self)
+                        toLine = deepDeltaToSync.deepLine
                     } else {
                         delta = deltaMax
                         firstLineToMove = line
-                        firstLineToMove.transitFromTextToCtxHorizontallyBetween(firstLineToMove, toLine: linesForText!.last!, byDelta: delta, animated: animated, duration: currentHorizontalAnimationDuration(delta), delegate: self)
+                        toLine = linesForText!.last!
                     }
-                    if !animated { totalDeltaX += delta }
-                    idOfLineStartedHorizontalAnimation = firstLineToMove.tag
-                    return
+                    if !animated {
+                        totalDeltaX += delta
+//                        startTextToCtxHorizontalTransition(false)
+                    }
+                } else {
+                    firstLineToMove = line
+                    toLine = line
                 }
-                idOfLineStartedHorizontalAnimation = line.tag
-                transitOneLineHorizontally(line, byDelta: deltaMax, animated: animated, duration: currentHorizontalAnimationDuration(deltaMax), delegate: self)
+                idOfLineStartedHorizontalAnimation = firstLineToMove.tag
+                firstLineToMove.transitFromTextToCtxHorizontallyBetween(firstLineToMove, toLine: toLine, byDelta: delta, animated: animated, duration: currentHorizontalAnimationDuration(delta), delegate: self, chainCompletion: newCycle)
             }
         }
     }
-    func transitOneLineHorizontally(line: SingleLineInCtx, byDelta: CGFloat, animated: Bool, duration: NSTimeInterval = 0, delegate: AnyObject?) {
-        if !animated { totalDeltaX += byDelta }
-        line.startHorizontalTransition(byDelta, animated: animated, duration: duration, delegate: delegate)
-        if line.follower!.frame.origin.y == line.frame.origin.y {
-            (line.follower! as! SingleLineInCtx).startHorizontalTransition(byDelta, animated: animated, duration: duration, delegate: delegate)
+    func newCycle() {
+        if extra.last?.frame.origin.x == targetPositionOfLastLineInMain?.x {
+            deltaXFromTotalDeltaX = totalDeltaX
+        } else {
+            startTextToCtxHorizontalTransition(false)
         }
     }
     var horizontalAnimationDone = false
@@ -477,31 +498,36 @@ class TransitionController: UIViewController {
 }
 
 extension SingleLineInCtx {
-    func transitFromTextToCtxHorizontallyBetween(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, animated: Bool, duration: NSTimeInterval = 0, delegate: TextCtxTransitionReady){
+    func transitFromTextToCtxHorizontallyBetween(fromLine: SingleLineTextView?, toLine: SingleLineTextView?, byDelta: CGFloat, animated: Bool, duration: NSTimeInterval = 0, delegate: TextCtxTransitionReady, chainCompletion: (() -> Void)?){
         var from: SingleLineTextView?
+        var to: SingleLineTextView?
+        var transitSelf = false
         if let startLine = fromLine {
             if startLine.isEqual(self) {
-                startHorizontalTransition(byDelta, animated: animated, duration: duration, delegate: (delegate as? AnyObject))
-                if startLine.isEqual(toLine!) {
-                    transitLineExtraHorizontally(byDelta, animated: animated, duration: duration, delegate: delegate)
-                    return
+                transitSelf = true
+                if !startLine.isEqual(toLine!) {
+                    to = toLine
                 }
             } else {
                 from = fromLine
+                to = toLine
             }
         } else {
             if let endLine = toLine {
-                startHorizontalTransition(byDelta, animated: animated, duration: duration, delegate: (delegate as? AnyObject))
-                if endLine.isEqual(self) {
-                    transitLineExtraHorizontally(byDelta, animated: animated, duration: duration, delegate: delegate)
-                    return
-                }
+                transitSelf = true
+                if !endLine.isEqual(self) { to = endLine }
             } else {
-                return
+                if delegate.extra.contains(self) { transitSelf = true }
             }
         }
-        if let f = follower {
-            (f as! SingleLineInCtx).transitFromTextToCtxHorizontallyBetween(from, toLine: toLine, byDelta: byDelta, animated: animated, duration: duration, delegate: delegate)
+        if transitSelf {
+            startHorizontalTransition(byDelta, animated: animated, duration: duration, delegate: (delegate as? AnyObject))
+            if let f = follower {
+                (f as! SingleLineInCtx).transitFromTextToCtxHorizontallyBetween(from, toLine: to, byDelta: byDelta, animated: animated, duration: duration, delegate: delegate, chainCompletion: chainCompletion)
+            }
+            if toLine == nil && !animated {
+                if let completion = chainCompletion { completion() }
+            }
         }
     }
 }

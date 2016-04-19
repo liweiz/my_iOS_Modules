@@ -10,6 +10,7 @@
 		EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */; };
 		EE1966F01CA3123D0078F1C3 /* UITextViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */; };
 		EE1E8C191CBFEE450050E1D2 /* SingleLineInCtx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */; };
+		EE23F1671CC5F81000E011B9 /* TransitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE23F1661CC5F81000E011B9 /* TransitionModel.swift */; };
 		EE2D85A61CA10B8A002BA9ED /* NSRangeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */; };
 		EE3F80841CA03B4E007D09A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */; };
 		EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80851CA03B4E007D09A9 /* ViewController.swift */; };
@@ -44,6 +45,7 @@
 		EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
 		EE1966EF1CA3123D0078F1C3 /* UITextViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtensionTests.swift; sourceTree = "<group>"; };
 		EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineInCtx.swift; sourceTree = "<group>"; };
+		EE23F1661CC5F81000E011B9 /* TransitionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionModel.swift; sourceTree = "<group>"; };
 		EE2D85A51CA10B8A002BA9ED /* NSRangeHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRangeHelperTests.swift; sourceTree = "<group>"; };
 		EE3F80801CA03B4E007D09A9 /* TextCtxTransitionAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextCtxTransitionAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE3F80831CA03B4E007D09A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				EE3F80851CA03B4E007D09A9 /* ViewController.swift */,
 				EE3F80B91CA03C60007D09A9 /* ViewMatcher.swift */,
 				EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */,
+				EE23F1661CC5F81000E011B9 /* TransitionModel.swift */,
 				EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */,
 				EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */,
 				EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */,
@@ -279,6 +282,7 @@
 				EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */,
 				EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */,
 				EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */,
+				EE23F1671CC5F81000E011B9 /* TransitionModel.swift in Sources */,
 				EE3F80841CA03B4E007D09A9 /* AppDelegate.swift in Sources */,
 				EE1E8C191CBFEE450050E1D2 /* SingleLineInCtx.swift in Sources */,
 				EE3F80BA1CA03C60007D09A9 /* ViewMatcher.swift in Sources */,
