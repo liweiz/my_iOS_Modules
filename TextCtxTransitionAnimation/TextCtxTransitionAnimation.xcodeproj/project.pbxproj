@@ -20,6 +20,7 @@
 		EE3F80B81CA03C56007D09A9 /* ViewMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */; };
 		EE3F80BA1CA03C60007D09A9 /* ViewMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80B91CA03C60007D09A9 /* ViewMatcher.swift */; };
 		EE3F80BC1CA03DE3007D09A9 /* UnitTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3F80BB1CA03DE3007D09A9 /* UnitTestHelper.swift */; };
+		EE5FBEE71CDE3DE100870589 /* TransitionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5FBEE61CDE3DE100870589 /* TransitionModelTests.swift */; };
 		EE88FBEC1CB6DE7F00AF4CF0 /* TransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */; };
 		EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewMatcherTests.swift; path = TextCtxTransitionAnimationTests/ViewMatcherTests.swift; sourceTree = SOURCE_ROOT; };
 		EE3F80B91CA03C60007D09A9 /* ViewMatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewMatcher.swift; sourceTree = "<group>"; };
 		EE3F80BB1CA03DE3007D09A9 /* UnitTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestHelper.swift; sourceTree = "<group>"; };
+		EE5FBEE61CDE3DE100870589 /* TransitionModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionModelTests.swift; sourceTree = "<group>"; };
 		EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionController.swift; sourceTree = "<group>"; };
 		EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +132,7 @@
 		EE3F80971CA03B4E007D09A9 /* TextCtxTransitionAnimationTests */ = {
 			isa = PBXGroup;
 			children = (
+				EE5FBEE61CDE3DE100870589 /* TransitionModelTests.swift */,
 				EE3F80BB1CA03DE3007D09A9 /* UnitTestHelper.swift */,
 				EE3F80B71CA03C56007D09A9 /* ViewMatcherTests.swift */,
 				EE3F80981CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.swift */,
@@ -295,6 +298,7 @@
 			files = (
 				EE2D85A61CA10B8A002BA9ED /* NSRangeHelperTests.swift in Sources */,
 				EE1966F01CA3123D0078F1C3 /* UITextViewExtensionTests.swift in Sources */,
+				EE5FBEE71CDE3DE100870589 /* TransitionModelTests.swift in Sources */,
 				EE3F80991CA03B4E007D09A9 /* TextCtxTransitionAnimationTests.swift in Sources */,
 				EE3F80B81CA03C56007D09A9 /* ViewMatcherTests.swift in Sources */,
 				EE3F80BC1CA03DE3007D09A9 /* UnitTestHelper.swift in Sources */,
