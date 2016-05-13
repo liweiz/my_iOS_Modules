@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+
 protocol FloatConvertible {
     func float() -> Float
 }
@@ -19,57 +21,86 @@ extension CGFloat: FloatConvertible {
     }
 }
 
-protocol OneMovableInDirection {
+protocol MovableInDirection {
     associatedtype DistanceTypeInDirection: FloatConvertible
     func maxDelta(target: Self.DistanceTypeInDirection) -> Self.DistanceTypeInDirection
 }
 
-extension CGFloat: OneMovableInDirection {
+extension CGFloat: MovableInDirection {
     func maxDelta(target: CGFloat) -> CGFloat {
         return target - self
     }
-}
-
-// Not able to conform to this protocol FOR NOW. Discussion: http://stackoverflow.com/questions/33332613/is-it-possible-to-add-type-constraints-to-a-swift-protocol-conformance-extension
-protocol HasMovablesInDirection: CollectionType {
-    associatedtype DistanceTypeInDirection
-    func indexOfFirstMovableElementInOrder(targets: [Self.DistanceTypeInDirection]) -> Self.Index?
-    func indicesOfMovableElementsInOrder(targets: [Self.DistanceTypeInDirection]) -> Range<Self.Index>
 }
 
 protocol ElementsMatchable: CollectionType {
     func rangeMatched(targets: [Self.Generator.Element]) -> Bool
 }
 
-// dataflow(in CGFloat): initialXs =[find movables]=> movables =[get min delta]=> deltaToMove =[move movables]=> newXs
-
-extension CollectionType where Self.Generator.Element: OneMovableInDirection, Self.Index == Int {
-    // protocol HasMovablesInDirection: CollectionType
-    func indexOfFirstMovableElementInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Self.Index? {
-        for i in startIndex..<endIndex {
-            if self[i].maxDelta(targets[i]).float() > Float(0) { return i }
-        }
-        return nil
-    }
-    func indicesOfMovableElementsInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Range<Self.Index> {
-        guard let firstIndex = indexOfFirstMovableElementInOrder(targets) else {
-            return startIndex..<startIndex
-        }
-        for i in firstIndex..<endIndex {
-            if self[i].maxDelta(targets[i]).float() == Float(0) {
-                return firstIndex..<i
-            }
-        }
-        return firstIndex..<endIndex
-    }
-    // protocol ElementsMatchable: CollectionType
+// protocol ElementsMatchable: CollectionType
+extension CollectionType where Self.Generator.Element: MovableInDirection, Self.Index == Int {
     func rangeMatched(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Bool {
         guard count == targets.count else {
             fatalError("Numbers of elements in two CollectionTypes not matched.")
         }
         return true
     }
-    
+}
+
+protocol IndexMatchable: Indexable {
+    func index(inRangeInt: Range<Int>, indexInSelf: Self.Index) -> Int?
+}
+
+extension IndexMatchable {
+    func index(inRangeInt: Range<Int>, indexInSelf: Self.Index) -> Int? {
+        if inRangeInt.startIndex == inRangeInt.endIndex { return nil }
+        var j = inRangeInt.startIndex
+        var isContained = false
+        var doneAdding = false
+        for i in startIndex...indexInSelf {
+            if j < inRangeInt.endIndex {
+                j = j.advancedBy(1)
+            } else {
+                doneAdding = true
+            }
+            if i == indexInSelf { isContained = true }
+            if isContained && doneAdding { return j }
+        }
+        return nil
+    }
+}
+
+// dataflow(in CGFloat): initialXs =[find movables]=> movables =[get min delta]=> deltaToMove =[move movables]=> newXs
+// Not able to conform to this protocol FOR NOW. Discussion: http://stackoverflow.com/questions/33332613/is-it-possible-to-add-type-constraints-to-a-swift-protocol-conformance-extension
+protocol HasMovablesInDirection: CollectionType {
+    associatedtype DistanceTypeInDirection
+    func indexOfFirstMovableElementInOrder(targets: [Self.DistanceTypeInDirection]) -> (inSelf: Self.Index, inTarget: Int)?
+    func indicesOfMovableElementsInOrder(targets: [Self.DistanceTypeInDirection]) -> (rangeInSelf: Range<Self.Index>, rangeInTargets: Range<Int>)?
+    func maxDeltas(targets: [Self.DistanceTypeInDirection]) -> [Self.DistanceTypeInDirection]
+    func maxDeltaNow(targets: [Self.DistanceTypeInDirection]) -> Self.DistanceTypeInDirection?
+}
+
+// protocol HasMovablesInDirection: CollectionType
+extension CollectionType where Self.Generator.Element: MovableInDirection, Self.Index == Int {
+    func indexOfFirstMovableElementInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> (inSelf: Self.Index, inTarget: Int)? {
+        var j = targets.startIndex
+        for i in startIndex..<endIndex {
+            if self[i].maxDelta(targets[i]).float() > Float(0) { return (i, j) }
+            j = j.advancedBy(1)
+        }
+        return nil
+    }
+    func indicesOfMovableElementsInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> (rangeInSelf: Range<Self.Index>, rangeInTargets: Range<Int>)? {
+        guard let firstIndex = indexOfFirstMovableElementInOrder(targets) else {
+            return nil
+        }
+        var j
+        for i in firstIndex.inSelf..<endIndex {
+            if self[i].maxDelta(targets[i]).float() == Float(0) {
+                return (firstIndex..<i, targets.)
+            }
+        }
+        return firstIndex..<endIndex
+    }
     func maxDeltas(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> [Self.Generator.Element.DistanceTypeInDirection] {
         var deltas: [Self.Generator.Element.DistanceTypeInDirection] = []
         if rangeMatched(targets) {
@@ -81,9 +112,15 @@ extension CollectionType where Self.Generator.Element: OneMovableInDirection, Se
         }
         return deltas
     }
-    
-    
+    func maxDeltaNow(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Self.Generator.Element.DistanceTypeInDirection? {
+        guard let movableRange = indicesOfMovableElementsInOrder(targets) else { return nil }
+        let movables = self[movableRange] as! Self
+        return movables.maxDeltas(targets[movableRange])
+    }
 }
+
+
+
 
 
 
