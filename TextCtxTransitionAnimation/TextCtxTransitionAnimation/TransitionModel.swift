@@ -41,6 +41,8 @@ protocol ElementsMatchable: CollectionType {
     func rangeMatched(targets: [Self.Generator.Element]) -> Bool
 }
 
+// dataflow(in CGFloat): initialXs =[find movables]=> movables =[get min delta]=> deltaToMove =[move movables]=> newXs
+
 extension CollectionType where Self.Generator.Element: OneMovableInDirection, Self.Index == Int {
     // protocol HasMovablesInDirection: CollectionType
     func indexOfFirstMovableElementInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Self.Index? {
