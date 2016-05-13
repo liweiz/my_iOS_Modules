@@ -30,13 +30,19 @@ extension CGFloat: OneMovableInDirection {
     }
 }
 
+// Not able to conform to this protocol FOR NOW. Discussion: http://stackoverflow.com/questions/33332613/is-it-possible-to-add-type-constraints-to-a-swift-protocol-conformance-extension
 protocol HasMovablesInDirection: CollectionType {
     associatedtype DistanceTypeInDirection
     func indexOfFirstMovableElementInOrder(targets: [Self.DistanceTypeInDirection]) -> Self.Index?
     func indicesOfMovableElementsInOrder(targets: [Self.DistanceTypeInDirection]) -> Range<Self.Index>
 }
 
+protocol ElementsMatchable: CollectionType {
+    func rangeMatched(targets: [Self.Generator.Element]) -> Bool
+}
+
 extension CollectionType where Self.Generator.Element: OneMovableInDirection, Self.Index == Int {
+    // protocol HasMovablesInDirection: CollectionType
     func indexOfFirstMovableElementInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Self.Index? {
         for i in startIndex..<endIndex {
             if self[i].maxDelta(targets[i]).float() > Float(0) { return i }
@@ -45,7 +51,7 @@ extension CollectionType where Self.Generator.Element: OneMovableInDirection, Se
     }
     func indicesOfMovableElementsInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Range<Self.Index> {
         guard let firstIndex = indexOfFirstMovableElementInOrder(targets) else {
-            return self.startIndex..<self.startIndex
+            return startIndex..<startIndex
         }
         for i in firstIndex..<endIndex {
             if self[i].maxDelta(targets[i]).float() == Float(0) {
@@ -54,47 +60,54 @@ extension CollectionType where Self.Generator.Element: OneMovableInDirection, Se
         }
         return firstIndex..<endIndex
     }
+    // protocol ElementsMatchable: CollectionType
+    func rangeMatched(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Bool {
+        guard count == targets.count else {
+            fatalError("Numbers of elements in two CollectionTypes not matched.")
+        }
+        return true
+    }
+    
+    func maxDeltas(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> [Self.Generator.Element.DistanceTypeInDirection] {
+        var deltas: [Self.Generator.Element.DistanceTypeInDirection] = []
+        if rangeMatched(targets) {
+            var i = targets.startIndex
+            for j in startIndex..<endIndex {
+                deltas.append(self[j].maxDelta(targets[i]))
+                i = i.advancedBy(1)
+            }
+        }
+        return deltas
+    }
+    
+    
 }
 
 
 
-//extension Array {
-//    func interwine(withArray: Array) -> Array {
-//        var result: Array = []
-//        for i in 0..<max(count, withArray.count) {
-//            if i < count { result.append(self[i]) }
-//            if i < withArray.count { result.append(withArray[i]) }
-//        }
-//        return result
-//    }
-//}
-//
-//extension CollectionType where Generator.Element: OneMovableInDirection, Self: HasMovablesInDirection {}
-//
-//protocol MaxMoveInMany {
-//    func maxMoveThatAllCan(maxMovesOfEach m: [CGFloat]) -> CGFloat
-//}
-//
-//typealias XsNow = [CGFloat]
-//
-//typealias DeltaXsForAllLinesInSingleMove = [CGFloat]
-//
-//typealias DeltaXs = [DeltaXsForAllLinesInSingleMove]
-//
-///// A container for fixed origin.xs for a line.
-//struct StaticOriginXsOfLine {
-//    let textImitatedInThisLine: CGFloat
-//    let ctxImitatedInThisLine: CGFloat
-//    let whenExtraHidden: CGFloat
-//}
-//
-//
-//
-//
-//
-//
-//
-//
+extension Array {
+    func interwine(withArray: Array) -> Array {
+        var result: Array = []
+        for i in 0..<max(count, withArray.count) {
+            if i < count { result.append(self[i]) }
+            if i < withArray.count { result.append(withArray[i]) }
+        }
+        return result
+    }
+}
+
+
+
+typealias XsNow = [CGFloat]
+
+typealias DeltaXsForAllLinesInSingleMove = [CGFloat]
+
+typealias DeltaXs = [DeltaXsForAllLinesInSingleMove]
+
+
+
+
+
 //struct NumbersInTextCtxHorizontalTransition {
 //    let originXsImitatingText: [CGFloat]
 //    let originXsImitatingCtx: [CGFloat]
