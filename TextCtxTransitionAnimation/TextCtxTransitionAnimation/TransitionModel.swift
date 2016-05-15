@@ -9,24 +9,51 @@
 import Foundation
 import UIKit
 
-protocol FloatConvertible {
-    @warn_unused_result func float() -> Float
+protocol NumericType: Comparable {
+    func +(lhs: Self, rhs: Self) -> Self
+    func -(lhs: Self, rhs: Self) -> Self
+    func *(lhs: Self, rhs: Self) -> Self
+    func /(lhs: Self, rhs: Self) -> Self
+    func %(lhs: Self, rhs: Self) -> Self
+    var zero: Self { get }
 }
 
-extension CGFloat: FloatConvertible {
-    @warn_unused_result func float() -> Float {
-        return Float(self)
+extension NumericType {
+    var zero: Self {
+        return self - self
     }
 }
 
+extension Double: NumericType {}
+extension Float: NumericType {}
+extension Int: NumericType {}
+extension Int8: NumericType {}
+extension Int16: NumericType {}
+extension Int32: NumericType {}
+extension Int64: NumericType {}
+extension UInt: NumericType {}
+extension UInt8: NumericType {}
+extension UInt16: NumericType {}
+extension UInt32: NumericType {}
+extension UInt64: NumericType {}
+extension CGFloat: NumericType {}
+
 protocol MovableInDirection {
-    associatedtype DistanceTypeInDirection: FloatConvertible
+    associatedtype DistanceTypeInDirection: NumericType
+    var valueInDirection: Self.DistanceTypeInDirection { get }
     @warn_unused_result func maxDelta(target: Self.DistanceTypeInDirection) -> Self.DistanceTypeInDirection
+    @warn_unused_result func updated(byDelta: Self.DistanceTypeInDirection) -> Self.DistanceTypeInDirection
 }
 
 extension CGFloat: MovableInDirection {
+    var valueInDirection: CGFloat {
+        return self
+    }
     @warn_unused_result func maxDelta(target: CGFloat) -> CGFloat {
         return target - self
+    }
+    @warn_unused_result func updated(byDelta: CGFloat) -> CGFloat {
+        return self + byDelta
     }
 }
 
@@ -81,7 +108,7 @@ protocol HasMovablesInDirection: CollectionType {
 extension CollectionType where Self.Generator.Element: MovableInDirection, Self.Index == Int {
     func indexOfFirstMovableElementInOrder(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Self.Index? {
         for i in startIndex..<endIndex {
-            if self[i].maxDelta(targets[i]).float() > Float(0) { return i }
+            if self[i].maxDelta(targets[i]) > targets[i].zero { return i }
         }
         return nil
     }
@@ -90,7 +117,7 @@ extension CollectionType where Self.Generator.Element: MovableInDirection, Self.
             return nil
         }
         for i in firstIndex..<endIndex {
-            if self[i].maxDelta(targets[i]).float() == Float(0) {
+            if self[i].maxDelta(targets[i]) == targets[i].zero {
                 return firstIndex..<i
             }
         }
@@ -121,9 +148,19 @@ extension CollectionType where Self.Generator.Element: MovableInDirection, Self.
                 k = k.advancedBy(1)
             }
         }
-        return deltas.minElement({ (a, b) -> Bool in
-            return a.float() < b.float()
-            })
+        return deltas.minElement({ $0 < $1 })
+    }
+    func changesToReachAllTargets(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> (deltas: [Self.Generator.Element.DistanceTypeInDirection], ranges: [Range<Self.Index>]) {
+        var deltas: [Self.Generator.Element.DistanceTypeInDirection] = []
+        var ranges: [Range<Self.Index>] = []
+        var values: [Self.Generator.Element.DistanceTypeInDirection] = []
+        var d: Self.Generator.Element.DistanceTypeInDirection? = nil
+        while d == nil || d! != d!.zero {
+            let newBase = deltas.reduce(Float(0), combine: $0.)
+            guard let now = base..maxDeltaNow(targets) else {
+                
+            }
+        }
     }
 }
 
