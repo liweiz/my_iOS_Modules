@@ -24,20 +24,6 @@ extension NumericType {
     }
 }
 
-extension Double: NumericType {}
-extension Float: NumericType {}
-extension Int: NumericType {}
-extension Int8: NumericType {}
-extension Int16: NumericType {}
-extension Int32: NumericType {}
-extension Int64: NumericType {}
-extension UInt: NumericType {}
-extension UInt8: NumericType {}
-extension UInt16: NumericType {}
-extension UInt32: NumericType {}
-extension UInt64: NumericType {}
-extension CGFloat: NumericType {}
-
 protocol MovableInDirection {
     associatedtype DistanceTypeInDirection: NumericType
     var valueInDirection: Self.DistanceTypeInDirection { get }
@@ -61,15 +47,29 @@ extension NumericTypeInDirection {
     }
 }
 
+extension Double: NumericTypeInDirection {}
+extension Float: NumericTypeInDirection {}
+extension Int: NumericTypeInDirection {}
+extension Int8: NumericTypeInDirection {}
+extension Int16: NumericTypeInDirection {}
+extension Int32: NumericTypeInDirection {}
+extension Int64: NumericTypeInDirection {}
+extension UInt: NumericTypeInDirection {}
+extension UInt8: NumericTypeInDirection {}
+extension UInt16: NumericTypeInDirection {}
+extension UInt32: NumericTypeInDirection {}
+extension UInt64: NumericTypeInDirection {}
+extension CGFloat: NumericTypeInDirection {}
+
 protocol ElementsMatchable: CollectionType {
-    @warn_unused_result func rangeMatched(targets: [Self.Generator.Element]) -> Bool
+    @warn_unused_result func okToProceed(withArrayWithNumberOfElem: Int) -> Bool
 }
 
 // protocol ElementsMatchable: CollectionType
 extension CollectionType where Self.Generator.Element: MovableInDirection, Self.Index == Int {
-    @warn_unused_result func rangeMatched(targets: [Self.Generator.Element.DistanceTypeInDirection]) -> Bool {
-        guard count == targets.count else {
-            fatalError("Numbers of elements in two CollectionTypes not matched.")
+    @warn_unused_result func okToProceed(withArrayWithNumberOfElem: Int) -> Bool {
+        guard count == withArrayWithNumberOfElem else {
+            fatalError("Not able to work with array with different number of elements.")
         }
         return true
     }
@@ -80,18 +80,18 @@ protocol IndexMatchable: Indexable {
 }
 
 extension CollectionType {
-    @warn_unused_result func index(inRangeInt: Range<Int>, indexInSelf: Self.Index) -> Int? {
+    @warn_unused_result func correspondingIndex(inRangeInt: Range<Int>, forIndexInSelf: Self.Index) -> Int? {
         if inRangeInt.startIndex == inRangeInt.endIndex { return nil }
         var j = inRangeInt.startIndex
         var isContained = false
         var doneAdding = false
-        for i in startIndex...indexInSelf {
-            if j < inRangeInt.endIndex {
+        for i in startIndex...forIndexInSelf {
+            if j < inRangeInt.endIndex && i != forIndexInSelf {
                 j = j.advancedBy(1)
             } else {
                 doneAdding = true
             }
-            if i == indexInSelf { isContained = true }
+            if i == forIndexInSelf { isContained = true }
             if isContained && doneAdding { return j }
         }
         return nil
@@ -105,17 +105,19 @@ protocol HasMovablesInDirection: CollectionType {
     @warn_unused_result func indexOfFirstMovableElementInOrder(targets: [Self.DistanceTypeInDirection]) -> Self.Index?
     @warn_unused_result func indicesOfMovableElementsInOrder(targets: [Self.DistanceTypeInDirection]) -> Range<Self.Index>?
     @warn_unused_result func maxDeltas(targets: [Self.DistanceTypeInDirection]) -> [Self.DistanceTypeInDirection]
-    @warn_unused_result func maxDeltaNow(targets: [Self.DistanceTypeInDirection]) -> Self.DistanceTypeInDirection?
+    @warn_unused_result func maxDeltaNow(targets: [Self.DistanceTypeInDirection]) -> (delta: Self.DistanceTypeInDirection?, range: Range<Self.Index>)?
+    @warn_unused_result func update(range: Range<Self.Index>, withDelta: Self.DistanceTypeInDirection) -> [Self.DistanceTypeInDirection]?
+    @warn_unused_result func deltasOfEachMoveToReachTargets(targets: [Self.DistanceTypeInDirection], existingDeltas: [Self.DistanceTypeInDirection]) -> [Self.DistanceTypeInDirection]?
 }
 
-extension CollectionType where Self.Generator.Element: NumericTypeInDirection, Self.Index == Int, Self.SubSequence == Self {
-    func indexOfFirstMovableElementInOrder(targets: Self) -> Self.Index? {
+extension CollectionType where Self.Generator.Element: NumericTypeInDirection, Self.Index == Int {
+    @warn_unused_result func indexOfFirstMovableElementInOrder(targets: [Self.Generator.Element]) -> Self.Index? {
         for i in startIndex..<endIndex {
             if self[i].maxDelta(targets[i]) > targets[i].zero { return i }
         }
         return nil
     }
-    func indicesOfMovableElementsInOrder(targets: Self) -> Range<Self.Index>? {
+    @warn_unused_result func indicesOfMovableElementsInOrder(targets: [Self.Generator.Element]) -> Range<Self.Index>? {
         guard let firstIndex = indexOfFirstMovableElementInOrder(targets) else {
             return nil
         }
@@ -126,30 +128,41 @@ extension CollectionType where Self.Generator.Element: NumericTypeInDirection, S
         }
         return firstIndex..<endIndex
     }
-    func maxDeltas(targets: Self) -> Self {
+    @warn_unused_result func maxDeltas(targets: [Self.Generator.Element]) -> [Self.Generator.Element] {
         var deltas: [Self.Generator.Element] = []
-        if rangeMatched(targets.map { $0 as! Self.Generator.Element.DistanceTypeInDirection }) {
+        if okToProceed(targets.count) {
             var i = targets.startIndex
             for j in startIndex..<endIndex {
                 deltas.append(self[j].maxDelta(targets[i]))
                 i = i.advancedBy(1)
             }
         }
-        return deltas as! Self
+        return deltas
     }
-    func maxDeltaNow(targets: Self) -> Self.Generator.Element? {
+    @warn_unused_result func maxDeltaNow(targets: [Self.Generator.Element]) -> (delta: Self.Generator.Element?, range: Range<Self.Index>)? {
         guard let movableRange = indicesOfMovableElementsInOrder(targets) else { return nil }
-        let movables = self[movableRange]
-        guard let i = index(targets.startIndex..<targets.endIndex, indexInSelf: movableRange.startIndex) else { return nil }
-        guard let j = index(targets.startIndex..<targets.endIndex, indexInSelf: movableRange.endIndex) else { return nil }
-        return movables.maxDeltas(targets[i..<j]).minElement({ $0 < $1 })
+        let movables = self[movableRange].map { $0 as! Self.Generator.Element }
+        guard let i = correspondingIndex(targets.startIndex..<targets.endIndex, forIndexInSelf: movableRange.startIndex) else { return nil }
+        guard let j = correspondingIndex(targets.startIndex..<targets.endIndex, forIndexInSelf: movableRange.endIndex) else { return nil }
+        return (movables.maxDeltas(targets[i..<j].map { $0 }).minElement({ $0 < $1 }), movableRange)
     }
-    func deltasOfEachMoveToReachTargets(targets: Self, existingDeltas: [Self.Generator.Element] = []) -> [Self.Generator.Element]? {
-        guard let dNow = maxDeltaNow(targets) else { return nil }
-        if dNow == dNow.zero {
-            return existingDeltas
+    @warn_unused_result func update(range: Range<Self.Index>, withDelta: Self.Generator.Element) -> [Self.Generator.Element]? {
+        guard range.startIndex >= startIndex && range.endIndex <= endIndex && range.startIndex < range.endIndex else {
+            return nil
         }
-        return deltasOfEachMoveToReachTargets(targets, existingDeltas: existingDeltas + [dNow])
+        var updated: [Self.Generator.Element] = []
+        for i in startIndex..<endIndex {
+            updated.append(range.contains(i) ? self[i] + withDelta : self[i])
+        }
+        return updated
+    }
+    @warn_unused_result func deltasOfEachMoveToReachTargets(targets: [Self.Generator.Element], existingDeltas: [Self.Generator.Element] = []) -> [Self.Generator.Element]? {
+        guard okToProceed(targets.count) else { return nil }
+        guard let dNow = maxDeltaNow(targets) else { return existingDeltas }
+        guard let d = dNow.delta else { return existingDeltas }
+        if d == d.zero { return existingDeltas }
+        guard let new = update(dNow.range, withDelta: d) else { return existingDeltas }
+        return new.deltasOfEachMoveToReachTargets(targets, existingDeltas: existingDeltas + [d])
     }
 }
 
