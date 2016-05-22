@@ -8,13 +8,12 @@
 
 import Foundation
 
-/*
- Problem to solve:
- Given a list of numbers and new values of each number. Each time only one
- delta can be applied to a sublist of numbers. The delta can not be larger than 
- the difference between current value and the new value for any number in the
- sublist. Find out each step's delta and sublist.
- */
+
+//  Problem to solve:
+//  Given a list of numbers and new values of each number. Each time, only one
+//  non zero delta can be applied to a non empty subset of continuous members of
+//  the list. The delta needs to minimize the gap between current value and new
+//  value for each number applied, while not creating new gap for any member.
 
 protocol Numberable: Comparable {
     func +(lhs: Self, rhs: Self) -> Self
@@ -44,6 +43,10 @@ extension UInt16: Numberable {}
 extension UInt32: Numberable {}
 extension UInt64: Numberable {}
 
-protocol  {
-    <#requirements#>
+protocol ElementOfSequenceTypesAtSamePositionGroupable {
+    associatedtype Sequence: CollectionType
+    associatedtype SequenceElement
+    @warn_unused_result func groupable(sequences: [Sequence]) -> Bool
+    @warn_unused_result func groupSequences(sequences: [Sequence], at position: Sequence.Index) -> [SequenceElement]?
+    @warn_unused_result func groupSequences(sequences: [Sequence]) -> [[SequenceElement]]?
 }
