@@ -24,6 +24,8 @@
 		EE67A4A71CEF794400E642A6 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE67A4A61CEF794400E642A6 /* Model.swift */; };
 		EE88FBEC1CB6DE7F00AF4CF0 /* TransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */; };
 		EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */; };
+		EEF32B9C1CF77947007054BD /* NestedSequenceGrouper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF32B9B1CF77947007054BD /* NestedSequenceGrouper.swift */; };
+		EEF32B9E1CF7E542007054BD /* Numberable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF32B9D1CF7E542007054BD /* Numberable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		EE67A4A61CEF794400E642A6 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionController.swift; sourceTree = "<group>"; };
 		EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineTextView.swift; sourceTree = "<group>"; };
+		EEF32B9B1CF77947007054BD /* NestedSequenceGrouper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedSequenceGrouper.swift; sourceTree = "<group>"; };
+		EEF32B9D1CF7E542007054BD /* Numberable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Numberable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,8 @@
 				EE88FBEB1CB6DE7F00AF4CF0 /* TransitionController.swift */,
 				EE23F1661CC5F81000E011B9 /* TransitionModel.swift */,
 				EE67A4A61CEF794400E642A6 /* Model.swift */,
+				EEF32B9D1CF7E542007054BD /* Numberable.swift */,
+				EEF32B9B1CF77947007054BD /* NestedSequenceGrouper.swift */,
 				EE1E8C181CBFEE450050E1D2 /* SingleLineInCtx.swift */,
 				EEABDB121CB59F8100A95722 /* SingleLineTextView.swift */,
 				EE1966EB1CA2E72B0078F1C3 /* UITextViewExtension.swift */,
@@ -284,9 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEF32B9C1CF77947007054BD /* NestedSequenceGrouper.swift in Sources */,
 				EE67A4A71CEF794400E642A6 /* Model.swift in Sources */,
 				EE88FBEC1CB6DE7F00AF4CF0 /* TransitionController.swift in Sources */,
 				EEABDB131CB59F8100A95722 /* SingleLineTextView.swift in Sources */,
+				EEF32B9E1CF7E542007054BD /* Numberable.swift in Sources */,
 				EE3F80861CA03B4E007D09A9 /* ViewController.swift in Sources */,
 				EE1966EC1CA2E72B0078F1C3 /* UITextViewExtension.swift in Sources */,
 				EE23F1671CC5F81000E011B9 /* TransitionModel.swift in Sources */,
