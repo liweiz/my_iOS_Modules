@@ -18,22 +18,22 @@ import Foundation
 
 typealias currentAndTargetNumbers = [[Numberable]]
 
+/// Provides a Numberable type for adopters.
 protocol HasNumber {
     associatedtype number: Numberable
 }
 
-protocol ElementDeltable : HasNumber {
-    var deltas: [number] { get }
-}
-
+/// Provides a ForwardIndexType type for adopters.
 protocol IndexOfRange {
     associatedtype rangeElement : ForwardIndexType
 }
 
 protocol MaxDeltaFoundable : HasNumber, IndexOfRange {
+    /// Returns the max delta that everyone in a range can be applied to.
     @warn_unused_result func maxDelta(for range: Range<rangeElement>) -> number
 }
 
+/// Makes Range conform to Hashable.
 extension Range : Hashable {
     public var hashValue: Int {
         return String(startIndex).hashValue ^ String(endIndex).hashValue
@@ -41,6 +41,12 @@ extension Range : Hashable {
 }
 
 protocol NewNumbersTransformable : HasNumber, IndexOfRange {
+    /// Returns range associated with delta for each step in the execution
+    /// order. The deltaPicker provides how each delta is selected, given all
+    /// possible deltas and their corresponding ranges for a step.
     @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForOneStep: [Range<rangeElement>: number]) -> (Range<rangeElement>, number)) -> [(Range<rangeElement>, number)]
+}
+
+extension currentAndTargetNumbers {
     
 }
