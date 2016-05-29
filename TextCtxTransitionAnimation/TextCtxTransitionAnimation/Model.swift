@@ -34,8 +34,13 @@ protocol MaxDeltaFoundable : HasNumber, IndexOfRange {
     @warn_unused_result func maxDelta(for range: Range<rangeElement>) -> number
 }
 
-protocol NewNumbersTransformable : HasNumber, IndexOfRange {
-    @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (deltasWithRanges: [Range<rangeElement>: number]) -> (number, Range<rangeElement>) )
-    
+extension Range : Hashable {
+    public var hashValue: Int {
+        return String(startIndex).hashValue ^ String(endIndex).hashValue
+    }
 }
 
+protocol NewNumbersTransformable : HasNumber, IndexOfRange {
+    @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForOneStep: [Range<rangeElement>: number]) -> (Range<rangeElement>, number)) -> [(Range<rangeElement>, number)]
+    
+}
