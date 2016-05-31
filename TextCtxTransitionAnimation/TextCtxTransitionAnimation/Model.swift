@@ -47,6 +47,17 @@ protocol NewNumbersTransformable : HasNumber, IndexOfRange {
     @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForOneStep: [Range<rangeElement>: number]) -> (Range<rangeElement>, number)) -> [(Range<rangeElement>, number)]
 }
 
-extension currentAndTargetNumbers {
-    
+protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, DictionaryLiteralConvertible {
+    associatedtype Value : Numberable
+    associatedtype Element = (Key, Value)
+    var keys: LazyMapCollection<[Value : Value], Value> { get }
+    subscript (key: Value) -> Array<Value>? { get }
+}
+
+extension CollectionType where Generator.Element : NumberableKeyNumberableArrayValueDictionary {
+    @warn_unused_result
+    func maxDelta(for range: Range<Index>) -> Generator.Element.Key {
+        let deltas = self[range].map { $0.Key - $0.Key }
+    }
+
 }

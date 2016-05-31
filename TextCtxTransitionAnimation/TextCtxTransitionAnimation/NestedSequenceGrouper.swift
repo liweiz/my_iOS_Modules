@@ -36,7 +36,7 @@ extension SequenceType where Generator.Element : SequenceType {
     /// Returns new nested array with each element is an array of same position
     /// elements.
     /// Shortest nested sequence sets the length of the new array.
-    var eachElementToSamePositionElements: [[Generator.Element.Generator.Element]] {
+    var nestedArrayThatEachElementToSamePositionElements: [[Generator.Element.Generator.Element]] {
         var generators = generatorsOfElements()
         var newSequence: [[Generator.Element.Generator.Element]] = []
         while let result = nextElements(from: generators) {
@@ -46,3 +46,4 @@ extension SequenceType where Generator.Element : SequenceType {
         return newSequence
     }
 }
+

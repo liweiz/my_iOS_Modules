@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Numberable: Comparable {
+protocol Numberable: Comparable, Hashable {
     func +(lhs: Self, rhs: Self) -> Self
     func -(lhs: Self, rhs: Self) -> Self
     func *(lhs: Self, rhs: Self) -> Self
@@ -35,3 +35,14 @@ extension UInt8: Numberable {}
 extension UInt16: Numberable {}
 extension UInt32: Numberable {}
 extension UInt64: Numberable {}
+
+extension SequenceType where Generator.Element : Numberable {
+    @warn_unused_result
+    func dicWithFirstAsKeyRestAsValueArray() -> [Generator.Element: SubSequence]? {
+        var gen = generate()
+        guard let first = gen.next(), _ = gen.next() else {
+            return nil
+        }
+        return [first: self.dropFirst()]
+    }
+}
