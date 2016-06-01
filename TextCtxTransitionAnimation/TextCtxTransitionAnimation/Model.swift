@@ -30,7 +30,7 @@ protocol IndexOfRange {
 
 protocol MaxDeltaFoundable : HasNumber, IndexOfRange {
     /// Returns the max delta that everyone in a range can be applied to.
-    @warn_unused_result func maxDelta(for range: Range<rangeElement>) -> number
+    @warn_unused_result func maxDelta(for range: Range<rangeElement>) -> number?
 }
 
 /// Makes Range conform to Hashable.
@@ -48,16 +48,29 @@ protocol NewNumbersTransformable : HasNumber, IndexOfRange {
 }
 
 protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, DictionaryLiteralConvertible {
-    associatedtype Value : Numberable
-    associatedtype Element = (Key, Value)
-    var keys: LazyMapCollection<[Value : Value], Value> { get }
-    subscript (key: Value) -> Array<Value>? { get }
+    associatedtype MetaType : Numberable
+    associatedtype Element = (MetaType, MetaType)
+    var keys: LazyMapCollection<[MetaType : MetaType], MetaType> { get }
+    subscript (key: MetaType) -> Array<MetaType>? { get }
 }
 
-extension CollectionType where Generator.Element : NumberableKeyNumberableArrayValueDictionary {
-    @warn_unused_result
-    func maxDelta(for range: Range<Index>) -> Generator.Element.Key {
-        let deltas = self[range].map { $0.Key - $0.Key }
-    }
 
+
+extension CollectionType where Generator.Element : NumberableKeyNumberableArrayValueDictionary, SubSequence.Generator.Element == Generator.Element {
+    /// Returns the max delta value 'Self.Generator.Element.MetaType' valid for 
+    /// all members in the 'range'; returns 'nil', if no member in 'range'.
+    @warn_unused_result
+    func maxDelta(for range: Range<Index>) -> Generator.Element.MetaType? {
+        let membersInRange = self[range]
+        let deltas = membersInRange.map { (dic) -> Generator.Element.MetaType in
+            guard let key = dic.keys.first else {
+                fatalError("No Key in Dictionary<NumberableKeyNumberableArrayValueDictionary, NumberableKeyNumberableArrayValueDictionary>")
+            }
+            guard let latest = dic[key]?.last else {
+                fatalError("No member in Array Value of Dictionary<NumberableKeyNumberableArrayValueDictionary, NumberableKeyNumberableArrayValueDictionary>")
+            }
+            return key - latest
+        }
+        return deltas.minElement()
+    }
 }
