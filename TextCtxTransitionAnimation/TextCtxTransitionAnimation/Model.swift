@@ -80,21 +80,34 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
     @warn_unused_result
     func nonZeroMaxDeltaRangesAndDeltas() -> [Range<Index>: Generator.Element.MetaType] {
         let ds = deltas(for: startIndex..<endIndex)
-        var result: [Range<Index>: Generator.Element.MetaType] = [:]
+        var results: [Range<Index>: Generator.Element.MetaType] = [:]
         var startI: Index? = nil
         var endI: Index? = nil
         var deltasGen = ds.generate()
+        var deltaNow: Generator.Element.MetaType? = nil
         for i in startIndex..<endIndex {
             guard let delta = deltasGen.next() else {
                 fatalError("func nonZeroMaxDeltaRangesAndDeltas came up with invalid deltas.")
             }
             if delta != delta.zero {
-                guard let s = startI else { startI = i }
+                if startI == nil {
+                    startI = i
+                }
                 endI = i
+                deltaNow = delta
             }
-            
+            else {
+                if let end = endI {
+                    results[startI!..<end] = delta
+                }
+                startI = nil
+                endI = nil
+            }
         }
-        
+        if let start = startI, end = endI, delta = deltaNow {
+            results[start..<end] = delta
+        }
+        return results
     }
     
     @warn_unused_result
