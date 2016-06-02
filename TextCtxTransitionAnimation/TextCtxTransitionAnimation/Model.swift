@@ -28,9 +28,11 @@ protocol IndexOfRange {
     associatedtype rangeElement : ForwardIndexType
 }
 
-protocol MaxDeltaFoundable : HasNumber, IndexOfRange {
+protocol DeltasFoundable : HasNumber, IndexOfRange {
+    @warn_unused_result func deltas(for range: Range<rangeElement>) -> [number]
     /// Returns the max delta that everyone in a range can be applied to.
     @warn_unused_result func maxDelta(for range: Range<rangeElement>) -> number?
+    @warn_unused_result func nonZeroMaxDeltaRangesAndDeltas() -> [Range<rangeElement>: number]
 }
 
 /// Makes Range conform to Hashable.
@@ -44,7 +46,7 @@ protocol NewNumbersTransformable : HasNumber, IndexOfRange {
     /// Returns range associated with delta for each step in the execution
     /// order. The deltaPicker provides how each delta is selected, given all
     /// possible deltas and their corresponding ranges for a step.
-    @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForOneStep: [Range<rangeElement>: number]) -> (Range<rangeElement>, number)) -> [(Range<rangeElement>, number)]
+    @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<rangeElement>: number]) -> (Range<rangeElement>, number)) -> [(Range<rangeElement>, number)]
 }
 
 protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, DictionaryLiteralConvertible {
@@ -54,15 +56,11 @@ protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, Dictionar
     subscript (key: MetaType) -> Array<MetaType>? { get }
 }
 
-
-
 extension CollectionType where Generator.Element : NumberableKeyNumberableArrayValueDictionary, SubSequence.Generator.Element == Generator.Element {
-    /// Returns the max delta value 'Self.Generator.Element.MetaType' valid for 
-    /// all members in the 'range'; returns 'nil', if no member in 'range'.
     @warn_unused_result
-    func maxDelta(for range: Range<Index>) -> Generator.Element.MetaType? {
+    func deltas(for range: Range<Index>) -> [Generator.Element.MetaType] {
         let membersInRange = self[range]
-        let deltas = membersInRange.map { (dic) -> Generator.Element.MetaType in
+        return membersInRange.map { (dic) -> Generator.Element.MetaType in
             guard let key = dic.keys.first else {
                 fatalError("No Key in Dictionary<NumberableKeyNumberableArrayValueDictionary, NumberableKeyNumberableArrayValueDictionary>")
             }
@@ -71,6 +69,36 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
             }
             return key - latest
         }
-        return deltas.minElement()
+    }
+    
+    /// Returns the max delta value 'Self.Generator.Element.MetaType' valid for
+    /// all members in the 'range'; returns 'nil', if no member in 'range'.
+    @warn_unused_result
+    func maxDelta(for range: Range<Index>) -> Generator.Element.MetaType? {
+        return deltas(for: range).minElement()
+    }
+    @warn_unused_result
+    func nonZeroMaxDeltaRangesAndDeltas() -> [Range<Index>: Generator.Element.MetaType] {
+        let ds = deltas(for: startIndex..<endIndex)
+        var result: [Range<Index>: Generator.Element.MetaType] = [:]
+        var startI: Index? = nil
+        var endI: Index? = nil
+        var deltasGen = ds.generate()
+        for i in startIndex..<endIndex {
+            guard let delta = deltasGen.next() else {
+                fatalError("func nonZeroMaxDeltaRangesAndDeltas came up with invalid deltas.")
+            }
+            if delta != delta.zero {
+                guard let s = startI else { startI = i }
+                endI = i
+            }
+            
+        }
+        
+    }
+    
+    @warn_unused_result
+    func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.MetaType]) -> (Range<Index>, Generator.Element.MetaType)) -> [(Range<Index>, Generator.Element.MetaType)] {
+        
     }
 }
