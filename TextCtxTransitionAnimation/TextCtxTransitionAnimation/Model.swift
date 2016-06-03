@@ -43,10 +43,11 @@ extension Range : Hashable {
 }
 
 protocol NewNumbersTransformable : HasNumber, IndexOfRange {
+    @warn_unused_result func updatedBy(delta: number, for range: Range<rangeElement>) -> Self
     /// Returns range associated with delta for each step in the execution
     /// order. The deltaPicker provides how each delta is selected, given all
     /// possible deltas and their corresponding ranges for a step.
-    @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<rangeElement>: number]) -> (Range<rangeElement>, number)) -> [(Range<rangeElement>, number)]
+    @warn_unused_result func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<rangeElement>: number]) -> (Range<rangeElement>, number)) -> [Range<rangeElement>: number]
 }
 
 protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, DictionaryLiteralConvertible {
@@ -54,6 +55,17 @@ protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, Dictionar
     associatedtype Element = (MetaType, MetaType)
     var keys: LazyMapCollection<[MetaType : MetaType], MetaType> { get }
     subscript (key: MetaType) -> Array<MetaType>? { get }
+}
+
+extension CollectionType where Generator.Element : Numberable, SubSequence.Generator.Element == Generator.Element {
+    @warn_unused_result
+    func updatedBy(delta: Generator.Element, for range: Range<Index>) -> [Generator.Element] {
+        let head = self[startIndex..<range.startIndex]
+        let tail = self[range.endIndex..<endIndex]
+        let toUpdate = self[range]
+        let updated = toUpdate.map { $0 + delta }
+        return Array(head) + Array(updated) + Array(tail)
+    }
 }
 
 extension CollectionType where Generator.Element : NumberableKeyNumberableArrayValueDictionary, SubSequence.Generator.Element == Generator.Element {
@@ -77,6 +89,8 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
     func maxDelta(for range: Range<Index>) -> Generator.Element.MetaType? {
         return deltas(for: range).minElement()
     }
+    /// Returns all ranges with continuous non-zero delta in Dictionary with 
+    /// Range as Key and max delta of all of this range as Value.
     @warn_unused_result
     func nonZeroMaxDeltaRangesAndDeltas() -> [Range<Index>: Generator.Element.MetaType] {
         let ds = deltas(for: startIndex..<endIndex)
@@ -94,14 +108,15 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
                     startI = i
                 }
                 endI = i
-                deltaNow = delta
+                deltaNow = (deltaNow == nil) ? delta : min(deltaNow!, delta)
             }
             else {
                 if let end = endI {
-                    results[startI!..<end] = delta
+                    results[startI!..<end] = deltaNow
                 }
                 startI = nil
                 endI = nil
+                deltaNow = nil
             }
         }
         if let start = startI, end = endI, delta = deltaNow {
@@ -109,9 +124,9 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
         }
         return results
     }
-    
     @warn_unused_result
-    func deltasWithRangesToAllNewNumbers(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.MetaType]) -> (Range<Index>, Generator.Element.MetaType)) -> [(Range<Index>, Generator.Element.MetaType)] {
-        
+    func deltaWithRangeToNewNumber(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.MetaType]) -> (Range<Index>, Generator.Element.MetaType)) -> [Range<Index>: Generator.Element.MetaType] {
+        var latestNumbers: [Generator.Element.MetaType] = Array(self)
+        while
     }
 }
