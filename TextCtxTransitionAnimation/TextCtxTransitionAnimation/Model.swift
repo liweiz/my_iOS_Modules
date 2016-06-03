@@ -51,10 +51,10 @@ protocol NewNumbersTransformable : HasNumber, IndexOfRange {
 }
 
 protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, DictionaryLiteralConvertible {
-    associatedtype MetaType : Numberable
-    associatedtype Element = (MetaType, MetaType)
-    var keys: LazyMapCollection<[MetaType : MetaType], MetaType> { get }
-    subscript (key: MetaType) -> Array<MetaType>? { get }
+    associatedtype Number : Numberable
+    associatedtype Element = (Number, Number)
+    var keys: LazyMapCollection<[Number : Number], Number> { get }
+    subscript (key: Number) -> Array<Number>? { get }
 }
 
 extension CollectionType where Generator.Element : Numberable, SubSequence.Generator.Element == Generator.Element {
@@ -70,9 +70,9 @@ extension CollectionType where Generator.Element : Numberable, SubSequence.Gener
 
 extension CollectionType where Generator.Element : NumberableKeyNumberableArrayValueDictionary, SubSequence.Generator.Element == Generator.Element {
     @warn_unused_result
-    func deltas(for range: Range<Index>) -> [Generator.Element.MetaType] {
+    func deltas(for range: Range<Index>) -> [Generator.Element.Number] {
         let membersInRange = self[range]
-        return membersInRange.map { (dic) -> Generator.Element.MetaType in
+        return membersInRange.map { (dic) -> Generator.Element.Number in
             guard let key = dic.keys.first else {
                 fatalError("No Key in Dictionary<NumberableKeyNumberableArrayValueDictionary, NumberableKeyNumberableArrayValueDictionary>")
             }
@@ -83,22 +83,22 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
         }
     }
     
-    /// Returns the max delta value 'Self.Generator.Element.MetaType' valid for
+    /// Returns the max delta value 'Self.Generator.Element.Number' valid for
     /// all members in the 'range'; returns 'nil', if no member in 'range'.
     @warn_unused_result
-    func maxDelta(for range: Range<Index>) -> Generator.Element.MetaType? {
+    func maxDelta(for range: Range<Index>) -> Generator.Element.Number? {
         return deltas(for: range).minElement()
     }
     /// Returns all ranges with continuous non-zero delta in Dictionary with 
     /// Range as Key and max delta of all of this range as Value.
     @warn_unused_result
-    func nonZeroMaxDeltaRangesAndDeltas() -> [Range<Index>: Generator.Element.MetaType] {
+    func nonZeroMaxDeltaRangesAndDeltas() -> [Range<Index>: Generator.Element.Number] {
         let ds = deltas(for: startIndex..<endIndex)
-        var results: [Range<Index>: Generator.Element.MetaType] = [:]
+        var results: [Range<Index>: Generator.Element.Number] = [:]
         var startI: Index? = nil
         var endI: Index? = nil
         var deltasGen = ds.generate()
-        var deltaNow: Generator.Element.MetaType? = nil
+        var deltaNow: Generator.Element.Number? = nil
         for i in startIndex..<endIndex {
             guard let delta = deltasGen.next() else {
                 fatalError("func nonZeroMaxDeltaRangesAndDeltas came up with invalid deltas.")
@@ -125,8 +125,8 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
         return results
     }
     @warn_unused_result
-    func deltaWithRangeToNewNumber(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.MetaType]) -> (Range<Index>, Generator.Element.MetaType)) -> [Range<Index>: Generator.Element.MetaType] {
-        var latestNumbers: [Generator.Element.MetaType] = Array(self)
+    func deltaWithRangeToNewNumber(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.Number]) -> (Range<Index>, Generator.Element.Number)) -> () -> [(Range<Index>, Generator.Element.Number)] {
+        var latestNumbers: [Generator.Element.Number] = Array(self)
         while
     }
 }
