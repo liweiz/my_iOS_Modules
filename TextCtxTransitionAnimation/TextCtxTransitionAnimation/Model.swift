@@ -125,8 +125,14 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
         return results
     }
     @warn_unused_result
-    func deltaWithRangeToNewNumber(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.Number]) -> (Range<Index>, Generator.Element.Number)) -> () -> [(Range<Index>, Generator.Element.Number)] {
-        var latestNumbers: [Generator.Element.Number] = Array(self)
-        while
+    mutating func formDeltaWithRangeToNewNumber(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.Number]) -> (Range<Index>, Generator.Element.Number)?) -> [(Range<Index>, Generator.Element.Number)]? {
+        var options: [Range<Index>: Generator.Element.Number] = nonZeroMaxDeltaRangesAndDeltas()
+        while options.count > 0 {
+            let picked = deltaPicker(rangesAndDeltasForCurrentStep: options)!
+            update
+            options = nonZeroMaxDeltaRangesAndDeltas()
+        }
+
+        
     }
 }
