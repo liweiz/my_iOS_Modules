@@ -9,12 +9,25 @@
 import Foundation
 
 
-///  Problem to solve:
-///  Given a list of numbers and new values of each number. Each time, only one
-///  non zero delta can be applied to a non empty subset of continuous members
-///  of the list. The delta needs to minimize the gap between current value and
-///  new value for each number applied, while not creating new gap for any 
-///  member.
+/// Problem to solve:
+/// Given a list of numbers and new values of each number. Each time, only one
+/// non zero delta can be applied to a non empty subset of continuous members of 
+/// the list. The delta needs to minimize the gap between current value and new 
+/// value for each number applied, while not creating new gap for any member.
+
+/// Solution:
+/// Data Structure:
+/// To have easier way to find corresponding number pair, group the initial and
+/// target together and form a new list. To know the whole transform clearly,
+/// record all changes (including zeros) for each step. Append each step's 
+/// change after the initial. To clearly identify the target and each step's 
+/// number, a dictionary with target as key and an array of number as value is a
+/// good structure to group them. Two lists of numbers transform to be a list of
+/// dictionaries.
+/// Calculation:
+/// Find out all continuous non-zero-delta-to-reach-target ranges for current numbers. Get max delta necessary for each number in the range for each 
+/// range. Follow a rule provided to pick the range to operate on. Execute and
+/// loop the process till no non-zero-delta-to-reach-target range can be found.
 
 typealias currentAndTargetNumbers = [[Numberable]]
 
