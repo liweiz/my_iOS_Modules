@@ -65,11 +65,12 @@ protocol NewNumbersTransformable : HasNumber, IndexOfRange {
 
 protocol NumberableKeyNumberableArrayValueDictionary : CollectionType, DictionaryLiteralConvertible {
     associatedtype Number : Numberable
-    associatedtype Element = (Number, Number)
+    associatedtype Element = (Number, [Number])
     var keys: LazyMapCollection<[Number : Number], Number> { get }
-    subscript (key: Number) -> Array<Number>? { get }
+    subscript (key: Number) -> [Number]? { get set }
 }
 
+/// Numberable list.
 extension CollectionType where Generator.Element : Numberable, SubSequence.Generator.Element == Generator.Element {
     @warn_unused_result
     func updatedBy(delta: Generator.Element, for range: Range<Index>) -> [Generator.Element] {
@@ -81,6 +82,7 @@ extension CollectionType where Generator.Element : Numberable, SubSequence.Gener
     }
 }
 
+/// Numberable dictionary list
 extension CollectionType where Generator.Element : NumberableKeyNumberableArrayValueDictionary, SubSequence.Generator.Element == Generator.Element {
     @warn_unused_result
     func deltas(for range: Range<Index>) -> [Generator.Element.Number] {
@@ -137,15 +139,41 @@ extension CollectionType where Generator.Element : NumberableKeyNumberableArrayV
         }
         return results
     }
+    
     @warn_unused_result
-    mutating func formDeltaWithRangeToNewNumber(deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.Number]) -> (Range<Index>, Generator.Element.Number)?) -> [(Range<Index>, Generator.Element.Number)]? {
-        var options: [Range<Index>: Generator.Element.Number] = nonZeroMaxDeltaRangesAndDeltas()
-        while options.count > 0 {
-            let picked = deltaPicker(rangesAndDeltasForCurrentStep: options)!
-            update
-            options = nonZeroMaxDeltaRangesAndDeltas()
-        }
+    func updated(by delta: Generator.Element.Number, for range: Range<Index>) -> [Generator.Element] {
+        var deltas: [Generator.Element.Number] = []
+        deltas.appendContentsOf(Repeat(count: ((startIndex..<range.startIndex).count as! Int), repeatedValue: delta.zero))
+        deltas.appendContentsOf(Repeat(count: ((range.startIndex..<range.endIndex).count as! Int), repeatedValue: delta))
+        deltas.appendContentsOf(Repeat(count: ((range.endIndex..<endIndex).count as! Int), repeatedValue: delta.zero))
 
-        
+        return map { (dic) -> Generator.Element in
+            guard let key = dic.keys.first else {
+                fatalError("Empty Dictionary.")
+            }
+            var d = dic[key]!
+            d.append(delta)
+            var newDic = dic
+            newDic[key] = d
+            return newDic
+        }
+    }
+    
+    @warn_unused_result
+    func deltaWithRangeToNewNumber(
+        deltasAndRanges: [(Range<Index>, Generator.Element.Number)],
+        deltaPicker: (rangesAndDeltasForCurrentStep: [Range<Index>: Generator.Element.Number]) -> (Range<Index>, Generator.Element.Number)?
+        ) -> ([Generator.Element], [(Range<Index>, Generator.Element.Number)])? {
+        let options: [Range<Index>: Generator.Element.Number] = nonZeroMaxDeltaRangesAndDeltas()
+        if options.count > 0 {
+            guard let picked = deltaPicker(rangesAndDeltasForCurrentStep: options) else {
+                fatalError("deltaPicker did not pick anyone.")
+            }
+            var newDeltasAndRanges = deltasAndRanges
+            newDeltasAndRanges.append(picked)
+            let newSelf = updated(by: picked.1, for: picked.0)
+            return (newSelf, newDeltasAndRanges)
+        }
+        return nil
     }
 }
